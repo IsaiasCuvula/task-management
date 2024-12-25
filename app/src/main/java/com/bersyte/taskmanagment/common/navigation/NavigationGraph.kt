@@ -1,0 +1,24 @@
+package com.bersyte.taskmanagment.common.navigation
+
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import com.bersyte.taskmanagment.feature.home.views.screens.HomeScreen
+
+@Composable
+fun NavigationGraph(
+    navController: NavHostController,
+    modifier: Modifier = Modifier
+) {
+
+    NavHost(
+        navController= navController,
+        startDestination = Route.Home.name,
+        modifier= modifier
+    ){
+        composable(Route.Home.name) { HomeScreen(navController) }
+    }
+
+}
