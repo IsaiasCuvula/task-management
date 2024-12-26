@@ -1,4 +1,4 @@
-package com.bersyte.taskmanagment.common.theme
+package com.bersyte.taskmanagement.common.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme

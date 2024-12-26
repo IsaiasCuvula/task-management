@@ -1,4 +1,4 @@
-package com.bersyte.taskmanagment.feature.home.views.screens
+package com.bersyte.taskmanagement.feature.home.views.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.bersyte.taskmanagment.common.components.ThemedCard
+import com.bersyte.taskmanagement.common.components.ThemedCard
 
 @Composable
 fun HomeScreen(navController: NavHostController) {

@@ -1,4 +1,4 @@
-package com.bersyte.taskmanagment
+package com.bersyte.taskmanagement
 
 import org.junit.Test
 

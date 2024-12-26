@@ -1,11 +1,11 @@
-package com.bersyte.taskmanagment.common.navigation
+package com.bersyte.taskmanagement.common.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.bersyte.taskmanagment.feature.home.views.screens.HomeScreen
+import com.bersyte.taskmanagement.feature.home.views.screens.HomeScreen
 
 @Composable
 fun NavigationGraph(

@@ -1,4 +1,4 @@
-package com.bersyte.taskmanagment.common.theme
+package com.bersyte.taskmanagement.common.theme
 
 import androidx.compose.ui.graphics.Color
 

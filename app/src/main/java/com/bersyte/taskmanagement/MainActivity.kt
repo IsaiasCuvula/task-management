@@ -1,4 +1,4 @@
-package com.bersyte.taskmanagment
+package com.bersyte.taskmanagement
 
 import android.os.Build
 import android.os.Bundle
@@ -12,8 +12,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
-import com.bersyte.taskmanagment.common.navigation.NavigationGraph
-import com.bersyte.taskmanagment.common.theme.TaskManagementTheme
+import com.bersyte.taskmanagement.common.navigation.NavigationGraph
+import com.bersyte.taskmanagement.common.theme.TaskManagementTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

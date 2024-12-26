@@ -1,4 +1,4 @@
-package com.bersyte.taskmanagment
+package com.bersyte.taskmanagement
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
