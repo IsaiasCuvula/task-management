@@ -7,21 +7,21 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun ThemedCard(
     onClick: () -> Unit = {},
     content: @Composable ()-> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    bgColor: Color = MaterialTheme.colorScheme.surface
 ) {
 
     Card(
         onClick = onClick,
         modifier = modifier,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
+        colors = CardDefaults.cardColors(containerColor = bgColor),
     ) {
         Box(
             modifier = Modifier.padding(16.dp)
