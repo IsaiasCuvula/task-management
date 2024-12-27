@@ -13,8 +13,8 @@ import androidx.core.view.WindowCompat
 
 
 private val DarkColorScheme = darkColorScheme(
-    primary = BgColor,
-    secondary = Purple,
+    primary = Purple,
+    secondary = LightBlue,
     tertiary = Green,
     background = BgColor,
     surface = CardColor,
