@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.bersyte.taskmanagement.feature.home.views.screens.HomeScreen
+import com.bersyte.taskmanagement.feature.notifications.views.screens.NotificationScreen
 
 @Composable
 fun NavigationGraph(
@@ -19,6 +20,7 @@ fun NavigationGraph(
         modifier= modifier
     ){
         composable(Route.Home.name) { HomeScreen(navController) }
+        composable(Route.Notifications.name) { NotificationScreen(navController) }
     }
 
 }
