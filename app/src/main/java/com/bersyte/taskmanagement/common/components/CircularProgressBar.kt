@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 fun CircularProgressBar(
     percentage: Float,
     totalPerc: Int = 100,
-    radius: Dp = 40.dp,
+    radius: Int = 40,
     color: Color = MaterialTheme.colorScheme.onSecondary,
     strokeWidth: Dp = 8.dp,
     animationDuration: Int = 1000,
@@ -52,10 +52,10 @@ fun CircularProgressBar(
 
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier.size( radius * 2f)
+        modifier = Modifier.size((radius * 2f).dp)
     ){
         Canvas(
-            modifier = Modifier.size(radius * 2f)
+            modifier = Modifier.size((radius * 2f).dp)
         ) {
             val strokeStyle = Stroke(
                 strokeWidth.toPx(),

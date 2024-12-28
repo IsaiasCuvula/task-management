@@ -33,6 +33,7 @@ import com.bersyte.taskmanagement.feature.home.views.components.HomeTaskCard
 import com.bersyte.taskmanagement.feature.home.views.components.HomeThreeTasksCards
 import com.bersyte.taskmanagement.feature.home.views.components.HomeTwoTasksCards
 import com.bersyte.taskmanagement.feature.home.views.components.SearchField
+import com.bersyte.taskmanagement.feature.home.views.components.UrgentTasks
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
@@ -123,6 +124,7 @@ fun HomeScreen(navController: NavHostController) {
                         }
                     }
                     VerticalSpace(24)
+                    UrgentTasks(tasks)
                 }
             }
         }
