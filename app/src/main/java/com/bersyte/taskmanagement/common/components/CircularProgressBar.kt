@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun CircularProgressBar(
     percentage: Float,
-    number: Int = 100,
+    totalPerc: Int = 100,
     radius: Dp = 40.dp,
     color: Color = MaterialTheme.colorScheme.onSecondary,
     strokeWidth: Dp = 8.dp,
@@ -77,7 +77,7 @@ fun CircularProgressBar(
             )
         }
         Text(
-            "${(curPercentage.value * number).toInt()}%",
+            "${(curPercentage.value * totalPerc).toInt()}%",
             style = MaterialTheme.typography.titleMedium.copy(
                 fontWeight = FontWeight.Bold
             )
