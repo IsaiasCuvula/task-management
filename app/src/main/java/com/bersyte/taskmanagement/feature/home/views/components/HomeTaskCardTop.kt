@@ -43,14 +43,16 @@ fun HomeTaskCardTop(
             style = textStyle.titleMedium.copy(
                 fontWeight = FontWeight.Bold,
                 color = Color.White
-            )
+            ),
+            maxLines = 1
         )
         if(desc.isNotEmpty()){
             Text(
                 desc,
                 style = textStyle.bodyLarge.copy(
                     color = Color.White
-                )
+                ),
+                maxLines = 3
             )
         }
     }
