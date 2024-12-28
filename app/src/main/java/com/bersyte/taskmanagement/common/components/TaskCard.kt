@@ -20,11 +20,18 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun TaskCard(){
+fun TaskCard(
+    isTime: Boolean = false
+){
     val textStyle = MaterialTheme.typography
+    val colorScheme = MaterialTheme. colorScheme
+
+    val bgColor = if(isTime) colorScheme.primary else colorScheme.surface
+
 
     ThemedCard(
         modifier = Modifier.fillMaxWidth(),
+        bgColor = bgColor,
         content = {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -74,7 +81,8 @@ fun TaskCard(){
                     }
                 }
                 CircularProgressBar(
-                    percentage = 0.3f, radius = 30
+                    percentage = 0.3f, radius = 30,
+                    color = if(isTime)colorScheme.onSurface else colorScheme.onSecondary,
                 )
             }
         }
