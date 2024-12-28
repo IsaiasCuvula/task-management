@@ -30,7 +30,7 @@ import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.common.navigation.Route
 import com.bersyte.taskmanagement.feature.home.views.components.HomeAppBar
-import com.bersyte.taskmanagement.feature.home.views.components.HomeTaskCard
+import com.bersyte.taskmanagement.feature.home.views.components.HomeOneTaskCard
 import com.bersyte.taskmanagement.feature.home.views.components.HomeThreeTasksCards
 import com.bersyte.taskmanagement.feature.home.views.components.HomeTwoTasksCards
 import com.bersyte.taskmanagement.feature.home.views.components.SearchField
@@ -118,7 +118,7 @@ fun HomeScreen(navController: NavHostController) {
                     VerticalSpace(16)
                     when (tasks.size) {
                         1 -> {
-                            HomeTaskCard()
+                            HomeOneTaskCard()
                         }
                         2 -> {
                             HomeTwoTasksCards()

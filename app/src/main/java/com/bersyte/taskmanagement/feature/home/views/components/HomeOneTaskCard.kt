@@ -15,7 +15,7 @@ import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 
 @Composable
-fun HomeTaskCard() {
+fun HomeOneTaskCard() {
 
     ThemedCard(
         bgColor = colorScheme.primary,
