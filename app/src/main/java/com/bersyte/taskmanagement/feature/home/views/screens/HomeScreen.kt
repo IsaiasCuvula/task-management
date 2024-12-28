@@ -28,6 +28,7 @@ import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.CircularProgressBar
 import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
+import com.bersyte.taskmanagement.common.navigation.Route
 import com.bersyte.taskmanagement.feature.home.views.components.HomeAppBar
 import com.bersyte.taskmanagement.feature.home.views.components.HomeTaskCard
 import com.bersyte.taskmanagement.feature.home.views.components.HomeThreeTasksCards
@@ -75,6 +76,9 @@ fun HomeScreen(navController: NavHostController) {
                     )
                     VerticalSpace(16)
                     ThemedCard(
+                        onClick = {
+                            navController.navigate(Route.Tasks.name)
+                        },
                         modifier = Modifier.fillMaxWidth(),
                         content = {
                             Row(
