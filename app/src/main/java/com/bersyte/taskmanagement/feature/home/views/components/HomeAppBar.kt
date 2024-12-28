@@ -26,7 +26,9 @@ fun HomeAppBar(navController: NavHostController) {
         ),
         navigationIcon = {
             IconButton(
-                onClick = {}
+                onClick = {
+                    navController.navigate(Route.Tasks.name)
+                }
             ) {
                 Icon(
                     Icons.Rounded.Category,
