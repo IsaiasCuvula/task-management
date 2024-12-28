@@ -29,7 +29,7 @@ fun ProgressBar(
     percentage: Float,
     height: Int = 8,
     totalPerc: Int = 100,
-    color: Color = colorScheme.onSecondary,
+    color: Color = colorScheme.secondary,
     trackColor: Color =  colorScheme.background,
     animationDuration: Int = 1000,
     animationDelay: Int = 0
@@ -74,6 +74,7 @@ fun ProgressBar(
             Text(
                 "${(curPercentage.value * totalPerc).toInt()}%",
                 style = textStyle.labelSmall.copy(
+                    color = colorScheme.onSurface,
                     fontWeight = FontWeight.Bold
                 )
             )
