@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.bersyte.taskmanagement.feature.about.views.screens.AboutScreen
 import com.bersyte.taskmanagement.feature.home.views.screens.HomeScreen
-import com.bersyte.taskmanagement.feature.home.views.screens.TasksScreen
+import com.bersyte.taskmanagement.feature.tasks.views.screens.TasksScreen
 import com.bersyte.taskmanagement.feature.notifications.views.screens.NotificationScreen
 import com.bersyte.taskmanagement.feature.tasks.views.screens.TaskDetailsScreen
 

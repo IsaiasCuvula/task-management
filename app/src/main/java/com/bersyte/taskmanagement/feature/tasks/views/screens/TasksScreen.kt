@@ -1,4 +1,4 @@
-package com.bersyte.taskmanagement.feature.home.views.screens
+package com.bersyte.taskmanagement.feature.tasks.views.screens
 
 import android.util.Log
 import androidx.compose.foundation.background
