@@ -1,5 +1,6 @@
 package com.bersyte.taskmanagement.feature.home.views.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.HorizontalDivider
@@ -25,12 +26,16 @@ fun UrgentTasks(tasks: List<String>) {
             )
         )
         VerticalSpace(16)
-        for(task in tasks) {
-            TaskCard()
-            VerticalSpace(8)
-            HorizontalDivider()
-            VerticalSpace(8)
+        tasks.forEachIndexed { index, task ->
+
+            HomeUrgentTaskCard()
+            if(index != tasks.lastIndex){
+                VerticalSpace(8)
+                HorizontalDivider()
+                Log.d("task", "$task >")
+                VerticalSpace(8)
+            }
         }
-        VerticalSpace(24)
+        VerticalSpace(32)
     }
 }
