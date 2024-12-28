@@ -1,4 +1,4 @@
-package com.bersyte.taskmanagement.common.components
+package com.bersyte.taskmanagement.feature.tasks.views.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,6 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.bersyte.taskmanagement.common.components.CircularProgressBar
+import com.bersyte.taskmanagement.common.components.HorizontalSpace
+import com.bersyte.taskmanagement.common.components.ThemedCard
+import com.bersyte.taskmanagement.common.components.VerticalSpace
 
 
 @Composable

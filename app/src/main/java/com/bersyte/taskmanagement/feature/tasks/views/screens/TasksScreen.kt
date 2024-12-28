@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.BackButton
 import com.bersyte.taskmanagement.common.components.HorizontalSpace
-import com.bersyte.taskmanagement.common.components.TaskCard
+import com.bersyte.taskmanagement.feature.tasks.views.components.TaskCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.common.navigation.Route
 

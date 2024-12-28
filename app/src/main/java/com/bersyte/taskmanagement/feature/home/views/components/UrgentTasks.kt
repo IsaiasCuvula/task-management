@@ -9,7 +9,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import com.bersyte.taskmanagement.common.components.TaskCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 
 @Composable
