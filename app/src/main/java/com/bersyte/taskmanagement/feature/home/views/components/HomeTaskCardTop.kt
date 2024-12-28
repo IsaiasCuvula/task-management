@@ -49,7 +49,7 @@ fun HomeTaskCardTop(
         if(desc.isNotEmpty()){
             Text(
                 desc,
-                style = textStyle.bodyLarge.copy(
+                style = textStyle.bodyMedium.copy(
                     color = Color.White
                 ),
                 maxLines = 3
