@@ -22,6 +22,7 @@ fun HomeTaskCardTop(
     onClick: ()-> Unit,
     title: String,
     desc: String = "",
+    descMaxLines: Int = 3
 ) {
     val textStyle = MaterialTheme.typography
 
@@ -52,7 +53,7 @@ fun HomeTaskCardTop(
                 style = textStyle.bodyMedium.copy(
                     color = Color.White
                 ),
-                maxLines = 3
+                maxLines = descMaxLines
             )
         }
     }

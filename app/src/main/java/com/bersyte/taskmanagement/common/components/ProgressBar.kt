@@ -60,6 +60,7 @@ fun ProgressBar(
             trackColor = trackColor.copy(alpha = 0.4f),
             color = color
         )
+        VerticalSpace(4)
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
