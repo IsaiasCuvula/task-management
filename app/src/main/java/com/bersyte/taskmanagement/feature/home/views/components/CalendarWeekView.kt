@@ -1,8 +1,6 @@
 package com.bersyte.taskmanagement.feature.home.views.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,7 +23,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.bersyte.taskmanagement.common.components.HorizontalSpace
@@ -40,7 +37,6 @@ fun CalendarWeekView() {
     val today = AppHelper.getCurrentDate().date
     val month = Month.getName(today.month.number)
     val daysOfWeek = AppHelper.getDaysOfTheWeek()
-
 
     val selectedDate  = remember { mutableStateOf(value = today)}
     val textStyle = MaterialTheme.typography
@@ -69,22 +65,15 @@ fun CalendarWeekView() {
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             items(daysOfWeek) { date ->
-                val isToday = date == today
-                val bgColor = if(isToday) colorScheme.primary else colorScheme.surface
+                val isSelectedDate = selectedDate.value == date
+                val bgColor = if(isSelectedDate) colorScheme.primary else colorScheme.onSurface
+                val textColor = if(isSelectedDate) colorScheme.onSurface else colorScheme.primary
 
                 Box (
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(color = bgColor)
-                        .border(
-                            border = BorderStroke(
-                                1.dp,
-                                color = bgColor
-                            ),
-                        )
-                        .clickable {
-                            selectedDate.value = date
-                        }
+                        .clickable {selectedDate.value = date}
                         .padding(4.dp)
                         .height(100.dp)
                 ) {
@@ -96,17 +85,18 @@ fun CalendarWeekView() {
                         Text(
                             text = date.dayOfMonth.toString(),
                             style = textStyle.displayMedium.copy(
-                                color = if(isToday)Color.White else Color.DarkGray
+                                color = textColor
                             )
                         )
                         Text(
                             text = date.dayOfWeek.name.take(3),
                             style = textStyle.titleMedium.copy(
-                                color = if(isToday) Color.White else Color.DarkGray
+                                color = textColor
                             )
                         )
                     }
                 }
+                HorizontalSpace(1)
             }
         }
     }

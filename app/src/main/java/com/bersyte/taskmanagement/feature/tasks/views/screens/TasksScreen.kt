@@ -1,23 +1,16 @@
 package com.bersyte.taskmanagement.feature.tasks.views.screens
 
-import android.icu.util.Calendar
 import android.util.Log
-import android.widget.CalendarView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.NotificationsNone
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -35,7 +28,6 @@ import com.bersyte.taskmanagement.common.components.BackButton
 import com.bersyte.taskmanagement.common.components.HorizontalSpace
 import com.bersyte.taskmanagement.feature.tasks.views.components.TaskCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
-import com.bersyte.taskmanagement.common.navigation.Route
 import com.bersyte.taskmanagement.feature.home.views.components.CalendarWeekView
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,19 +49,6 @@ fun TasksScreen(navController: NavHostController) {
                 },
                 title = {
                     Text("Schedule")
-                },
-                actions = {
-                    IconButton(
-                        onClick = {
-                            navController.navigate(Route.Notifications.name)
-                        }
-                    ) {
-                        Icon(
-                            Icons.Rounded.NotificationsNone,
-                            contentDescription = "Open notification page",
-                            modifier = Modifier.size(32.dp)
-                        )
-                    }
                 }
             )
         }
