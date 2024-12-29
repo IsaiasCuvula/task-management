@@ -41,7 +41,7 @@ fun HomeScreen(navController: NavHostController) {
     var query by remember { mutableStateOf("") }
     val textStyle = MaterialTheme.typography
     val tasks = remember {
-        mutableStateListOf("Website frontend", "Website backend", "London")
+        mutableStateListOf("Website frontend", "Website backend" ,"London")
     }
 
     NavigationDrawer(

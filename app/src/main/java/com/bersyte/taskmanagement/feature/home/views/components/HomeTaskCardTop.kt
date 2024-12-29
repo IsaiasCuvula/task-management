@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.bersyte.taskmanagement.common.components.EditTaskButton
 
 @Composable
 fun HomeTaskCardTop(
@@ -27,18 +28,7 @@ fun HomeTaskCardTop(
     val textStyle = MaterialTheme.typography
 
     Column {
-        IconButton(onClick = onClick) {
-            Icon(
-                Icons.Outlined.Edit,
-                contentDescription = "",
-                modifier = Modifier.
-                background(
-                    color = colorScheme.surface.copy(alpha = 0.3f),
-                    shape = CircleShape
-                ).padding(6.dp),
-                tint = Color.White
-            )
-        }
+        EditTaskButton(onClick = onClick)
         Text(
             title,
             style = textStyle.titleMedium.copy(
