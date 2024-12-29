@@ -1,6 +1,8 @@
 package com.bersyte.taskmanagement.feature.tasks.views.screens
 
+import android.icu.util.Calendar
 import android.util.Log
+import android.widget.CalendarView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -34,6 +36,7 @@ import com.bersyte.taskmanagement.common.components.HorizontalSpace
 import com.bersyte.taskmanagement.feature.tasks.views.components.TaskCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.common.navigation.Route
+import com.bersyte.taskmanagement.feature.home.views.components.CalendarWeekView
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -78,9 +81,8 @@ fun TasksScreen(navController: NavHostController) {
             Column(
                 modifier = Modifier.fillMaxWidth()
                     .background(color = MaterialTheme.colorScheme.surface)
-                    .padding(16.dp)
             ) {
-                Text("24")
+                CalendarWeekView()
             }
             VerticalSpace(12)
             LazyColumn {
@@ -124,8 +126,6 @@ fun TasksScreen(navController: NavHostController) {
                     }
                 }
             }
-
-
         }
     }
 }
