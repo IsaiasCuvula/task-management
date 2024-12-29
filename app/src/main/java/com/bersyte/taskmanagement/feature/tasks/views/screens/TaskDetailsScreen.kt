@@ -93,7 +93,7 @@ fun TaskDetailsScreen(navController: NavHostController) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text("Task title")
-                    EditTaskButton(onClick = {})
+                    EditTaskButton(navController)
                 }
                 VerticalSpace(4)
                 Text(

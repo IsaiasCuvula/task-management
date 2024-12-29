@@ -12,11 +12,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.bersyte.taskmanagement.common.navigation.Route
 
 @Composable
-fun EditTaskButton(onClick: ()-> Unit) {
+fun EditTaskButton(navController: NavHostController) {
 
-    IconButton(onClick = onClick) {
+    IconButton(onClick = {
+        navController.navigate(Route.EditTask.name)
+    }) {
         Icon(
             Icons.Outlined.Edit,
             contentDescription = "Edit Task",

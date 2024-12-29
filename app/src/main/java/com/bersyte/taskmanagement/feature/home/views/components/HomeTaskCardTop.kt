@@ -1,26 +1,17 @@
 package com.bersyte.taskmanagement.feature.home.views.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Edit
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.EditTaskButton
 
 @Composable
 fun HomeTaskCardTop(
-    onClick: ()-> Unit,
+    navController: NavHostController,
     title: String,
     desc: String = "",
     descMaxLines: Int = 3
@@ -28,7 +19,7 @@ fun HomeTaskCardTop(
     val textStyle = MaterialTheme.typography
 
     Column {
-        EditTaskButton(onClick = onClick)
+        EditTaskButton(navController)
         Text(
             title,
             style = textStyle.titleMedium.copy(

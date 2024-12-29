@@ -58,7 +58,7 @@ fun HomeOneTaskCard(navController: NavHostController) {
                             maxLines = 1
                         )
                     }
-                    EditTaskButton(onClick = {})
+                    EditTaskButton(navController)
                 }
                 VerticalSpace(32)
                 ProgressBar(percentage = 0.7f)

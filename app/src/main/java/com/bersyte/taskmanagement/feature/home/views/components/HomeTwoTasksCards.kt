@@ -35,7 +35,7 @@ fun HomeTwoTasksCards(navController: NavHostController,) {
                ) {
                    HomeTaskCardTop(
                        title =  "API payment",
-                       onClick = {}
+                       navController = navController,
                    )
                    VerticalSpace(24)
                    ProgressBar(percentage = 0.4f,
@@ -54,7 +54,7 @@ fun HomeTwoTasksCards(navController: NavHostController,) {
                ) {
                    HomeTaskCardTop(
                        title =  "UX Design",
-                       onClick = {}
+                       navController = navController,
                    )
                    VerticalSpace(24)
                    ProgressBar(percentage = 0.4f,

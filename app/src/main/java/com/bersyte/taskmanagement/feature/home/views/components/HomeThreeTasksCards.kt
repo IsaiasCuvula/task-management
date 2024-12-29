@@ -43,7 +43,7 @@ fun HomeThreeTasksCards(navController: NavHostController,) {
                     HomeTaskCardTop(
                         title =  "UX Design",
                         desc = "Internet banking mobile app",
-                        onClick = {}
+                        navController = navController,
                     )
                     VerticalSpace(48)
                     ProgressBar(percentage = 0.7f)
@@ -78,7 +78,7 @@ fun HomeThreeTasksCards(navController: NavHostController,) {
                     ) {
                         HomeTaskCardTop(
                             title =  "API payment",
-                            onClick = {}
+                            navController = navController,
                         )
                         VerticalSpace(24)
                         ProgressBar(percentage = 0.4f,
@@ -101,7 +101,7 @@ fun HomeThreeTasksCards(navController: NavHostController,) {
                             title =  "Update work",
                             desc = "Review home page",
                             descMaxLines = 1,
-                            onClick = {}
+                            navController = navController,
                         )
                     }
                 }
