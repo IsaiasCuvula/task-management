@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -29,6 +30,7 @@ fun ProgressBar(
     percentage: Float,
     height: Int = 8,
     totalPerc: Int = 100,
+    fontSize: TextUnit = MaterialTheme.typography.labelSmall.fontSize,
     color: Color = colorScheme.secondary,
     trackColor: Color =  colorScheme.background,
     animationDuration: Int = 1000,
@@ -68,6 +70,7 @@ fun ProgressBar(
             Text(
                 "Progress",
                 style = textStyle.labelSmall.copy(
+                    fontSize = fontSize,
                     color = Color.White.copy(alpha = 0.6f)
                 )
             )
@@ -75,6 +78,7 @@ fun ProgressBar(
             Text(
                 "${(curPercentage.value * totalPerc).toInt()}%",
                 style = textStyle.labelSmall.copy(
+                    fontSize = fontSize,
                     color = colorScheme.onSurface,
                     fontWeight = FontWeight.Bold
                 )
