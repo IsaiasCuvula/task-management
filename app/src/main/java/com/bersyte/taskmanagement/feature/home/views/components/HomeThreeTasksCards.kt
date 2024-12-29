@@ -14,13 +14,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.HorizontalSpace
 import com.bersyte.taskmanagement.common.components.ProgressBar
 import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
+import com.bersyte.taskmanagement.common.navigation.Route
 
 @Composable
-fun HomeThreeTasksCards() {
+fun HomeThreeTasksCards(navController: NavHostController,) {
 
     val colorScheme = MaterialTheme.colorScheme
     val textStyle = MaterialTheme.typography
@@ -30,6 +32,9 @@ fun HomeThreeTasksCards() {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         ThemedCard(
+            onClick = {
+                navController.navigate(Route.TaskDetails.name)
+            },
             modifier = Modifier.weight(1f)
                 .height(300.dp),
             bgColor = colorScheme.primary,
@@ -62,6 +67,9 @@ fun HomeThreeTasksCards() {
                 .height(300.dp),
         ) {
             ThemedCard(
+                onClick = {
+                    navController.navigate(Route.TaskDetails.name)
+                },
                 modifier = Modifier.weight(1f),
                 bgColor = colorScheme.secondary,
                 content = {
@@ -81,6 +89,9 @@ fun HomeThreeTasksCards() {
             )
             VerticalSpace(10)
             ThemedCard(
+                onClick = {
+                    navController.navigate(Route.TaskDetails.name)
+                },
                 bgColor = colorScheme.tertiary,
                 content = {
                     Column(

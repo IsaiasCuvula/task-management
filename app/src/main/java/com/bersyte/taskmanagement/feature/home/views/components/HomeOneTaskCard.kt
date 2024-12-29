@@ -10,14 +10,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.ProgressBar
 import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
+import com.bersyte.taskmanagement.common.navigation.Route
 
 @Composable
-fun HomeOneTaskCard() {
+fun HomeOneTaskCard(navController: NavHostController,) {
 
     ThemedCard(
+        onClick = {
+            navController.navigate(Route.TaskDetails.name)
+        },
         bgColor = colorScheme.primary,
         content = {
             Column {

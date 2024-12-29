@@ -17,10 +17,13 @@ import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 
 @Composable
-fun HomeUrgentTaskCard() {
+fun HomeUrgentTaskCard(
+    onClick: ()-> Unit
+) {
     val textStyle = MaterialTheme.typography
 
     ThemedCard(
+        onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
         content = {
             Row(
@@ -31,10 +34,7 @@ fun HomeUrgentTaskCard() {
                     percentage = 0.3f, radius = 28, strokeWidth = 6.dp
                 )
                 HorizontalSpace(16)
-                Column(
-                    modifier = Modifier.weight(1f),
-
-                ) {
+                Column(modifier = Modifier.weight(1f)) {
                     Text(
                         "Landing page design",
                         style = textStyle.titleMedium.copy(

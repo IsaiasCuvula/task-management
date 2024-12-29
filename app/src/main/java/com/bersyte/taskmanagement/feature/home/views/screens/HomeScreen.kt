@@ -114,17 +114,17 @@ fun HomeScreen(navController: NavHostController) {
                         VerticalSpace(16)
                         when (tasks.size) {
                             1 -> {
-                                HomeOneTaskCard()
+                                HomeOneTaskCard(navController)
                             }
                             2 -> {
-                                HomeTwoTasksCards()
+                                HomeTwoTasksCards(navController)
                             }
                             else -> {
-                                HomeThreeTasksCards()
+                                HomeThreeTasksCards(navController)
                             }
                         }
                         VerticalSpace(24)
-                        UrgentTasks(tasks)
+                        UrgentTasks(navController, tasks)
                     }
                 }
             }

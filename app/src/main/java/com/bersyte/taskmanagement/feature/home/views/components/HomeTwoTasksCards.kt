@@ -7,13 +7,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.HorizontalSpace
 import com.bersyte.taskmanagement.common.components.ProgressBar
 import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
+import com.bersyte.taskmanagement.common.navigation.Route
 
 @Composable
-fun HomeTwoTasksCards() {
+fun HomeTwoTasksCards(navController: NavHostController,) {
 
     val colorScheme = MaterialTheme.colorScheme
 
@@ -22,6 +24,9 @@ fun HomeTwoTasksCards() {
        horizontalArrangement = Arrangement.SpaceBetween
    ) {
        ThemedCard(
+           onClick = {
+               navController.navigate(Route.TaskDetails.name)
+           },
            modifier = Modifier.weight(1f),
            bgColor = colorScheme.secondary,
            content = {

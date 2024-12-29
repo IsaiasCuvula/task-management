@@ -9,10 +9,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.VerticalSpace
+import com.bersyte.taskmanagement.common.navigation.Route
 
 @Composable
-fun UrgentTasks(tasks: List<String>) {
+fun UrgentTasks(
+    navController: NavHostController,
+    tasks: List<String>
+) {
 
 
     Column(
@@ -27,7 +32,9 @@ fun UrgentTasks(tasks: List<String>) {
         VerticalSpace(16)
         tasks.forEachIndexed { index, task ->
 
-            HomeUrgentTaskCard()
+            HomeUrgentTaskCard(onClick = {
+               navController.navigate(Route.TaskDetails.name)
+            })
             if(index != tasks.lastIndex){
                 VerticalSpace(8)
                 HorizontalDivider()

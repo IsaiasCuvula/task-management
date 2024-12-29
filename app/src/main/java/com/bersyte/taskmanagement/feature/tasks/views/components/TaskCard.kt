@@ -17,14 +17,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.CircularProgressBar
 import com.bersyte.taskmanagement.common.components.HorizontalSpace
 import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
+import com.bersyte.taskmanagement.common.navigation.Route
 
 
 @Composable
 fun TaskCard(
+    navController: NavHostController,
     isTime: Boolean = false
 ){
     val textStyle = MaterialTheme.typography
@@ -34,6 +37,9 @@ fun TaskCard(
 
 
     ThemedCard(
+        onClick = {
+            navController.navigate(Route.TaskDetails.name)
+        },
         modifier = Modifier.fillMaxWidth(),
         bgColor = bgColor,
         content = {

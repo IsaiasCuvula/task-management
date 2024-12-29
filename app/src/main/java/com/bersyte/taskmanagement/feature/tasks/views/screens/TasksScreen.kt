@@ -92,7 +92,7 @@ fun TasksScreen(navController: NavHostController) {
                                    )
                                )
                                HorizontalSpace(24)
-                               TaskCard(isTime = taskDeadline)
+                               TaskCard(navController, isTime = taskDeadline)
                            }
                             if(index != tasks.lastIndex){
                                 VerticalSpace(8)
