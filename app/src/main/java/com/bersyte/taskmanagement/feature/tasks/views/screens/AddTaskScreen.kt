@@ -1,5 +1,6 @@
 package com.bersyte.taskmanagement.feature.tasks.views.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -43,16 +44,16 @@ import com.bersyte.taskmanagement.utils.AppHelper
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddTaskScreen(navController: NavHostController) {
-
+    val today = AppHelper.getCurrentDate()
     var title by remember {  mutableStateOf("") }
     var description by remember {  mutableStateOf("") }
-    var dueDate by remember {  mutableStateOf("") }
-    var dueTime by remember {  mutableStateOf("") }
+    var dueDate by remember {  mutableStateOf(today) }
+    var dueTime by remember {  mutableStateOf(today.time) }
 
     var showTimePicker by remember { mutableStateOf(false) }
     var showDatePicker by remember { mutableStateOf(false) }
 
-    val today = AppHelper.getCurrentDate()
+
 
     Scaffold(
         topBar = {
@@ -66,7 +67,8 @@ fun AddTaskScreen(navController: NavHostController) {
         }
     ) { innerPadding ->
         LazyColumn (
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
                 .padding(innerPadding)
                 .padding(horizontal = 16.dp),
         ){
@@ -86,7 +88,8 @@ fun AddTaskScreen(navController: NavHostController) {
                      Text("Description")
                      VerticalSpace(8)
                      CommonTextField(
-                         modifier = Modifier.fillMaxWidth()
+                         modifier = Modifier
+                             .fillMaxWidth()
                              .height(180.dp),
                          value = description,
                          onValueChange = { newValue ->
@@ -110,12 +113,10 @@ fun AddTaskScreen(navController: NavHostController) {
                                  shape = RoundedCornerShape(16.dp)
                              ) {
                                  CommonTextField(
-                                     value = dueDate,
+                                     value = dueDate.date.toString(),
                                      readOnly= true,
-                                     onValueChange = { newValue ->
-                                         dueDate = newValue
-                                     },
-                                     placeholder = today.date.toString(),
+                                     onValueChange = {},
+                                     placeholder = dueDate.date.toString(),
                                      trailingIcon = {
                                          Icon(
                                              Icons.Rounded.CalendarMonth,
@@ -135,13 +136,12 @@ fun AddTaskScreen(navController: NavHostController) {
                                  },
                                 shape = RoundedCornerShape(16.dp)
                              ) {
+                                 val time = "${dueTime.hour}:${dueTime.minute}"
                                  CommonTextField(
-                                     value = dueTime,
+                                     value = time,
                                      readOnly= true,
-                                     onValueChange = { newValue ->
-                                         dueTime = newValue
-                                     },
-                                     placeholder = today.time.toString(),
+                                     onValueChange = {},
+                                     placeholder = time,
                                      trailingIcon = {
                                          Icon(
                                              Icons.Rounded.AccessTime,
@@ -181,7 +181,7 @@ fun AddTaskScreen(navController: NavHostController) {
                     showDatePicker = false
                 },
                 onDateSelected = { dateLong ->
-
+                    dueDate = AppHelper.longToDate(dateLong)
                 }
             )
         }
@@ -192,7 +192,9 @@ fun AddTaskScreen(navController: NavHostController) {
                     showTimePicker = false
                 },
                 onConfirm = { timeState ->
-
+                    dueTime = AppHelper.timeStateToLocalTime(
+                        timeState.hour, timeState.minute
+                    )
                 }
             )
         }

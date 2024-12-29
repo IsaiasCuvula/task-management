@@ -32,7 +32,12 @@ fun ShowTimePickerDialog(
             }
         },
         confirmButton = {
-            TextButton(onClick = { onConfirm(timePickerState) }) {
+            TextButton(
+                onClick = {
+                    onConfirm(timePickerState)
+                    onDismiss()
+                }
+            ) {
                 Text("OK")
             }
         },

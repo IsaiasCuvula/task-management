@@ -6,6 +6,7 @@ import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.isoDayNumber
 import kotlinx.datetime.minus
@@ -45,5 +46,7 @@ object AppHelper {
         } ?: getCurrentDate()
     }
 
-
+    fun timeStateToLocalTime(hour: Int, minute: Int): LocalTime{
+      return LocalTime(hour, minute)
+    }
 }
