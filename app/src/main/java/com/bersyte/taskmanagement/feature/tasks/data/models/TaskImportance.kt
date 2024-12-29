@@ -1,11 +1,12 @@
 package com.bersyte.taskmanagement.feature.tasks.data.models
 
 import androidx.compose.ui.graphics.Color
+import com.bersyte.taskmanagement.common.theme.LightBlue
+import com.bersyte.taskmanagement.common.theme.LightGreen
+import com.bersyte.taskmanagement.common.theme.Purple
 
-enum class TaskImportance(color: Color) {
-    CRITICAL(Color.Red),   // Tasks that are urgent and require immediate attention
-    HIGH(Color.Red),       // Tasks that are important but not urgent
-    MEDIUM(Color.Red),     // Tasks that are moderately important
-    LOW(Color.Red),        // Tasks that can be attended to later
-    OPTIONAL(Color.Red)    // Tasks that are nice-to-have but not necessary
+enum class TaskImportance(val color: Color) {
+    LOW(LightGreen),
+    MEDIUM(LightBlue),
+    HIGH(Purple)
 }
