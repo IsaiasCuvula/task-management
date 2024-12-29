@@ -28,7 +28,7 @@ fun CommonTextField(
         onValueChange = onValueChange,
         placeholder = {
             Text(
-                placeholder ,
+                placeholder,
                 style = MaterialTheme.typography.labelLarge.copy(
                     color = Color.Gray
                 )
@@ -38,6 +38,7 @@ fun CommonTextField(
         leadingIcon = leadingIcon,
         maxLines = maxLines,
         readOnly = readOnly,
+        enabled = !readOnly,
         modifier = modifier.fillMaxWidth()
             .clip(shape = RoundedCornerShape((16.dp))),
         colors = TextFieldDefaults.colors(

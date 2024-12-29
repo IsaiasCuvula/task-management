@@ -18,6 +18,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -35,6 +36,7 @@ import com.bersyte.taskmanagement.common.components.CommonTextField
 import com.bersyte.taskmanagement.common.components.HorizontalSpace
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.feature.tasks.views.components.ChooseTaskImportance
+import com.bersyte.taskmanagement.feature.tasks.views.components.ShowDatePickerDialog
 import com.bersyte.taskmanagement.utils.AppHelper
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,6 +47,9 @@ fun AddTaskScreen(navController: NavHostController) {
     var description by remember {  mutableStateOf("") }
     var dueDate by remember {  mutableStateOf("") }
     var dueTime by remember {  mutableStateOf("") }
+
+    var selectedDate by remember { mutableStateOf<Long?>(null) }
+    var showDatePicker by remember { mutableStateOf(false) }
 
     val today = AppHelper.getCurrentDate()
 
@@ -97,39 +102,53 @@ fun AddTaskScreen(navController: NavHostController) {
                          Column(modifier = Modifier.weight(1f)) {
                              Text("Due date")
                              VerticalSpace(8)
-                             CommonTextField(
-                                 value = dueDate,
-                                 readOnly= true,
-                                 onValueChange = { newValue ->
-                                     dueDate = newValue
+                             Surface(
+                                 onClick = {
+                                     showDatePicker = true
                                  },
-                                 placeholder = today.date.toString(),
-                                 trailingIcon = {
-                                     Icon(
-                                         Icons.Rounded.CalendarMonth,
-                                         contentDescription = ""
-                                     )
-                                 }
-                             )
+                                 shape = RoundedCornerShape(16.dp)
+                             ) {
+                                 CommonTextField(
+                                     value = dueDate,
+                                     readOnly= true,
+                                     onValueChange = { newValue ->
+                                         dueDate = newValue
+                                     },
+                                     placeholder = today.date.toString(),
+                                     trailingIcon = {
+                                         Icon(
+                                             Icons.Rounded.CalendarMonth,
+                                             contentDescription = ""
+                                         )
+                                     }
+                                 )
+                            }
                          }
                          HorizontalSpace(12)
                          Column(modifier = Modifier.weight(1f)) {
                              Text("Due time")
                              VerticalSpace(8)
-                             CommonTextField(
-                                 value = dueTime,
-                                 readOnly= true,
-                                 onValueChange = { newValue ->
-                                     dueTime = newValue
+                             Surface(
+                                 onClick = {
+                                     showDatePicker = true
                                  },
-                                 placeholder = today.time.toString(),
-                                 trailingIcon = {
-                                     Icon(
-                                         Icons.Rounded.AccessTime,
-                                         contentDescription = ""
-                                     )
-                                 }
-                             )
+                                shape = RoundedCornerShape(16.dp)
+                             ) {
+                                 CommonTextField(
+                                     value = dueTime,
+                                     readOnly= true,
+                                     onValueChange = { newValue ->
+                                         dueTime = newValue
+                                     },
+                                     placeholder = today.time.toString(),
+                                     trailingIcon = {
+                                         Icon(
+                                             Icons.Rounded.AccessTime,
+                                             contentDescription = ""
+                                         )
+                                     }
+                                 )
+                             }
                          }
                      }
                      VerticalSpace(24)
@@ -153,6 +172,15 @@ fun AddTaskScreen(navController: NavHostController) {
                      }
                  }
              }
+        }
+
+        if (showDatePicker) {
+            ShowDatePickerDialog(
+                onDismiss = {
+                    showDatePicker = false
+                },
+                onDateSelected = {}
+            )
         }
     }
 }
