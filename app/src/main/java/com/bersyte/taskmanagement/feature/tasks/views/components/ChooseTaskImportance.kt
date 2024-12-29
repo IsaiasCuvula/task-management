@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,7 +21,9 @@ import androidx.compose.ui.unit.dp
 import com.bersyte.taskmanagement.feature.tasks.data.models.TaskImportance
 
 @Composable
-fun ChooseTaskImportance() {
+fun ChooseTaskImportance(
+    onResponse: (TaskImportance) -> Unit,
+) {
     var selectedImportance by remember {  mutableStateOf(TaskImportance.LOW) }
     val colors = MaterialTheme.colorScheme
 
@@ -37,6 +40,7 @@ fun ChooseTaskImportance() {
             Surface(
                 onClick = {
                     selectedImportance = taskImportance
+                    onResponse(selectedImportance)
                 },
                 shape = RoundedCornerShape(16.dp),
                 modifier = Modifier.weight(1f)

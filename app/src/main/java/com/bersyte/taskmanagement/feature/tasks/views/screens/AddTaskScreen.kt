@@ -1,6 +1,5 @@
 package com.bersyte.taskmanagement.feature.tasks.views.screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -36,6 +35,7 @@ import com.bersyte.taskmanagement.common.components.BackButton
 import com.bersyte.taskmanagement.common.components.CommonTextField
 import com.bersyte.taskmanagement.common.components.HorizontalSpace
 import com.bersyte.taskmanagement.common.components.VerticalSpace
+import com.bersyte.taskmanagement.feature.tasks.data.models.TaskImportance
 import com.bersyte.taskmanagement.feature.tasks.views.components.ChooseTaskImportance
 import com.bersyte.taskmanagement.feature.tasks.views.components.ShowDatePickerDialog
 import com.bersyte.taskmanagement.feature.tasks.views.components.ShowTimePickerDialog
@@ -49,9 +49,11 @@ fun AddTaskScreen(navController: NavHostController) {
     var description by remember {  mutableStateOf("") }
     var dueDate by remember {  mutableStateOf(today) }
     var dueTime by remember {  mutableStateOf(today.time) }
+    var importance by remember {  mutableStateOf(TaskImportance.LOW) }
 
     var showTimePicker by remember { mutableStateOf(false) }
     var showDatePicker by remember { mutableStateOf(false) }
+
 
 
 
@@ -155,7 +157,11 @@ fun AddTaskScreen(navController: NavHostController) {
                      VerticalSpace(24)
                      Text("Priority")
                      VerticalSpace(8)
-                     ChooseTaskImportance()
+                     ChooseTaskImportance(
+                         onResponse = { result ->
+                             importance = result
+                         }
+                     )
                      VerticalSpace(32)
                      Button(
                          onClick = {},
