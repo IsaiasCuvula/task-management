@@ -56,6 +56,9 @@ dependencies {
     //Icons
     implementation(libs.androidx.material.icons.extended)
 
+    //Date time
+    implementation(libs.kotlinx.datetime)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
