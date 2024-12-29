@@ -37,6 +37,7 @@ import com.bersyte.taskmanagement.common.components.HorizontalSpace
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.feature.tasks.views.components.ChooseTaskImportance
 import com.bersyte.taskmanagement.feature.tasks.views.components.ShowDatePickerDialog
+import com.bersyte.taskmanagement.feature.tasks.views.components.ShowTimePickerDialog
 import com.bersyte.taskmanagement.utils.AppHelper
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -48,7 +49,7 @@ fun AddTaskScreen(navController: NavHostController) {
     var dueDate by remember {  mutableStateOf("") }
     var dueTime by remember {  mutableStateOf("") }
 
-    var selectedDate by remember { mutableStateOf<Long?>(null) }
+    var showTimePicker by remember { mutableStateOf(false) }
     var showDatePicker by remember { mutableStateOf(false) }
 
     val today = AppHelper.getCurrentDate()
@@ -130,7 +131,7 @@ fun AddTaskScreen(navController: NavHostController) {
                              VerticalSpace(8)
                              Surface(
                                  onClick = {
-                                     showDatePicker = true
+                                     showTimePicker = true
                                  },
                                 shape = RoundedCornerShape(16.dp)
                              ) {
@@ -179,7 +180,20 @@ fun AddTaskScreen(navController: NavHostController) {
                 onDismiss = {
                     showDatePicker = false
                 },
-                onDateSelected = {}
+                onDateSelected = { dateLong ->
+
+                }
+            )
+        }
+
+        if (showTimePicker) {
+            ShowTimePickerDialog(
+                onDismiss = {
+                    showTimePicker = false
+                },
+                onConfirm = { timeState ->
+
+                }
             )
         }
     }
