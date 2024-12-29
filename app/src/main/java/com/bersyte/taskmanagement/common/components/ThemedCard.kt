@@ -15,7 +15,8 @@ fun ThemedCard(
     onClick: () -> Unit = {},
     content: @Composable ()-> Unit,
     modifier: Modifier = Modifier,
-    bgColor: Color = MaterialTheme.colorScheme.surface
+    bgColor: Color = MaterialTheme.colorScheme.surface,
+    contentPadding : Int = 16,
 ) {
 
     Card(
@@ -24,7 +25,7 @@ fun ThemedCard(
         colors = CardDefaults.cardColors(containerColor = bgColor),
     ) {
         Box(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(contentPadding.dp)
         ) {
             content()
         }
