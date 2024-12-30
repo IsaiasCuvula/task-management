@@ -53,6 +53,7 @@ fun FileAndLinks() {
 
     ThemedCard(
         content = {
+            filesLinks.addAll(emptyList())
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
@@ -68,21 +69,25 @@ fun FileAndLinks() {
                 }
                 Text("File & Links: ")
                 HorizontalSpace(10)
-                LazyRow {
-                    items(items = filesLinks, key = {it}){ item ->
-                        Column(
-                            modifier = Modifier
-                                .clip(shape = RoundedCornerShape(8.dp))
-                                .clickable {
+                if(filesLinks.isEmpty()){
+                    Text("No 🔗 links added yet...")
+                }else{
+                    LazyRow {
+                        items(items = filesLinks, key = {it}){ item ->
+                            Column(
+                                modifier = Modifier
+                                    .clip(shape = RoundedCornerShape(8.dp))
+                                    .clickable {
 
-                            }.padding(6.dp)
-                        ) {
-                            Icon(
-                                Icons.Filled.DatasetLinked,
-                                contentDescription = ""
-                            )
+                                    }.padding(6.dp)
+                            ) {
+                                Icon(
+                                    Icons.Filled.DatasetLinked,
+                                    contentDescription = ""
+                                )
+                            }
+                            HorizontalSpace(8)
                         }
-                        HorizontalSpace(8)
                     }
                 }
             }
