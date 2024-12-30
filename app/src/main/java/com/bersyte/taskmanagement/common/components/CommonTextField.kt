@@ -2,6 +2,7 @@ package com.bersyte.taskmanagement.common.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,13 +22,16 @@ fun CommonTextField(
     placeholder: String,
     trailingIcon: @Composable (() -> Unit)? = null,
     leadingIcon: @Composable (() -> Unit)? = null,
-    label: @Composable() (() -> Unit)? = null,
+    label: @Composable (() -> Unit)? = null,
     maxLines: Int = 1,
+    singleLine: Boolean = false,
     readOnly: Boolean = false,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default
 ) {
     TextField(
         keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
         value = value,
         onValueChange = onValueChange,
         placeholder = {
@@ -41,6 +45,7 @@ fun CommonTextField(
         label = label,
         trailingIcon = trailingIcon,
         leadingIcon = leadingIcon,
+        singleLine = singleLine,
         maxLines = maxLines,
         readOnly = readOnly,
         enabled = !readOnly,
