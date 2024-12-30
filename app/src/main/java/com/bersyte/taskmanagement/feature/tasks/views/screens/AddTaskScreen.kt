@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -35,6 +36,7 @@ import com.bersyte.taskmanagement.common.components.BackButton
 import com.bersyte.taskmanagement.common.components.CommonTextField
 import com.bersyte.taskmanagement.common.components.HorizontalSpace
 import com.bersyte.taskmanagement.common.components.VerticalSpace
+import com.bersyte.taskmanagement.common.navigation.Route
 import com.bersyte.taskmanagement.feature.tasks.data.models.TaskImportance
 import com.bersyte.taskmanagement.feature.tasks.views.components.ChooseTaskImportance
 import com.bersyte.taskmanagement.feature.tasks.views.components.ShowDatePickerDialog
@@ -53,6 +55,8 @@ fun AddTaskScreen(navController: NavHostController) {
 
     var showTimePicker by remember { mutableStateOf(false) }
     var showDatePicker by remember { mutableStateOf(false) }
+
+    val context = LocalContext.current
 
 
 
@@ -164,7 +168,24 @@ fun AddTaskScreen(navController: NavHostController) {
                      )
                      VerticalSpace(32)
                      Button(
-                         onClick = {},
+                         onClick = {
+                             if(title.isEmpty()){
+                                 AppHelper.showToast(
+                                     context,
+                                     "Task title cannot be empty"
+                                 )
+                             }else{
+
+
+                                 //navigate to home page
+                                 navController.navigate(Route.Home.name){
+                                     popUpTo(Route.Home.name) {
+                                         inclusive = true
+                                     }
+                                 }
+
+                             }
+                         },
                          shape = RoundedCornerShape(16.dp),
                          modifier = Modifier.fillMaxWidth()
 
