@@ -35,7 +35,6 @@ import com.bersyte.taskmanagement.common.components.HorizontalSpace
 import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.feature.tasks.views.screens.AddLinks
-import com.bersyte.taskmanagement.feature.tasks.views.screens.AddSubTask
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

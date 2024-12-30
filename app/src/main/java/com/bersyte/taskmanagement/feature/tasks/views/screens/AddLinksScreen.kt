@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.ContentPaste
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -23,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -31,7 +34,9 @@ import com.bersyte.taskmanagement.common.components.VerticalSpace
 
 @Composable
 fun AddLinks(onClose: () -> Unit) {
-    var taskTitle by remember { mutableStateOf("") }
+    var taskLink by remember { mutableStateOf("") }
+
+    val clipboardManager = LocalClipboardManager.current
 
     LazyColumn(
         modifier = Modifier.fillMaxWidth()
@@ -65,9 +70,9 @@ fun AddLinks(onClose: () -> Unit) {
                     .padding(16.dp)
             ) {
                 CommonTextField(
-                    value = taskTitle,
-                    onValueChange = {value -> taskTitle = value},
-                    placeholder = taskTitle,
+                    value = taskLink,
+                    onValueChange = {value -> taskLink = value},
+                    placeholder = taskLink,
                     label = {
                         Text(
                             "Link",
@@ -75,13 +80,41 @@ fun AddLinks(onClose: () -> Unit) {
                                 color = Color.Gray
                             )
                         )
+                    },
+                    trailingIcon = {
+                        if(taskLink.isNotEmpty()){
+                            IconButton(
+                                onClick = {taskLink = ""}
+                            ) {
+                                Icon(
+                                    Icons.Filled.Close,
+                                    contentDescription = "Clear"
+                                )
+                            }
+                        }
+                    },
+                    leadingIcon = {
+                        IconButton(
+                            onClick = {
+                               val data = clipboardManager.getText()
+                                taskLink = (data?.text ?: "").toString()
+                            }
+                        ) {
+                            Icon(
+                                Icons.Filled.ContentPaste,
+                                contentDescription = "Paste"
+                            )
+                        }
                     }
                 )
                 VerticalSpace(24)
                 Button(
                     modifier = Modifier.fillMaxWidth().height(50.dp),
                     shape = RoundedCornerShape(16.dp),
-                    onClick = {}
+                    onClick = {
+                        //Close bottom sheet
+                        onClose()
+                    }
                 ) {
                     Text("Save")
                 }
