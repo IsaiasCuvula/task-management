@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -78,17 +79,19 @@ fun TaskDetailsScreen(navController: NavHostController) {
                         ),
                     )
                     VerticalSpace(16)
-                    Text("Task landing page design concept. This project will be" +
-                            " Designed a basic for bringing up as " +
-                            "digital self-care that helps you reach",
+                    SelectionContainer {
+                        Text("Task landing page design concept. This project will be" +
+                                " Designed a basic for bringing up as " +
+                                "digital self-care that helps you reach",
 
-                        modifier = Modifier
-                            .border(
-                                border = BorderStroke(1.dp, color = colors.surface),
-                                shape = RoundedCornerShape(16.dp)
-                            )
-                            .padding(16.dp)
-                    )
+                            modifier = Modifier
+                                .border(
+                                    border = BorderStroke(1.dp, color = colors.surface),
+                                    shape = RoundedCornerShape(16.dp)
+                                )
+                                .padding(16.dp)
+                        )
+                    }
                     VerticalSpace(16)
                     FileAndLinks()
                     VerticalSpace(32)
