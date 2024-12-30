@@ -40,7 +40,7 @@ fun TaskManagementTheme(
             window.statusBarColor = DarkColorScheme.background.toArgb()
             // Set the status bar appearance to "light"
             WindowCompat.getInsetsController(window, view)
-                .isAppearanceLightStatusBars = !darkMode
+                .isAppearanceLightStatusBars = darkMode
         }
     }
 
