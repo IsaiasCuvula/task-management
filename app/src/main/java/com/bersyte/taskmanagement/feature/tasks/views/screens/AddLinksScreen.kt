@@ -75,7 +75,7 @@ fun AddLinks(onClose: () -> Unit) {
                     placeholder = taskLink,
                     label = {
                         Text(
-                            "Link",
+                            "🔗 link ...",
                             style = MaterialTheme.typography.labelLarge.copy(
                                 color = Color.Gray
                             )

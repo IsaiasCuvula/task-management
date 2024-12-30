@@ -93,7 +93,7 @@ fun TaskDetailsScreen(navController: NavHostController) {
                         )
                     }
                     VerticalSpace(16)
-                    FileAndLinks()
+                    FileAndLinks(navController)
                     VerticalSpace(32)
                     ProgressBar(
                         percentage = 0.7f, height = 12,

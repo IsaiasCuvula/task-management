@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.bersyte.taskmanagement.common.components.WebViewScreen
 import com.bersyte.taskmanagement.feature.about.views.screens.AboutScreen
 import com.bersyte.taskmanagement.feature.home.views.screens.HomeScreen
 import com.bersyte.taskmanagement.feature.tasks.views.screens.TasksScreen
@@ -31,6 +32,12 @@ fun NavigationGraph(
         composable(Route.About.name) { AboutScreen(navController) }
         composable(Route.EditTask.name) { EditTaskScreen(navController) }
         composable(Route.AddTask.name) { AddTaskScreen(navController) }
+        composable("${Route.WebView.name}/{url}") { backStackEntry ->
+            val url = backStackEntry.arguments?.getString("url")
+            if(url !=null){
+                WebViewScreen(url, navController)
+            }
+        }
     }
 
 }
