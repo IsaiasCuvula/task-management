@@ -1,5 +1,7 @@
 package com.bersyte.taskmanagement.utils
 
+import android.content.Context
+import android.widget.Toast
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.DateTimeUnit
@@ -14,6 +16,10 @@ import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
 
 object AppHelper {
+
+    fun showToast(context: Context, msg: String){
+       return Toast.makeText(context,msg,Toast.LENGTH_SHORT).show()
+    }
 
     fun getCurrentDate(): LocalDateTime{
         val now = Clock.System.now()
