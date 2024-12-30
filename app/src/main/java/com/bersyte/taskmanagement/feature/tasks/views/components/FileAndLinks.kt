@@ -4,7 +4,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
@@ -16,7 +15,6 @@ import androidx.compose.material.icons.rounded.AddLink
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -29,11 +27,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import com.bersyte.taskmanagement.common.components.BottomSheet
 import com.bersyte.taskmanagement.common.components.HorizontalSpace
 import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
+import com.bersyte.taskmanagement.common.components.WebViewScreen
 import com.bersyte.taskmanagement.feature.tasks.views.screens.AddLinks
 import kotlinx.coroutines.launch
 
@@ -45,11 +44,14 @@ fun FileAndLinks() {
         mutableStateListOf("billiffy.com", "google.com", "bersyte.com")
     }
 
+    val selectedLink = remember {mutableStateOf("")}
+
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded  = true
     )
     val scope = rememberCoroutineScope()
-    var showBottomSheet by remember { mutableStateOf(false) }
+    var showAddLinksSheet by remember { mutableStateOf(false) }
+    var showWebViewSheet by remember { mutableStateOf(false) }
 
     ThemedCard(
         content = {
@@ -59,7 +61,7 @@ fun FileAndLinks() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(
-                    onClick = {showBottomSheet=true}
+                    onClick = {showAddLinksSheet=true}
                 ) {
                     Icon(
                         Icons.Rounded.AddLink,
@@ -78,7 +80,8 @@ fun FileAndLinks() {
                                 modifier = Modifier
                                     .clip(shape = RoundedCornerShape(8.dp))
                                     .clickable {
-
+                                        selectedLink.value = item
+                                        showWebViewSheet = true
                                     }.padding(6.dp)
                             ) {
                                 Icon(
@@ -93,29 +96,47 @@ fun FileAndLinks() {
             }
             VerticalSpace(32)
 
-            if(showBottomSheet){
-                ModalBottomSheet(
+            if(showAddLinksSheet){
+                BottomSheet(
                     sheetState = sheetState,
-                    modifier = Modifier.fillMaxWidth()
-                        .heightIn(
-                            max = LocalConfiguration.current.screenHeightDp.dp * 0.9f
-                        ),
                     onDismissRequest = {
-                        showBottomSheet = false
+                        showAddLinksSheet = false
                     },
-                    dragHandle = {}
-                ) {
-                    AddLinks (
-                        onClose = {
-                            scope.launch { sheetState.hide() }
-                                .invokeOnCompletion {
-                                    if(!sheetState.isVisible){
-                                        showBottomSheet = false
+                    content = {
+                        AddLinks (
+                            onClose = {
+                                scope.launch { sheetState.hide() }
+                                    .invokeOnCompletion {
+                                        if(!sheetState.isVisible){
+                                            showAddLinksSheet = false
+                                        }
                                     }
-                                }
-                        }
-                    )
-                }
+                            }
+                        )
+                    }
+                )
+            }
+
+            if(showWebViewSheet){
+                BottomSheet(
+                    sheetState = sheetState,
+                    onDismissRequest = {
+                        showWebViewSheet = false
+                    },
+                    content = {
+                        WebViewScreen (
+                            url = selectedLink.value,
+                            onClose = {
+                                scope.launch { sheetState.hide() }
+                                    .invokeOnCompletion {
+                                        if(!sheetState.isVisible){
+                                            showWebViewSheet = false
+                                        }
+                                    }
+                            }
+                        )
+                    }
+                )
             }
         }
     )
