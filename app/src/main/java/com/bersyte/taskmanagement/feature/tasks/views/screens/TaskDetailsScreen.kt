@@ -1,26 +1,15 @@
 package com.bersyte.taskmanagement.feature.tasks.views.screens
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AccessTime
-import androidx.compose.material.icons.rounded.AddLink
-import androidx.compose.material.icons.rounded.AttachFile
-import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -28,20 +17,17 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.BackButton
-import com.bersyte.taskmanagement.common.components.EditTaskButton
-import com.bersyte.taskmanagement.common.components.HorizontalSpace
 import com.bersyte.taskmanagement.common.components.ProgressBar
-import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.feature.tasks.views.components.AddSubTaskButton
 import com.bersyte.taskmanagement.feature.tasks.views.components.DetailsHeader
+import com.bersyte.taskmanagement.feature.tasks.views.components.FileAndLinks
 import com.bersyte.taskmanagement.feature.tasks.views.components.SubtaskCard
 import com.bersyte.taskmanagement.feature.tasks.views.components.SwipeToDeleteContainer
 
@@ -104,27 +90,7 @@ fun TaskDetailsScreen(navController: NavHostController) {
                             .padding(16.dp)
                     )
                     VerticalSpace(16)
-                    ThemedCard(
-                        content = {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text("File & Links: ")
-                                HorizontalSpace(16)
-                                Icon(
-                                    Icons.Rounded.AttachFile,
-                                    contentDescription = "",
-                                    modifier = Modifier.size(30.dp),
-                                )
-                                Icon(
-                                    Icons.Rounded.AddLink,
-                                    contentDescription = "",
-                                    modifier = Modifier.size(30.dp),
-                                )
-                            }
-                        }
-                    )
+                    FileAndLinks()
                     VerticalSpace(32)
                     ProgressBar(
                         percentage = 0.7f, height = 12,
