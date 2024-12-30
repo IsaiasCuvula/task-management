@@ -8,10 +8,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material3.Icon
@@ -23,6 +24,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.bersyte.taskmanagement.common.components.HorizontalSpace
@@ -66,16 +68,18 @@ fun CalendarWeekView() {
         ) {
             items(daysOfWeek) { date ->
                 val isSelectedDate = selectedDate.value == date
-                val bgColor = if(isSelectedDate) colorScheme.primary else colorScheme.onSurface
-                val textColor = if(isSelectedDate) colorScheme.onSurface else colorScheme.primary
+                val bgColor = if(isSelectedDate) colorScheme.primary else Color.Transparent
 
                 Box (
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(color = bgColor)
-                        .clickable {selectedDate.value = date}
+                        .background(
+                            color = bgColor,
+                            shape = RoundedCornerShape(16.dp)
+                        )
                         .padding(4.dp)
-                        .height(100.dp)
+                        .clickable {selectedDate.value = date}
+                        .size(height = 80.dp, width = 50.dp)
                 ) {
                     Column(
                         modifier = Modifier.fillMaxSize(),
@@ -83,20 +87,22 @@ fun CalendarWeekView() {
                         verticalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = date.dayOfMonth.toString(),
-                            style = textStyle.displayMedium.copy(
-                                color = textColor
+                            text = date.dayOfWeek.name.take(3),
+                            style = textStyle.titleSmall.copy(
+                                color = colorScheme.onSurface.copy(
+                                    alpha = 0.5f
+                                )
                             )
                         )
                         Text(
-                            text = date.dayOfWeek.name.take(3),
-                            style = textStyle.titleMedium.copy(
-                                color = textColor
+                            text = date.dayOfMonth.toString(),
+                            style = textStyle.titleLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = colorScheme.onSurface
                             )
                         )
                     }
                 }
-                HorizontalSpace(1)
             }
         }
     }

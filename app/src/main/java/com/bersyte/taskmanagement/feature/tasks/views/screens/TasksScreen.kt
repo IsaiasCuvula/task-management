@@ -1,7 +1,6 @@
 package com.bersyte.taskmanagement.feature.tasks.views.screens
 
 import android.util.Log
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -42,7 +41,7 @@ fun TasksScreen(navController: NavHostController) {
         topBar = {
             CenterAlignedTopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface
+                    containerColor = Color.Transparent
                 ),
                 navigationIcon = {
                     BackButton(navController)
@@ -57,13 +56,8 @@ fun TasksScreen(navController: NavHostController) {
         Column(
             modifier =  Modifier.padding(innerPadding)
         ) {
-            Column(
-                modifier = Modifier.fillMaxWidth()
-                    .background(color = MaterialTheme.colorScheme.surface)
-            ) {
-                CalendarWeekView()
-            }
-            VerticalSpace(12)
+            CalendarWeekView()
+            VerticalSpace(32)
             LazyColumn {
                 item {
                     Column(

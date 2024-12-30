@@ -181,6 +181,8 @@ fun EditTaskScreen(navController: NavHostController) {
                         }
                     )
                     VerticalSpace(32)
+
+                    VerticalSpace(32)
                     Button(
                         onClick = {
                             if(title.isEmpty()){
@@ -189,13 +191,7 @@ fun EditTaskScreen(navController: NavHostController) {
                                     "Task title cannot be empty"
                                 )
                             }else{
-
-                                //navigate to home page
-                                navController.navigate(Route.Home.name){
-                                    popUpTo(Route.Home.name) {
-                                        inclusive = true
-                                    }
-                                }
+                                //save task into db
 
                             }
                         },
