@@ -54,6 +54,7 @@ import com.bersyte.taskmanagement.common.components.ProgressBar
 import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.feature.tasks.views.components.AddSubTask
+import com.bersyte.taskmanagement.feature.tasks.views.components.SwipeToDeleteContainer
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -219,35 +220,48 @@ fun TaskDetailsScreen(navController: NavHostController) {
                     VerticalSpace(16)
                 }
 
-                items(subTasks){ subTask ->
-                    ThemedCard(
-                        modifier = Modifier.fillMaxWidth(),
-                        contentPadding = 8,
-                        content = {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                Checkbox(
-                                    checked = true,
-                                    onCheckedChange = { isChecked ->
-                                        // Update the individual child state
-                                       // childCheckedStates[index] = isChecked
-                                    },
-                                    colors = CheckboxDefaults.colors(
-                                        checkedColor = colors.onTertiary
-                                    ),
-                                )
-                                Text(
-                                    subTask,
-                                    style = textStyle.titleMedium.copy(
-                                        textDecoration = TextDecoration.LineThrough
-                                    ),
-                                    modifier = Modifier.weight(1f)
-                                )
-                            }
+                items(
+                    items = subTasks,
+                    key = { it }
+                ){ subTask ->
 
-                        }
+                    SwipeToDeleteContainer(
+                        content = {
+                            ThemedCard(
+                                modifier = Modifier.fillMaxWidth(),
+                                contentPadding = 8,
+                                content = {
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                    ) {
+                                        Checkbox(
+                                            checked = true,
+                                            onCheckedChange = { isChecked ->
+                                                // Update the individual child state
+                                                // childCheckedStates[index] = isChecked
+                                            },
+                                            colors = CheckboxDefaults.colors(
+                                                checkedColor = colors.onTertiary
+                                            ),
+                                        )
+                                        Text(
+                                            subTask,
+                                            style = textStyle.titleMedium.copy(
+                                                textDecoration = TextDecoration.LineThrough
+                                            ),
+                                            modifier = Modifier.weight(1f)
+                                        )
+                                    }
+
+                                }
+                            )
+                        },
+                        item = subTask,
+                        onDelete = { subtaskToDelete ->
+                            subTasks.remove(subtaskToDelete)
+                        },
                     )
+
                     VerticalSpace(16)
                 }
                  item{
