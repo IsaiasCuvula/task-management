@@ -21,8 +21,6 @@ import androidx.compose.material.icons.rounded.AddLink
 import androidx.compose.material.icons.rounded.AttachFile
 import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -44,7 +42,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.BackButton
@@ -54,6 +51,7 @@ import com.bersyte.taskmanagement.common.components.ProgressBar
 import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.feature.tasks.views.components.AddSubTask
+import com.bersyte.taskmanagement.feature.tasks.views.components.SubtaskCard
 import com.bersyte.taskmanagement.feature.tasks.views.components.SwipeToDeleteContainer
 import kotlinx.coroutines.launch
 
@@ -220,48 +218,16 @@ fun TaskDetailsScreen(navController: NavHostController) {
                     VerticalSpace(16)
                 }
 
-                items(
-                    items = subTasks,
-                    key = { it }
-                ){ subTask ->
-
+                items(items = subTasks, key = { it }){ subTask ->
                     SwipeToDeleteContainer(
                         content = {
-                            ThemedCard(
-                                modifier = Modifier.fillMaxWidth(),
-                                contentPadding = 8,
-                                content = {
-                                    Row(
-                                        verticalAlignment = Alignment.CenterVertically,
-                                    ) {
-                                        Checkbox(
-                                            checked = true,
-                                            onCheckedChange = { isChecked ->
-                                                // Update the individual child state
-                                                // childCheckedStates[index] = isChecked
-                                            },
-                                            colors = CheckboxDefaults.colors(
-                                                checkedColor = colors.onTertiary
-                                            ),
-                                        )
-                                        Text(
-                                            subTask,
-                                            style = textStyle.titleMedium.copy(
-                                                textDecoration = TextDecoration.LineThrough
-                                            ),
-                                            modifier = Modifier.weight(1f)
-                                        )
-                                    }
-
-                                }
-                            )
+                            SubtaskCard(subTask = subTask)
                         },
                         item = subTask,
                         onDelete = { subtaskToDelete ->
                             subTasks.remove(subtaskToDelete)
-                        },
+                        }
                     )
-
                     VerticalSpace(16)
                 }
                  item{
