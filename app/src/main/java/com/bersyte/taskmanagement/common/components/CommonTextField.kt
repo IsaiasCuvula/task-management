@@ -20,6 +20,7 @@ fun CommonTextField(
     placeholder: String,
     trailingIcon: @Composable (() -> Unit)? = null,
     leadingIcon: @Composable (() -> Unit)? = null,
+    label: String = "",
     maxLines: Int = 1,
     readOnly: Boolean = false
 ) {
@@ -29,6 +30,14 @@ fun CommonTextField(
         placeholder = {
             Text(
                 placeholder,
+                style = MaterialTheme.typography.labelLarge.copy(
+                    color = Color.Gray
+                )
+            )
+        },
+        label = {
+            Text(
+                label,
                 style = MaterialTheme.typography.labelLarge.copy(
                     color = Color.Gray
                 )
