@@ -30,7 +30,7 @@ interface TaskDao {
     fun getAllTasks():  Flow<List<Task>>
 
     @Query("SELECT * FROM tasks WHERE priority = :priority ORDER BY dueDate DESC")
-    fun getAllUrgentTasks(priority: TaskPriority): Flow<List<Task>>
+    fun getTasksByPriority(priority: TaskPriority): Flow<List<Task>>
 
     @Transaction
     @Query("SELECT * FROM tasks WHERE taskId = :taskId")
