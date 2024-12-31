@@ -14,6 +14,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavHostController
 
@@ -27,7 +28,13 @@ fun WebViewScreen(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("Edit task") },
+                title = {
+                    Text(
+                        url,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                   )
+                 },
                 navigationIcon = { BackButton(navController) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color.Transparent
