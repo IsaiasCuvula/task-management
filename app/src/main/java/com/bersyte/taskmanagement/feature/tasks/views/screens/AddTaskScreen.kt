@@ -42,7 +42,7 @@ import com.bersyte.taskmanagement.common.components.CommonTextField
 import com.bersyte.taskmanagement.common.components.HorizontalSpace
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.common.navigation.Route
-import com.bersyte.taskmanagement.feature.tasks.data.models.TaskImportance
+import com.bersyte.taskmanagement.feature.tasks.data.models.TaskPriority
 import com.bersyte.taskmanagement.feature.tasks.views.components.ChooseTaskImportance
 import com.bersyte.taskmanagement.feature.tasks.views.components.ShowDatePickerDialog
 import com.bersyte.taskmanagement.feature.tasks.views.components.ShowTimePickerDialog
@@ -56,7 +56,7 @@ fun AddTaskScreen(navController: NavHostController) {
     var description by remember {  mutableStateOf("") }
     var dueDate by remember {  mutableStateOf(today) }
     var dueTime by remember {  mutableStateOf(today.time) }
-    var importance by remember {  mutableStateOf(TaskImportance.LOW) }
+    var importance by remember {  mutableStateOf(TaskPriority.LOW) }
 
     var showTimePicker by remember { mutableStateOf(false) }
     var showDatePicker by remember { mutableStateOf(false) }

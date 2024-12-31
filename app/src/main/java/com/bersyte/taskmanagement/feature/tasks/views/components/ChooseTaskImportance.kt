@@ -8,7 +8,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,13 +17,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.bersyte.taskmanagement.feature.tasks.data.models.TaskImportance
+import com.bersyte.taskmanagement.feature.tasks.data.models.TaskPriority
 
 @Composable
 fun ChooseTaskImportance(
-    onResponse: (TaskImportance) -> Unit,
+    onResponse: (TaskPriority) -> Unit,
 ) {
-    var selectedImportance by remember {  mutableStateOf(TaskImportance.LOW) }
+    var selectedImportance by remember {  mutableStateOf(TaskPriority.LOW) }
     val colors = MaterialTheme.colorScheme
 
     Row(
@@ -35,7 +34,7 @@ fun ChooseTaskImportance(
             )
             .padding(2.dp)
     ) {
-        TaskImportance.entries.forEach { taskImportance ->
+        TaskPriority.entries.forEach { taskImportance ->
             val isSelected = selectedImportance == taskImportance
             Surface(
                 onClick = {
