@@ -17,6 +17,12 @@ import kotlinx.datetime.toLocalDateTime
 
 object AppHelper {
 
+    fun calculateDayLeft(givenDateTime: LocalDateTime): Int {
+        val today = getCurrentDate().date
+        val result = givenDateTime.date.minus(today)
+        return if(result.days < 0) 0 else result.days
+    }
+
     fun showToast(context: Context, msg: String){
        return Toast.makeText(context,msg,Toast.LENGTH_SHORT).show()
     }
