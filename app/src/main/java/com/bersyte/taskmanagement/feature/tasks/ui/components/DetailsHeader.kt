@@ -23,9 +23,10 @@ import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.EditTaskButton
 import com.bersyte.taskmanagement.common.components.HorizontalSpace
 import com.bersyte.taskmanagement.common.components.VerticalSpace
+import com.bersyte.taskmanagement.feature.tasks.data.models.Task
 
 @Composable
-fun DetailsHeader(navController: NavHostController) {
+fun DetailsHeader(navController: NavHostController, task: Task) {
 
     val colors = MaterialTheme.colorScheme
     val textStyle = MaterialTheme.typography
@@ -50,7 +51,7 @@ fun DetailsHeader(navController: NavHostController) {
         }
         VerticalSpace(4)
         Text(
-            "Landing page design",
+            task.title,
             style = textStyle.titleLarge.copy(
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
@@ -58,34 +59,42 @@ fun DetailsHeader(navController: NavHostController) {
             maxLines = 1
         )
         VerticalSpace(16)
-        Text("Due date")
-        VerticalSpace(6)
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Row {
-                Icon(
-                    Icons.Rounded.AccessTime,
-                    contentDescription = "Clock",
-                )
-                HorizontalSpace(8)
-                Text(
-                    "2 pm - 3 pm",
-                    style = textStyle.bodyLarge
-                )
+            Column {
+                Text("Due date")
+                VerticalSpace(6)
+                Row {
+                    Icon(
+                        Icons.Rounded.CalendarMonth,
+                        contentDescription = "Calendar",
+                    )
+                    HorizontalSpace(8)
+                    Text(
+                        task.dueDate.date.toString(),
+                        style = textStyle.bodyLarge
+                    )
+                }
+
             }
-            Row {
-                Icon(
-                    Icons.Rounded.CalendarMonth,
-                    contentDescription = "Calendar",
-                )
-                HorizontalSpace(8)
-                Text(
-                    "29 May 2024",
-                    style = textStyle.bodyLarge
-                )
+            Column {
+                Text("Due time")
+                VerticalSpace(6)
+                Row {
+                    Icon(
+                        Icons.Rounded.AccessTime,
+                        contentDescription = "Clock",
+                    )
+                    HorizontalSpace(8)
+                    Text(
+                        "${task.dueTime.hour}:${task.dueTime.minute}",
+                        style = textStyle.bodyLarge
+                    )
+                }
             }
         }
         VerticalSpace(16)

@@ -15,6 +15,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -22,19 +24,32 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.BackButton
 import com.bersyte.taskmanagement.common.components.HorizontalSpace
+import com.bersyte.taskmanagement.common.components.LoadingIndicator
+import com.bersyte.taskmanagement.common.components.ShowErrorMessage
 import com.bersyte.taskmanagement.feature.tasks.ui.components.TaskCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.feature.home.ui.components.CalendarWeekView
+import com.bersyte.taskmanagement.feature.tasks.data.models.Task
+import com.bersyte.taskmanagement.feature.tasks.viewmodels.TaskViewmodel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TasksScreen(navController: NavHostController) {
+fun TasksScreen(
+    navController: NavHostController,
+    taskViewmodel: TaskViewmodel = hiltViewModel()
+) {
 
-    val tasks = remember {
-        mutableStateListOf("Website frontend", "Website backend", "London")
+    val taskState = taskViewmodel.taskState.collectAsState()
+    val taskStateValue = taskState.value
+
+    val tasks = remember {mutableStateListOf<Task>()}
+
+    LaunchedEffect(key1 =  taskStateValue){
+        taskStateValue.data?.let { tasks.addAll(it) }
     }
 
     Scaffold (
@@ -71,28 +86,40 @@ fun TasksScreen(navController: NavHostController) {
                             )
                         )
                         VerticalSpace(16)
-                        tasks.forEachIndexed { index, task ->
-                           val taskDeadline = index == 0
 
-                           Row(
-                               modifier = Modifier.fillMaxWidth(),
-                               horizontalArrangement = Arrangement.Center,
-                               verticalAlignment = Alignment.CenterVertically
-                           ) {
-                               Text(
-                                   "10 PM",
-                                   style = MaterialTheme.typography.titleMedium.copy(
-                                       color = Color.White.copy(alpha = 0.6f)
-                                   )
-                               )
-                               HorizontalSpace(24)
-                               TaskCard(navController, isTime = taskDeadline)
-                           }
-                            if(index != tasks.lastIndex){
-                                VerticalSpace(8)
-                                HorizontalDivider()
-                                Log.d("task", "$task >")
-                                VerticalSpace(8)
+                        when{
+                            taskStateValue.isLoading -> {
+                                LoadingIndicator()
+                            }
+
+                            taskStateValue.error != null -> {
+                                ShowErrorMessage(taskStateValue.error)
+                            }
+
+                            taskStateValue.data != null -> {
+                                tasks.forEachIndexed { index, task ->
+
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.Center,
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Text(
+                                            "10 PM",
+                                            style = MaterialTheme.typography.titleMedium.copy(
+                                                color = Color.White.copy(alpha = 0.6f)
+                                            )
+                                        )
+                                        HorizontalSpace(24)
+                                        TaskCard(navController, task = task)
+                                    }
+                                    if(index != tasks.lastIndex){
+                                        VerticalSpace(8)
+                                        HorizontalDivider()
+                                        Log.d("task", "$task >")
+                                        VerticalSpace(8)
+                                    }
+                                }
                             }
                         }
                         VerticalSpace(24)

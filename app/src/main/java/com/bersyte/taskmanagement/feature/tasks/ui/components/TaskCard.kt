@@ -23,22 +23,26 @@ import com.bersyte.taskmanagement.common.components.HorizontalSpace
 import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.common.navigation.Route
+import com.bersyte.taskmanagement.feature.tasks.data.models.Task
+import com.bersyte.taskmanagement.utils.AppHelper
+import com.bersyte.taskmanagement.utils.TaskHelper
 
 
 @Composable
 fun TaskCard(
     navController: NavHostController,
-    isTime: Boolean = false
+    task: Task
 ){
     val textStyle = MaterialTheme.typography
     val colorScheme = MaterialTheme. colorScheme
-
-    val bgColor = if(isTime) colorScheme.primary else colorScheme.surface
-
+    val isTaskDeadline = TaskHelper.isTaskDeadline(task)
+    val bgColor = if(isTaskDeadline) colorScheme.primary else colorScheme.surface
 
     ThemedCard(
         onClick = {
-            navController.navigate(Route.TaskDetails.name)
+            navController.navigate(
+                "${Route.TaskDetails.name}/${task.taskId}"
+            )
         },
         modifier = Modifier.fillMaxWidth(),
         bgColor = bgColor,
@@ -50,7 +54,7 @@ fun TaskCard(
             ) {
                 Column {
                     Text(
-                        "Landing page design",
+                        task.title,
                         style = textStyle.titleMedium.copy(
                             fontWeight = FontWeight.Bold,
                             color = Color.White,
@@ -67,7 +71,7 @@ fun TaskCard(
                         )
                         HorizontalSpace(8)
                         Text(
-                            "2 pm - 3 pm",
+                            task.dueTime.toString(),
                             style = textStyle.labelLarge.copy(
                                 color = Color.White.copy(alpha = 0.6f)
                             )
@@ -83,7 +87,7 @@ fun TaskCard(
                         )
                         HorizontalSpace(8)
                         Text(
-                            "June 5",
+                            task.dueDate.date.toString(),
                             style = textStyle.labelLarge.copy(
                                 color = Color.White.copy(alpha = 0.6f)
                             )
@@ -92,7 +96,7 @@ fun TaskCard(
                 }
                 CircularProgressBar(
                     percentage = 0.3f, radius = 30,
-                    color = if(isTime)colorScheme.onSurface else colorScheme.onSecondary,
+                    color = if(isTaskDeadline)colorScheme.onSurface else colorScheme.onSecondary,
                 )
             }
         }
