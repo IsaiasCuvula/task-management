@@ -13,11 +13,16 @@ import com.bersyte.taskmanagement.common.components.ProgressBar
 import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.common.navigation.Route
+import com.bersyte.taskmanagement.feature.tasks.data.models.Task
 
 @Composable
-fun HomeTwoTasksCards(navController: NavHostController,) {
-
+fun HomeTwoTasksCards(
+    navController: NavHostController,
+    tasks: List<Task>
+) {
     val colorScheme = MaterialTheme.colorScheme
+    val firstTask = tasks.first()
+    val secondTask = tasks.last()
 
    Row(
        modifier = Modifier.fillMaxWidth(),
@@ -34,7 +39,7 @@ fun HomeTwoTasksCards(navController: NavHostController,) {
                    modifier = Modifier.fillMaxWidth()
                ) {
                    HomeTaskCardTop(
-                       title =  "API payment",
+                       title =  firstTask.title,
                        navController = navController,
                    )
                    VerticalSpace(24)
@@ -53,7 +58,7 @@ fun HomeTwoTasksCards(navController: NavHostController,) {
                    modifier = Modifier.fillMaxWidth()
                ) {
                    HomeTaskCardTop(
-                       title =  "UX Design",
+                       title =  secondTask.title,
                        navController = navController,
                    )
                    VerticalSpace(24)

@@ -15,12 +15,17 @@ import com.bersyte.taskmanagement.common.components.CircularProgressBar
 import com.bersyte.taskmanagement.common.components.HorizontalSpace
 import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
+import com.bersyte.taskmanagement.feature.tasks.data.models.Task
+import com.bersyte.taskmanagement.utils.AppHelper
 
 @Composable
 fun HomeUrgentTaskCard(
-    onClick: ()-> Unit
+    onClick: ()-> Unit,
+    task: Task
 ) {
     val textStyle = MaterialTheme.typography
+    val daysLeft = AppHelper.calculateDayLeft(task.dueDate)
+    val daysLeftText = if(daysLeft == 1) "1 day left" else "$daysLeft days left"
 
     ThemedCard(
         onClick = onClick,
@@ -36,7 +41,7 @@ fun HomeUrgentTaskCard(
                 HorizontalSpace(16)
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        "Landing page design",
+                        task.title,
                         style = textStyle.titleMedium.copy(
                             fontWeight = FontWeight.Bold,
                             color = Color.White,
@@ -45,7 +50,7 @@ fun HomeUrgentTaskCard(
                     )
                     VerticalSpace(8)
                     Text(
-                        "Make user and admin dashboard looks really nice and amazing",
+                        task.description,
                         style = textStyle.labelLarge.copy(
                             color = Color.White.copy(alpha = 0.6f)
                         ),
@@ -55,13 +60,12 @@ fun HomeUrgentTaskCard(
                 }
                 HorizontalSpace(16)
                 Text(
-                    "1 day left",
+                    daysLeftText,
                     style = textStyle.labelLarge.copy(
                         color = Color.White.copy(alpha = 0.6f)
                     ),
                     maxLines = 2
                 )
-
             }
         }
     )

@@ -3,6 +3,7 @@ package com.bersyte.taskmanagement.feature.tasks.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bersyte.taskmanagement.core.ui.UiState
 import com.bersyte.taskmanagement.feature.tasks.data.models.Task
 import com.bersyte.taskmanagement.feature.tasks.data.repositories.task.TaskRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,33 +19,24 @@ class TaskViewmodel @Inject constructor(
     private val repository: TaskRepository
 ): ViewModel() {
 
-    private val _taskListState = MutableStateFlow(TaskState<List<Task>>())
-    val taskListState = _taskListState.asStateFlow()
+    private val _taskState = MutableStateFlow(UiState<List<Task>>())
+    val taskState = _taskState.asStateFlow()
 
 
     fun saveTask(task: Task) = viewModelScope.launch {
         try {
-            _taskListState.update {it.copy(isLoading = true)}
+            _taskState.update {it.copy(isLoading = true)}
             //
             repository.insert(task)
             //
-            _taskListState.update {it.copy(isLoading = false)}
+            _taskState.update {it.copy(isLoading = false)}
         }catch (e: Exception){
             val tag = "Error while saving task"
             Log.d(tag, "$tag - ${e.message}")
-            _taskListState.update {
+            _taskState.update {
                 it.copy(isLoading = false, error = e.message)
             }
             return@launch
         }
     }
-
 }
-
-
-
-data class TaskState<T>(
-    val data: T? = null,
-    val error: String? = null,
-    val isLoading: Boolean = false
-)

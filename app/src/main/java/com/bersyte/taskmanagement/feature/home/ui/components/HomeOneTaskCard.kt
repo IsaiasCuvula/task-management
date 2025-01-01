@@ -20,10 +20,15 @@ import com.bersyte.taskmanagement.common.components.ProgressBar
 import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.common.navigation.Route
+import com.bersyte.taskmanagement.feature.tasks.data.models.Task
 
 @Composable
-fun HomeOneTaskCard(navController: NavHostController) {
+fun HomeOneTaskCard(
+    navController: NavHostController,
+    tasks: List<Task>
+) {
     val textStyle = MaterialTheme.typography
+    val firstTask = tasks.first()
 
     ThemedCard(
         onClick = {
@@ -43,7 +48,7 @@ fun HomeOneTaskCard(navController: NavHostController) {
                         modifier = Modifier.fillMaxWidth().weight(1f)
                     ) {
                         Text(
-                            "UX Design",
+                            firstTask.title,
                             style = textStyle.titleMedium.copy(
                                 fontWeight = FontWeight.Bold,
                                 color = Color.White
@@ -51,7 +56,7 @@ fun HomeOneTaskCard(navController: NavHostController) {
                             maxLines = 1
                         )
                         Text(
-                            "Internet banking mobile app",
+                            firstTask.description,
                             style = textStyle.bodyMedium.copy(
                                 color = Color.White
                             ),
@@ -68,7 +73,7 @@ fun HomeOneTaskCard(navController: NavHostController) {
                     Alignment.BottomStart
                 ) {
                     Text(
-                        "Due: 31 Dec 2024",
+                        "Due: ${firstTask.dueDate.date}",
                         style = MaterialTheme.typography.labelMedium.copy(
                             color = Color.White.copy(alpha = 0.6f)
                         )

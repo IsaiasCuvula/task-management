@@ -20,12 +20,19 @@ import com.bersyte.taskmanagement.common.components.ProgressBar
 import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.common.navigation.Route
+import com.bersyte.taskmanagement.feature.tasks.data.models.Task
 
 @Composable
-fun HomeThreeTasksCards(navController: NavHostController,) {
+fun HomeThreeTasksCards(
+    navController: NavHostController,
+    tasks: List<Task>
+) {
 
     val colorScheme = MaterialTheme.colorScheme
     val textStyle = MaterialTheme.typography
+    val firstTask = tasks.first()
+    val secondTask = tasks[1]
+    val thirdTask = tasks[2]
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -41,8 +48,8 @@ fun HomeThreeTasksCards(navController: NavHostController,) {
             content = {
                 Column {
                     HomeTaskCardTop(
-                        title =  "UX Design",
-                        desc = "Internet banking mobile app",
+                        title =  firstTask.title,
+                        desc = firstTask.description,
                         navController = navController,
                     )
                     VerticalSpace(48)
@@ -52,7 +59,7 @@ fun HomeThreeTasksCards(navController: NavHostController,) {
                         Alignment.BottomStart
                     ) {
                         Text(
-                            "Due: 31 Dec 2024",
+                            "Due: ${firstTask.dueDate}",
                             style = textStyle.labelMedium.copy(
                                 color = Color.White.copy(alpha = 0.6f)
                             )
@@ -77,7 +84,7 @@ fun HomeThreeTasksCards(navController: NavHostController,) {
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         HomeTaskCardTop(
-                            title =  "API payment",
+                            title =  secondTask.title,
                             navController = navController,
                         )
                         VerticalSpace(24)
@@ -98,8 +105,8 @@ fun HomeThreeTasksCards(navController: NavHostController,) {
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         HomeTaskCardTop(
-                            title =  "Update work",
-                            desc = "Review home page",
+                            title = thirdTask.title,
+                            desc = thirdTask.description,
                             descMaxLines = 1,
                             navController = navController,
                         )
