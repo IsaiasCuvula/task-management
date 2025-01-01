@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.bersyte.taskmanagement.feature.tasks.data.models.Task
 import com.bersyte.taskmanagement.feature.tasks.data.repositories.task.TaskRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -29,7 +28,6 @@ class TaskViewmodel @Inject constructor(
             //
             repository.insert(task)
             //
-            delay(9000)
             _taskListState.update {it.copy(isLoading = false)}
         }catch (e: Exception){
             val tag = "Error while saving task"
