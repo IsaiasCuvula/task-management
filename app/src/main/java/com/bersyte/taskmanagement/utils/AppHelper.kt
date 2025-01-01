@@ -2,6 +2,7 @@ package com.bersyte.taskmanagement.utils
 
 import android.content.Context
 import android.widget.Toast
+import com.bersyte.taskmanagement.feature.tasks.data.models.Task
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.DateTimeUnit
@@ -10,6 +11,7 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.atTime
 import kotlinx.datetime.isoDayNumber
 import kotlinx.datetime.minus
 import kotlinx.datetime.plus
@@ -17,11 +19,6 @@ import kotlinx.datetime.toLocalDateTime
 
 object AppHelper {
 
-    fun calculateDayLeft(givenDateTime: LocalDateTime): Int {
-        val today = getCurrentDate().date
-        val result = givenDateTime.date.minus(today)
-        return if(result.days < 0) 0 else result.days
-    }
 
     fun showToast(context: Context, msg: String){
        return Toast.makeText(context,msg,Toast.LENGTH_SHORT).show()
