@@ -12,13 +12,17 @@ class Converters {
     }
 
     @TypeConverter
-    fun dateToTimestamp(date: LocalDateTime?): String {
+    fun toTimestamp(date: LocalDateTime?): String {
         return date?.toString() ?: AppHelper.getCurrentDate().toString()
     }
 
+    @TypeConverter
+    fun fromLocalTime(time: LocalTime?): String {
+        return time.toString()
+    }
 
     @TypeConverter
-    fun timeToLocalTime(hour: Int, minute: Int): LocalTime {
-        return LocalTime(hour, minute)
+    fun toLocalTime(time: String?): LocalTime {
+        return time?.let { LocalTime.parse(it) } ?: AppHelper.getCurrentDate().time
     }
 }
