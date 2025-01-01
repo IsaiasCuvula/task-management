@@ -24,6 +24,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,33 +37,43 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.BackButton
 import com.bersyte.taskmanagement.common.components.CommonTextField
 import com.bersyte.taskmanagement.common.components.HorizontalSpace
+import com.bersyte.taskmanagement.common.components.LoadingIndicator
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.common.navigation.Route
+import com.bersyte.taskmanagement.feature.tasks.data.models.Task
 import com.bersyte.taskmanagement.feature.tasks.data.models.TaskPriority
 import com.bersyte.taskmanagement.feature.tasks.ui.components.ChooseTaskImportance
 import com.bersyte.taskmanagement.feature.tasks.ui.components.ShowDatePickerDialog
 import com.bersyte.taskmanagement.feature.tasks.ui.components.ShowTimePickerDialog
+import com.bersyte.taskmanagement.feature.tasks.viewmodels.TaskViewmodel
 import com.bersyte.taskmanagement.utils.AppHelper
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddTaskScreen(navController: NavHostController) {
+fun AddTaskScreen(
+    navController: NavHostController,
+    viewmodel: TaskViewmodel = hiltViewModel()
+) {
     val today = AppHelper.getCurrentDate()
     var title by remember {  mutableStateOf("") }
     var description by remember {  mutableStateOf("") }
     var dueDate by remember {  mutableStateOf(today) }
     var dueTime by remember {  mutableStateOf(today.time) }
-    var importance by remember {  mutableStateOf(TaskPriority.LOW) }
+    var priority by remember {  mutableStateOf(TaskPriority.LOW) }
 
     var showTimePicker by remember { mutableStateOf(false) }
     var showDatePicker by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
+
+    val taskState = viewmodel.taskListState.collectAsState()
+    val isLoading = taskState.value.isLoading
 
     Scaffold(
         topBar = {
@@ -183,40 +194,53 @@ fun AddTaskScreen(navController: NavHostController) {
                      VerticalSpace(8)
                      ChooseTaskImportance(
                          onResponse = { result ->
-                             importance = result
+                             priority = result
                          }
                      )
                      VerticalSpace(32)
-                     Button(
-                         onClick = {
-                             if(title.isEmpty()){
-                                 AppHelper.showToast(
-                                     context,
-                                     "Task title cannot be empty"
-                                 )
-                             }else{
 
+                     if (isLoading){
+                         LoadingIndicator()
+                     }else{
+                         Button(
+                             onClick = {
+                                 if(title.isEmpty()){
+                                     AppHelper.showToast(
+                                         context,
+                                         "Task title cannot be empty"
+                                     )
+                                 }else{
+                                     val newTask = Task(
+                                         taskId = 0,
+                                         title = title,
+                                         description = description,
+                                         dueDate = dueDate,
+                                         dueTime = dueTime,
+                                         priority = priority,
+                                     )
+                                     viewmodel.saveTask(newTask)
 
-                                 //navigate to home page
-                                 navController.navigate(Route.Home.name){
-                                     popUpTo(Route.Home.name) {
-                                         inclusive = true
+                                     //navigate to home page
+                                     navController.navigate(Route.Home.name){
+                                         popUpTo(Route.Home.name) {
+                                             inclusive = true
+                                         }
                                      }
+
                                  }
+                             },
+                             shape = RoundedCornerShape(16.dp),
+                             modifier = Modifier.fillMaxWidth()
 
-                             }
-                         },
-                         shape = RoundedCornerShape(16.dp),
-                         modifier = Modifier.fillMaxWidth()
-
-                     ) {
-                         Text(
-                             "Save task",
-                             style = MaterialTheme.typography.titleMedium.copy(
-                                 fontWeight = FontWeight.Bold
-                             ),
-                             modifier = Modifier.padding(10.dp)
-                         )
+                         ) {
+                             Text(
+                                 "Save task",
+                                 style = MaterialTheme.typography.titleMedium.copy(
+                                     fontWeight = FontWeight.Bold
+                                 ),
+                                 modifier = Modifier.padding(10.dp)
+                             )
+                         }
                      }
                  }
              }
