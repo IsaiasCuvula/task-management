@@ -72,7 +72,7 @@ fun AddTaskScreen(
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
 
-    val taskState = viewmodel.taskListState.collectAsState()
+    val taskState = viewmodel.taskState.collectAsState()
     val isLoading = taskState.value.isLoading
 
     Scaffold(
