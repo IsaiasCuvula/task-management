@@ -1,5 +1,6 @@
 package com.bersyte.taskmanagement.feature.tasks.data.datasource
 
+import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -9,6 +10,7 @@ import com.bersyte.taskmanagement.feature.tasks.data.models.Subtask
 import com.bersyte.taskmanagement.feature.tasks.data.models.TaskLink
 import kotlinx.coroutines.flow.Flow
 
+@Dao
 interface TaskLinkDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(taskLink: TaskLink)
