@@ -46,7 +46,9 @@ fun UrgentTasks(
                 HomeUrgentTaskCard(
                     task = task,
                     onClick = {
-                        navController.navigate(Route.TaskDetails.name)
+                        navController.navigate(
+                            "${Route.TaskDetails.name}/${task.taskId}"
+                        )
                     }
                 )
                 if(index != tasks.lastIndex){
