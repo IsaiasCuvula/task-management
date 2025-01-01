@@ -16,7 +16,7 @@ import com.bersyte.taskmanagement.common.components.HorizontalSpace
 import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.feature.tasks.data.models.Task
-import com.bersyte.taskmanagement.utils.AppHelper
+import com.bersyte.taskmanagement.utils.TaskHelper
 
 @Composable
 fun HomeUrgentTaskCard(
@@ -24,7 +24,7 @@ fun HomeUrgentTaskCard(
     task: Task
 ) {
     val textStyle = MaterialTheme.typography
-    val daysLeft = AppHelper.calculateDayLeft(task.dueDate)
+    val daysLeft = TaskHelper.calculateDayLeft(task.dueDate)
     val daysLeftText = if(daysLeft == 1) "1 day left" else "$daysLeft days left"
 
     ThemedCard(

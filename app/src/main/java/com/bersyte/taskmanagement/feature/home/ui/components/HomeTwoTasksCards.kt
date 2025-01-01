@@ -30,7 +30,9 @@ fun HomeTwoTasksCards(
    ) {
        ThemedCard(
            onClick = {
-               navController.navigate(Route.TaskDetails.name)
+               navController.navigate(
+                   "${Route.TaskDetails.name}/${firstTask.taskId}"
+               )
            },
            modifier = Modifier.weight(1f),
            bgColor = colorScheme.secondary,
@@ -51,6 +53,11 @@ fun HomeTwoTasksCards(
        )
        HorizontalSpace(10)
        ThemedCard(
+           onClick = {
+               navController.navigate(
+                   "${Route.TaskDetails.name}/${secondTask.taskId}"
+               )
+           },
            modifier = Modifier.weight(1f),
            bgColor = colorScheme.tertiary,
            content = {

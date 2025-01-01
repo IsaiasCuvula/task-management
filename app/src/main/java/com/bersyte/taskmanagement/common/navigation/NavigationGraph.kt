@@ -27,11 +27,23 @@ fun NavigationGraph(
     ){
         composable(Route.Home.name) { HomeScreen(navController) }
         composable(Route.Tasks.name) { TasksScreen(navController) }
-        composable(Route.TaskDetails.name) { TaskDetailsScreen(navController) }
         composable(Route.Notifications.name) { NotificationScreen(navController) }
         composable(Route.About.name) { AboutScreen(navController) }
         composable(Route.EditTask.name) { EditTaskScreen(navController) }
         composable(Route.AddTask.name) { AddTaskScreen(navController) }
+
+
+        composable("${Route.TaskDetails.name}/{taskId}") { backStackEntry ->
+            val taskId = backStackEntry.arguments?.getString("taskId")
+            if(taskId !=null){
+                TaskDetailsScreen(
+                    navController = navController,
+                    taskId = taskId.toLong()
+                )
+            }
+        }
+
+
         composable("${Route.WebView.name}/{url}") { backStackEntry ->
             val url = backStackEntry.arguments?.getString("url")
             if(url !=null){

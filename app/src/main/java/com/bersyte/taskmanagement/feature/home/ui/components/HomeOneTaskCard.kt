@@ -32,7 +32,9 @@ fun HomeOneTaskCard(
 
     ThemedCard(
         onClick = {
-            navController.navigate(Route.TaskDetails.name)
+            navController.navigate(
+                "${Route.TaskDetails.name}/${firstTask.taskId}"
+            )
         },
         bgColor = colorScheme.primary,
         content = {

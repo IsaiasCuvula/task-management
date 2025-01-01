@@ -40,7 +40,9 @@ fun HomeThreeTasksCards(
     ) {
         ThemedCard(
             onClick = {
-                navController.navigate(Route.TaskDetails.name)
+                navController.navigate(
+                    "${Route.TaskDetails.name}/${firstTask.taskId}"
+                )
             },
             modifier = Modifier.weight(1f)
                 .height(300.dp),
@@ -75,7 +77,9 @@ fun HomeThreeTasksCards(
         ) {
             ThemedCard(
                 onClick = {
-                    navController.navigate(Route.TaskDetails.name)
+                    navController.navigate(
+                        "${Route.TaskDetails.name}/${secondTask.taskId}"
+                    )
                 },
                 modifier = Modifier.weight(1f),
                 bgColor = colorScheme.secondary,
@@ -97,7 +101,9 @@ fun HomeThreeTasksCards(
             VerticalSpace(10)
             ThemedCard(
                 onClick = {
-                    navController.navigate(Route.TaskDetails.name)
+                    navController.navigate(
+                        "${Route.TaskDetails.name}/${thirdTask.taskId}"
+                    )
                 },
                 bgColor = colorScheme.tertiary,
                 content = {
