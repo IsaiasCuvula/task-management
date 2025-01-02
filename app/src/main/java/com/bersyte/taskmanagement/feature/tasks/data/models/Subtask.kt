@@ -11,7 +11,7 @@ data class Subtask(
     @PrimaryKey(autoGenerate = true)
     val subtaskId: Long,
     var title: String,
-    var isCompleted: Boolean,
+    var isCompleted: Boolean = false,
     val taskOwnerId: Long,
     var createdAt: LocalDateTime = AppHelper.getCurrentDate()
 )
