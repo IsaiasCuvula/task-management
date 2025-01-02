@@ -3,9 +3,11 @@ package com.bersyte.taskmanagement.common.navigation
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.material.icons.outlined.Task
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.Schedule
 import androidx.compose.material.icons.rounded.Task
 import androidx.compose.ui.graphics.vector.ImageVector
 
@@ -28,6 +30,12 @@ data class DrawerItem(
                 selectedIcon = Icons.Rounded.Task,
                 unselectedIcon =  Icons.Outlined.Task,
                 route = Route.Tasks
+            ),
+            DrawerItem(
+                title =  Route.Schedule.name,
+                selectedIcon = Icons.Rounded.Schedule,
+                unselectedIcon =  Icons.Outlined.Schedule,
+                route = Route.Schedule
             ),
             DrawerItem(
                 title =  Route.About.name,

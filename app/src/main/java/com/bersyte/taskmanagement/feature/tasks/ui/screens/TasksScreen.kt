@@ -1,38 +1,33 @@
 package com.bersyte.taskmanagement.feature.tasks.ui.screens
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.BackButton
-import com.bersyte.taskmanagement.common.components.HorizontalSpace
 import com.bersyte.taskmanagement.common.components.LoadingIndicator
 import com.bersyte.taskmanagement.common.components.ShowErrorMessage
 import com.bersyte.taskmanagement.feature.tasks.ui.components.TaskCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
-import com.bersyte.taskmanagement.feature.home.ui.components.CalendarWeekView
-import com.bersyte.taskmanagement.feature.tasks.data.models.Task
+import com.bersyte.taskmanagement.feature.home.ui.components.SearchField
+import com.bersyte.taskmanagement.feature.home.ui.components.SearchTaskResult
 import com.bersyte.taskmanagement.feature.tasks.viewmodels.TaskViewmodel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,12 +39,7 @@ fun TasksScreen(
 
     val taskState = taskViewmodel.taskState.collectAsState()
     val taskStateValue = taskState.value
-
-    val tasks = remember {mutableStateListOf<Task>()}
-
-    LaunchedEffect(key1 =  taskStateValue){
-        taskStateValue.data?.let { tasks.addAll(it) }
-    }
+    var query by remember { mutableStateOf("") }
 
     Scaffold (
         topBar = {
@@ -61,7 +51,7 @@ fun TasksScreen(
                     BackButton(navController)
                 },
                 title = {
-                    Text("Schedule")
+                    Text("All tasks")
                 }
             )
         }
@@ -70,57 +60,54 @@ fun TasksScreen(
         Column(
             modifier =  Modifier.padding(innerPadding)
         ) {
-            CalendarWeekView()
-            VerticalSpace(32)
             LazyColumn {
                 item {
                     Column(
                         modifier = Modifier.fillMaxWidth()
                             .padding(16.dp)
                     ) {
-                        Text(
-                            "Today's tasks",
-                            style = MaterialTheme.typography.titleLarge.copy(
-                                fontWeight = FontWeight.Bold
-                            )
+                        SearchField(
+                            query = query,
+                            onQueryChanged = {newValue ->
+                                query = newValue
+                            },
+                            onQueryClear = {query = ""},
                         )
-                        VerticalSpace(16)
-
-                        when{
-                            taskStateValue.isLoading -> {
-                                LoadingIndicator()
+                        VerticalSpace(32)
+                        if(query.isNotEmpty()){
+                            taskStateValue.data?.let {
+                                SearchTaskResult(
+                                    query= query,
+                                    allTask = it,
+                                    navController = navController
+                                )
                             }
+                            VerticalSpace(32)
+                        }else{
+                            when{
+                                taskStateValue.isLoading -> {
+                                    LoadingIndicator()
+                                }
 
-                            taskStateValue.error != null -> {
-                                ShowErrorMessage(taskStateValue.error)
-                            }
+                                taskStateValue.error != null -> {
+                                    ShowErrorMessage(taskStateValue.error)
+                                }
 
-                            taskStateValue.data != null -> {
-                                tasks.forEachIndexed { index, task ->
+                                taskStateValue.data != null -> {
+                                    val tasks = taskStateValue.data
 
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.Center,
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        Text(
-                                            "10 PM",
-                                            style = MaterialTheme.typography.titleMedium.copy(
-                                                color = Color.White.copy(alpha = 0.6f)
-                                            )
-                                        )
-                                        HorizontalSpace(24)
-                                        TaskCard(navController, task = task)
-                                    }
-                                    if(index != tasks.lastIndex){
-                                        VerticalSpace(8)
-                                        HorizontalDivider()
-                                        VerticalSpace(8)
+                                    tasks.forEachIndexed { index, task ->
+                                       TaskCard(navController, task = task)
+                                        if(index != tasks.lastIndex){
+                                            VerticalSpace(8)
+                                            HorizontalDivider()
+                                            VerticalSpace(8)
+                                        }
                                     }
                                 }
                             }
+                            VerticalSpace(24)
                         }
-                        VerticalSpace(24)
                     }
                 }
             }

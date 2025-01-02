@@ -12,6 +12,7 @@ import com.bersyte.taskmanagement.feature.tasks.ui.screens.TasksScreen
 import com.bersyte.taskmanagement.feature.notifications.ui.screens.NotificationScreen
 import com.bersyte.taskmanagement.feature.tasks.ui.screens.AddTaskScreen
 import com.bersyte.taskmanagement.feature.tasks.ui.screens.EditTaskScreen
+import com.bersyte.taskmanagement.feature.tasks.ui.screens.ScheduleScreen
 import com.bersyte.taskmanagement.feature.tasks.ui.screens.TaskDetailsScreen
 
 @Composable
@@ -30,6 +31,7 @@ fun NavigationGraph(
         composable(Route.Notifications.name) { NotificationScreen(navController) }
         composable(Route.About.name) { AboutScreen(navController) }
         composable(Route.AddTask.name) { AddTaskScreen(navController) }
+        composable(Route.Schedule.name) { ScheduleScreen(navController) }
 
 
         composable("${Route.EditTask.name}/{taskId}") { backStackEntry ->

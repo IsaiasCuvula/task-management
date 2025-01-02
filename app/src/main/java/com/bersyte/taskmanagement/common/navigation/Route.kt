@@ -4,5 +4,6 @@ enum class Route {
     Home, Notifications,
     Tasks, TaskDetails,
     About, EditTask,
-    AddTask, WebView
+    AddTask, WebView,
+    Schedule
 }
