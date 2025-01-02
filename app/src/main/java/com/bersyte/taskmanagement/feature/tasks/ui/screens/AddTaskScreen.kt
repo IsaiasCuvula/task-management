@@ -47,7 +47,7 @@ import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.common.navigation.Route
 import com.bersyte.taskmanagement.feature.tasks.data.models.Task
 import com.bersyte.taskmanagement.feature.tasks.data.models.TaskPriority
-import com.bersyte.taskmanagement.feature.tasks.ui.components.ChooseTaskImportance
+import com.bersyte.taskmanagement.feature.tasks.ui.components.SelectTaskPriority
 import com.bersyte.taskmanagement.feature.tasks.ui.components.ShowDatePickerDialog
 import com.bersyte.taskmanagement.feature.tasks.ui.components.ShowTimePickerDialog
 import com.bersyte.taskmanagement.feature.tasks.viewmodels.TaskViewmodel
@@ -192,7 +192,7 @@ fun AddTaskScreen(
                      VerticalSpace(24)
                      Text("Priority")
                      VerticalSpace(8)
-                     ChooseTaskImportance(
+                     SelectTaskPriority(
                          onResponse = { result ->
                              priority = result
                          }
