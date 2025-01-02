@@ -18,8 +18,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -28,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.BottomSheet
 import com.bersyte.taskmanagement.common.components.HorizontalSpace
@@ -35,17 +37,23 @@ import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.common.navigation.Route
 import com.bersyte.taskmanagement.feature.tasks.ui.screens.AddLinks
+import com.bersyte.taskmanagement.feature.tasks.viewmodels.TaskLinkViewmodel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FileAndLinks(
+    taskId: Long,
     navController: NavHostController,
+    taskLinkViewmodel: TaskLinkViewmodel = hiltViewModel()
 ) {
 
-    val filesLinks = remember {
-        mutableStateListOf("billiffy.com", "google.com", "bersyte.com")
+    LaunchedEffect(Unit){
+        taskLinkViewmodel.getTaskWithLinks(taskId)
     }
+
+    val taskLinksState = taskLinkViewmodel.taskLinkState.collectAsState()
+    val taskLinksStateValue = taskLinksState.value
 
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded  = true
@@ -55,45 +63,52 @@ fun FileAndLinks(
 
     ThemedCard(
         content = {
-            filesLinks.addAll(emptyList())
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                IconButton(
-                    onClick = {showAddLinksSheet=true}
-                ) {
-                    Icon(
-                        Icons.Rounded.AddLink,
-                        contentDescription = "",
-                        modifier = Modifier.size(30.dp),
-                    )
-                }
-                Text("File & Links: ")
-                HorizontalSpace(10)
-                if(filesLinks.isEmpty()){
-                    Text("No 🔗 links added yet...")
-                }else{
-                    LazyRow {
-                        items(items = filesLinks, key = {it}){ item ->
-                            Column(
-                                modifier = Modifier
-                                    .clip(shape = RoundedCornerShape(8.dp))
-                                    .clickable {
-                                        navController.navigate( "${Route.WebView.name}/${item}")
-                                    }.padding(6.dp)
-                            ) {
-                                Icon(
-                                    Icons.Filled.DatasetLinked,
-                                    contentDescription = ""
-                                )
+            when{
+
+                taskLinksStateValue.data != null -> {
+                    val filesLinks = taskLinksStateValue.data
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        IconButton(
+                            onClick = {showAddLinksSheet=true}
+                        ) {
+                            Icon(
+                                Icons.Rounded.AddLink,
+                                contentDescription = "",
+                                modifier = Modifier.size(30.dp),
+                            )
+                        }
+                        Text("File & Links: ")
+                        HorizontalSpace(10)
+                        if(filesLinks.isEmpty()){
+                            Text("No 🔗 links added yet...")
+                        }else{
+                            LazyRow {
+                                items(items = filesLinks, key = {it.taskLinkId}){ item ->
+                                    Column(
+                                        modifier = Modifier
+                                            .clip(shape = RoundedCornerShape(8.dp))
+                                            .clickable {
+                                                navController.navigate( "${Route.WebView.name}/${item.url}")
+                                            }.padding(6.dp)
+                                    ) {
+                                        Icon(
+                                            Icons.Filled.DatasetLinked,
+                                            contentDescription = ""
+                                        )
+                                    }
+                                    HorizontalSpace(8)
+                                }
                             }
-                            HorizontalSpace(8)
                         }
                     }
+                    VerticalSpace(32)
                 }
             }
-            VerticalSpace(32)
+
 
             if(showAddLinksSheet){
                 BottomSheet(
@@ -103,6 +118,7 @@ fun FileAndLinks(
                     },
                     content = {
                         AddLinks (
+                            taskId = taskId,
                             onClose = {
                                 scope.launch { sheetState.hide() }
                                     .invokeOnCompletion {

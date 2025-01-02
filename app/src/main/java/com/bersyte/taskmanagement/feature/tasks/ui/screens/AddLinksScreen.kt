@@ -26,17 +26,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.bersyte.taskmanagement.common.components.CommonTextField
 import com.bersyte.taskmanagement.common.components.VerticalSpace
+import com.bersyte.taskmanagement.feature.tasks.viewmodels.TaskLinkViewmodel
+import com.bersyte.taskmanagement.utils.AppHelper
 
 @Composable
-fun AddLinks(onClose: () -> Unit) {
+fun AddLinks(
+    taskId: Long,
+    onClose: () -> Unit,
+    taskLinkVM: TaskLinkViewmodel = hiltViewModel()
+) {
     var taskLink by remember { mutableStateOf("") }
 
     val clipboardManager = LocalClipboardManager.current
+    val context = LocalContext.current
 
     LazyColumn(
         modifier = Modifier.fillMaxWidth()
@@ -112,6 +121,10 @@ fun AddLinks(onClose: () -> Unit) {
                     modifier = Modifier.fillMaxWidth().height(50.dp),
                     shape = RoundedCornerShape(16.dp),
                     onClick = {
+                        taskLinkVM.saveLink(taskOwnerId = taskId, link = taskLink)
+
+                        AppHelper.showToast(context,"Link saved successfully")
+
                         //Close bottom sheet
                         onClose()
                     }
