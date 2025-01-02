@@ -27,6 +27,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,6 +41,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.BackButton
 import com.bersyte.taskmanagement.common.components.CommonTextField
@@ -50,21 +53,31 @@ import com.bersyte.taskmanagement.feature.tasks.data.models.TaskPriority
 import com.bersyte.taskmanagement.feature.tasks.ui.components.ChooseTaskImportance
 import com.bersyte.taskmanagement.feature.tasks.ui.components.ShowDatePickerDialog
 import com.bersyte.taskmanagement.feature.tasks.ui.components.ShowTimePickerDialog
+import com.bersyte.taskmanagement.feature.tasks.viewmodels.TaskViewmodel
 import com.bersyte.taskmanagement.utils.AppHelper
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditTaskScreen(
+    taskId: Long,
     navController: NavHostController,
-    taskId: Long
+    taskViewmodel: TaskViewmodel = hiltViewModel()
 ) {
+
+    val taskByIdState = taskViewmodel.taskByIdState.collectAsState()
+    val taskByIdStateValue = taskByIdState.value
+
+    LaunchedEffect(Unit) {
+        taskViewmodel.getTaskById(taskId)
+    }
+
 
     val today = AppHelper.getCurrentDate()
     var title by remember {  mutableStateOf("") }
     var description by remember {  mutableStateOf("") }
     var dueDate by remember {  mutableStateOf(today) }
     var dueTime by remember {  mutableStateOf(today.time) }
-    var importance by remember {  mutableStateOf(TaskPriority.LOW) }
+    var priority by remember {  mutableStateOf(TaskPriority.LOW) }
 
     var showTimePicker by remember { mutableStateOf(false) }
     var showDatePicker by remember { mutableStateOf(false) }
@@ -73,6 +86,17 @@ fun EditTaskScreen(
     val openAlertDialog = remember {  mutableStateOf(false) }
 
     val focusManager = LocalFocusManager.current
+
+    //assign initial value
+    LaunchedEffect(taskByIdStateValue) {
+        val data = taskByIdStateValue.data
+
+        title = data?.title ?: ""
+        description = data?.description ?:""
+        dueDate = data?.dueDate ?: today
+        dueTime = data?.dueTime ?: today.time
+        priority = data?.priority ?: TaskPriority.LOW
+    }
 
 
     Scaffold(
@@ -193,10 +217,12 @@ fun EditTaskScreen(
                     }
                     VerticalSpace(24)
                     Text("Priority")
+                    Text("Priority EDIT: ${priority.name}")
                     VerticalSpace(8)
                     ChooseTaskImportance(
+                        initialPriority = priority,
                         onResponse = { result ->
-                            importance = result
+                            priority = result
                         }
                     )
                     VerticalSpace(32)
@@ -210,8 +236,21 @@ fun EditTaskScreen(
                                     "Task title cannot be empty"
                                 )
                             }else{
-                                //save task into db
+                                val taskToUpdate = taskByIdStateValue.data
+                                if(taskToUpdate != null) {
 
+                                    taskToUpdate.title = title
+                                    taskToUpdate.description = description
+                                    taskToUpdate.dueDate = dueDate
+                                    taskToUpdate.dueDate = dueDate
+                                    taskToUpdate.priority = priority
+
+                                    taskViewmodel.updateTask(taskToUpdate)
+
+                                    AppHelper.showToast(
+                                        context, "Task updated successfully"
+                                    )
+                                }
                             }
                         },
                         shape = RoundedCornerShape(16.dp),
@@ -255,12 +294,12 @@ fun EditTaskScreen(
         }
 
         if(openAlertDialog.value){
-//            val oldNote = noteState.value.data
-//            if(oldNote != null){
+            val taskToDelete = taskByIdStateValue.data
+            if(taskToDelete != null){
                 ShowAlertDialog(
                     onDismissRequest = {openAlertDialog.value = false},
                     onConfirmation = {
-                        //vm.deleteNote(oldNote)
+                       taskViewmodel.deleteTask(taskToDelete)
 
                         AppHelper.showToast(
                             context, "Task deleted successfully"
@@ -277,7 +316,7 @@ fun EditTaskScreen(
                     body = "Are you sure you want to delete this task?",
                     icon = Icons.Rounded.Info,
                 )
-            //}
+            }
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.bersyte.taskmanagement.feature.tasks.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -116,7 +115,6 @@ fun TasksScreen(
                                     if(index != tasks.lastIndex){
                                         VerticalSpace(8)
                                         HorizontalDivider()
-                                        Log.d("task", "$task >")
                                         VerticalSpace(8)
                                     }
                                 }

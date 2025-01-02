@@ -30,6 +30,30 @@ class TaskViewmodel @Inject constructor(
         getAllTasks()
     }
 
+    fun updateTask(task: Task) = viewModelScope.launch {
+        try {
+            repository.update(task)
+        }catch (e:Exception){
+            Log.d("Update task", "Update task error: $e")
+            _taskState.update {
+                it.copy(isLoading = false, error = e.message)
+            }
+            return@launch
+        }
+    }
+
+    fun deleteTask(task: Task)= viewModelScope.launch {
+        try {
+            repository.delete(task)
+        }catch (e:Exception){
+            Log.d("Delete task", "Delete task error: $e")
+            _taskState.update {
+                it.copy(isLoading = false, error = e.message)
+            }
+            return@launch
+        }
+    }
+
     fun getTaskById(taskId: Long) = viewModelScope.launch {
         _taskByIdState.update { it.copy(isLoading = true) }
 

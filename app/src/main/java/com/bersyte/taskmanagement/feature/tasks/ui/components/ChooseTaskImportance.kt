@@ -1,5 +1,6 @@
 package com.bersyte.taskmanagement.feature.tasks.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,9 +22,11 @@ import com.bersyte.taskmanagement.feature.tasks.data.models.TaskPriority
 
 @Composable
 fun ChooseTaskImportance(
+    initialPriority: TaskPriority = TaskPriority.LOW,
     onResponse: (TaskPriority) -> Unit,
 ) {
-    var selectedImportance by remember {  mutableStateOf(TaskPriority.LOW) }
+
+    var selectedPriority by remember {mutableStateOf(initialPriority)}
     val colors = MaterialTheme.colorScheme
 
     Row(
@@ -34,18 +37,20 @@ fun ChooseTaskImportance(
             )
             .padding(2.dp)
     ) {
-        TaskPriority.entries.forEach { taskImportance ->
-            val isSelected = selectedImportance == taskImportance
+        TaskPriority.entries.forEach { taskPriority ->
+            val isSelected = selectedPriority == taskPriority
+            Log.d("Choose Priority", "Choose Priority ${initialPriority.name}")
+            Log.d("Choose Priority", "selected Priority ${selectedPriority.name}")
             Surface(
                 onClick = {
-                    selectedImportance = taskImportance
-                    onResponse(selectedImportance)
+                    selectedPriority = taskPriority
+                    onResponse(selectedPriority)
                 },
                 shape = RoundedCornerShape(16.dp),
                 modifier = Modifier.weight(1f)
             ){
                   Text(
-                      taskImportance.name,
+                      taskPriority.name,
                       style = MaterialTheme.typography.titleMedium.copy(
                           color = if(isSelected) Color.White else colors.primary
                       ),

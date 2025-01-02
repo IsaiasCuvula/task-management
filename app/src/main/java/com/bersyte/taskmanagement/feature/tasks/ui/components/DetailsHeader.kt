@@ -30,6 +30,7 @@ fun DetailsHeader(navController: NavHostController, task: Task) {
 
     val colors = MaterialTheme.colorScheme
     val textStyle = MaterialTheme.typography
+    val taskMin = if(task.dueTime.minute == 0) "00" else task.dueTime.minute
 
     Column(
         modifier = Modifier.fillMaxWidth()
@@ -94,7 +95,7 @@ fun DetailsHeader(navController: NavHostController, task: Task) {
                     )
                     HorizontalSpace(8)
                     Text(
-                        "${task.dueTime.hour}:${task.dueTime.minute}",
+                        "${task.dueTime.hour}:$taskMin",
                         style = textStyle.bodyLarge
                     )
                 }

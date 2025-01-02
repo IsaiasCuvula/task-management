@@ -24,7 +24,6 @@ import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.common.navigation.Route
 import com.bersyte.taskmanagement.feature.tasks.data.models.Task
-import com.bersyte.taskmanagement.utils.AppHelper
 import com.bersyte.taskmanagement.utils.TaskHelper
 
 
@@ -37,6 +36,8 @@ fun TaskCard(
     val colorScheme = MaterialTheme. colorScheme
     val isTaskDeadline = TaskHelper.isTaskDeadline(task)
     val bgColor = if(isTaskDeadline) colorScheme.primary else colorScheme.surface
+
+    val taskMin = if(task.dueTime.minute == 0) "00" else task.dueTime.minute
 
     ThemedCard(
         onClick = {
@@ -71,7 +72,7 @@ fun TaskCard(
                         )
                         HorizontalSpace(8)
                         Text(
-                            task.dueTime.toString(),
+                           "${task.dueTime.hour}:$taskMin",
                             style = textStyle.labelLarge.copy(
                                 color = Color.White.copy(alpha = 0.6f)
                             )
