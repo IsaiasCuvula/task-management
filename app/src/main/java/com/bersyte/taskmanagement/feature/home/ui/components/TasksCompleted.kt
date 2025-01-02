@@ -21,13 +21,19 @@ import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.common.navigation.Route
 import androidx.navigation.NavHostController
+import com.bersyte.taskmanagement.feature.tasks.data.models.Task
 import com.bersyte.taskmanagement.utils.AppHelper
 import com.bersyte.taskmanagement.utils.Month
 
 @Composable
-fun TasksCompleted(navController: NavHostController) {
+fun TasksCompleted(
+    navController: NavHostController,
+    tasks: List<Task>
+) {
     val textStyle = MaterialTheme.typography
     val today = AppHelper.getCurrentDate().date
+
+    val tasksDoneDisplayText = if(tasks.size != 1)"tasks done" else "task done"
 
     ThemedCard(
         onClick = {
@@ -49,7 +55,7 @@ fun TasksCompleted(navController: NavHostController) {
                     )
                     VerticalSpace(6)
                     Text(
-                        "30/40 task done",
+                        "30/${tasks.size} $tasksDoneDisplayText",
                         style = textStyle.bodyMedium.copy(
                             color = Color.White.copy(alpha = 0.6f)
                         )
