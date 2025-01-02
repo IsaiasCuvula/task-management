@@ -100,7 +100,7 @@ fun HomeScreen(
                                     )
                                 }else{
                                     VerticalSpace(16)
-                                    TasksCompleted(navController)
+                                    TasksCompleted(navController,tasks = tasks)
                                     VerticalSpace(16)
                                     when (tasks.size) {
                                         1 -> {
