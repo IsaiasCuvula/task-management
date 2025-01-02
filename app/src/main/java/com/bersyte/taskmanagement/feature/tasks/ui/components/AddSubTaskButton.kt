@@ -23,12 +23,12 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.bersyte.taskmanagement.common.components.VerticalSpace
-import com.bersyte.taskmanagement.feature.tasks.ui.screens.AddSubTask
+import com.bersyte.taskmanagement.feature.tasks.ui.screens.AddSubtaskScreen
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun  AddSubTaskButton() {
+fun  AddSubTaskButton(taskId: Long,) {
 
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded  = true
@@ -66,7 +66,8 @@ fun  AddSubTaskButton() {
                 },
                 dragHandle = {}
             ) {
-                AddSubTask (
+                AddSubtaskScreen (
+                    taskId = taskId,
                     onClose = {
                         scope.launch { sheetState.hide() }
                             .invokeOnCompletion {

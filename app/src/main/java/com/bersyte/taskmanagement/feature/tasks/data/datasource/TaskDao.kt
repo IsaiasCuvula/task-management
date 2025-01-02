@@ -36,9 +36,9 @@ interface TaskDao {
 
     @Transaction
     @Query("SELECT * FROM tasks WHERE taskId = :taskId")
-    fun getTasksWithSubtasks(taskId: Long): Flow<List<TaskWithSubtasks>>
+    fun getTasksWithSubtasks(taskId: Long): Flow<TaskWithSubtasks>
 
     @Transaction
     @Query("SELECT * FROM tasks WHERE taskId = :taskId")
-    fun getTasksWithLinks(taskId: Long): Flow<List<TaskWithLinks>>
+    fun getTasksWithLinks(taskId: Long): Flow<TaskWithLinks>
 }

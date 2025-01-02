@@ -22,15 +22,24 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.bersyte.taskmanagement.common.components.CommonTextField
 import com.bersyte.taskmanagement.common.components.VerticalSpace
+import com.bersyte.taskmanagement.feature.tasks.viewmodels.SubtaskViewmodel
+import com.bersyte.taskmanagement.utils.AppHelper
 
 @Composable
-fun AddSubTask(onClose: () -> Unit) {
-    var taskTitle by remember { mutableStateOf("")}
+fun AddSubtaskScreen(
+    taskId: Long,
+    onClose: () -> Unit,
+    subtaskViewmodel: SubtaskViewmodel = hiltViewModel()
+) {
+    var title by remember { mutableStateOf("")}
+    val context = LocalContext.current
 
     LazyColumn(
         modifier = Modifier.fillMaxWidth()
@@ -65,9 +74,9 @@ fun AddSubTask(onClose: () -> Unit) {
                     .padding(16.dp)
             ) {
                 CommonTextField(
-                    value = taskTitle,
-                    onValueChange = {value -> taskTitle = value},
-                    placeholder = taskTitle,
+                    value = title,
+                    onValueChange = {value -> title = value},
+                    placeholder = title,
                     label = {
                         Text(
                             "Subtask",
@@ -81,7 +90,25 @@ fun AddSubTask(onClose: () -> Unit) {
                 Button(
                     modifier = Modifier.fillMaxWidth().height(50.dp),
                     shape = RoundedCornerShape(16.dp),
-                    onClick = {}
+                    onClick = {
+                        if(title.isEmpty()){
+                          AppHelper.showToast(
+                              context, "Please add subtask title"
+                          )
+                        }else{
+                            subtaskViewmodel.saveSubtask(
+                                taskOwnerId = taskId,
+                                title = title,
+                            )
+
+                            //
+                            AppHelper.showToast(
+                                context, "Subtask saved successfully"
+                            )
+                            //
+                            onClose()
+                        }
+                    }
                 ) {
                     Text("Save")
                 }
