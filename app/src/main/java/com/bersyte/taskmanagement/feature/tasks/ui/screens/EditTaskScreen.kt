@@ -78,6 +78,7 @@ fun EditTaskScreen(
     var dueDate by remember {  mutableStateOf(today) }
     var dueTime by remember {  mutableStateOf(today.time) }
     var priority by remember {  mutableStateOf(TaskPriority.LOW) }
+    val taskMin = if(dueTime.minute == 0) "00" else dueTime.minute
 
     var showTimePicker by remember { mutableStateOf(false) }
     var showDatePicker by remember { mutableStateOf(false) }
@@ -199,7 +200,7 @@ fun EditTaskScreen(
                                 },
                                 shape = RoundedCornerShape(16.dp)
                             ) {
-                                val time = "${dueTime.hour}:${dueTime.minute}"
+                                val time = "${dueTime.hour}:$taskMin"
                                 CommonTextField(
                                     value = time,
                                     readOnly= true,
