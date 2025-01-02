@@ -18,12 +18,15 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
@@ -46,6 +49,13 @@ fun AddLinks(
 
     val clipboardManager = LocalClipboardManager.current
     val context = LocalContext.current
+
+    val focusRequester = remember { FocusRequester() }
+
+    //Request focus, as soon the this screen appears
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
 
     LazyColumn(
         modifier = Modifier.fillMaxWidth()
@@ -80,6 +90,7 @@ fun AddLinks(
             ) {
                 CommonTextField(
                     value = taskLink,
+                    modifier = Modifier.focusRequester(focusRequester),
                     onValueChange = {value -> taskLink = value},
                     placeholder = taskLink,
                     label = {
