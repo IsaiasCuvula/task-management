@@ -36,7 +36,8 @@ fun HomeUrgentTaskCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 CircularProgressBar(
-                    percentage = 0.3f, radius = 28, strokeWidth = 6.dp
+                    percentage = 0.3f, radius = 28, strokeWidth = 6.dp,
+                    color = task.priority.color
                 )
                 HorizontalSpace(16)
                 Column(modifier = Modifier.weight(1f)) {
