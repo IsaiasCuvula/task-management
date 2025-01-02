@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -32,7 +31,6 @@ import com.bersyte.taskmanagement.feature.home.ui.components.SearchTaskResult
 import com.bersyte.taskmanagement.feature.home.ui.components.TasksCompleted
 import com.bersyte.taskmanagement.feature.home.ui.components.UrgentTasks
 import com.bersyte.taskmanagement.feature.home.viewmodels.HomeViewModel
-import com.bersyte.taskmanagement.feature.tasks.data.models.Task
 
 @Composable
 fun HomeScreen(
@@ -49,12 +47,6 @@ fun HomeScreen(
 
     var query by remember { mutableStateOf("") }
     val textStyle = MaterialTheme.typography
-
-    val tasks = remember {mutableStateListOf<Task>()}
-
-    LaunchedEffect(key1 = homeState.value) {
-        homeStateValue.data?.let { tasks.addAll(it) }
-    }
 
     NavigationDrawer(
         navController = navController,
@@ -91,6 +83,8 @@ fun HomeScreen(
                                 ShowErrorMessage(homeStateValue.error)
                             }
                             homeStateValue.data != null -> {
+                                val tasks = homeStateValue.data
+
                                 if (query.isNotEmpty()){
                                     VerticalSpace(24)
                                     SearchTaskResult(
