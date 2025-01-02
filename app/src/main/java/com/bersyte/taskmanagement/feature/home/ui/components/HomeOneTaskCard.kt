@@ -16,11 +16,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.EditTaskButton
-import com.bersyte.taskmanagement.common.components.ProgressBar
 import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.common.navigation.Route
 import com.bersyte.taskmanagement.feature.tasks.data.models.Task
+import com.bersyte.taskmanagement.feature.tasks.ui.components.TaskProgressBar
 
 @Composable
 fun HomeOneTaskCard(
@@ -71,7 +71,11 @@ fun HomeOneTaskCard(
                     )
                 }
                 VerticalSpace(32)
-                ProgressBar(percentage = 0.7f)
+                TaskProgressBar(
+                    taskId = firstTask.taskId,
+                    color = colorScheme.tertiary,
+                    trackColor = colorScheme.surface
+                )
                 VerticalSpace(16)
                 Box(
                     modifier = Modifier.fillMaxSize(),

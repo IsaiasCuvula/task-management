@@ -9,11 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.HorizontalSpace
-import com.bersyte.taskmanagement.common.components.ProgressBar
 import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.common.navigation.Route
 import com.bersyte.taskmanagement.feature.tasks.data.models.Task
+import com.bersyte.taskmanagement.feature.tasks.ui.components.TaskProgressBar
 
 @Composable
 fun HomeTwoTasksCards(
@@ -46,7 +46,8 @@ fun HomeTwoTasksCards(
                        navController = navController,
                    )
                    VerticalSpace(24)
-                   ProgressBar(percentage = 0.4f,
+                   TaskProgressBar(
+                       taskId = firstTask.taskId,
                        color = colorScheme.onTertiary
                    )
                }
@@ -71,7 +72,8 @@ fun HomeTwoTasksCards(
                        navController = navController,
                    )
                    VerticalSpace(24)
-                   ProgressBar(percentage = 0.4f,
+                   TaskProgressBar(
+                       taskId = secondTask.taskId,
                        color = colorScheme.secondary
                    )
                }

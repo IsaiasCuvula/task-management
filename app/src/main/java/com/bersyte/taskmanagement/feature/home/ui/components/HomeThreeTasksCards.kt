@@ -16,11 +16,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.HorizontalSpace
-import com.bersyte.taskmanagement.common.components.ProgressBar
 import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.common.navigation.Route
 import com.bersyte.taskmanagement.feature.tasks.data.models.Task
+import com.bersyte.taskmanagement.feature.tasks.ui.components.TaskProgressBar
 
 @Composable
 fun HomeThreeTasksCards(
@@ -56,7 +56,7 @@ fun HomeThreeTasksCards(
                         navController = navController,
                     )
                     VerticalSpace(48)
-                    ProgressBar(percentage = 0.7f)
+                    TaskProgressBar(taskId = firstTask.taskId)
                     Box(
                         modifier = Modifier.fillMaxSize(),
                         Alignment.BottomStart
@@ -94,7 +94,8 @@ fun HomeThreeTasksCards(
                             navController = navController,
                         )
                         VerticalSpace(24)
-                        ProgressBar(percentage = 0.4f,
+                        TaskProgressBar(
+                            taskId = firstTask.taskId,
                             color = colorScheme.onTertiary
                         )
                     }

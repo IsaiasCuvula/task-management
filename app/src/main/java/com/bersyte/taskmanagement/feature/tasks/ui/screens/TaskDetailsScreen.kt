@@ -26,11 +26,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.BackButton
 import com.bersyte.taskmanagement.common.components.LoadingIndicator
-import com.bersyte.taskmanagement.common.components.ProgressBar
 import com.bersyte.taskmanagement.common.components.ShowErrorMessage
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.feature.tasks.ui.components.DetailsHeader
 import com.bersyte.taskmanagement.feature.tasks.ui.components.FileAndLinks
+import com.bersyte.taskmanagement.feature.tasks.ui.components.TaskProgressBar
 import com.bersyte.taskmanagement.feature.tasks.viewmodels.TaskViewmodel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -112,12 +112,11 @@ fun TaskDetailsScreen(
                             VerticalSpace(16)
                             FileAndLinks(navController = navController, taskId = taskId)
                             VerticalSpace(32)
-                            ProgressBar(
-                                percentage = 0.7f, height = 12,
-                                fontSize = textStyle.titleMedium.fontSize,
+                            TaskProgressBar(
+                                taskId = taskId, height = 12,
                                 color = colors.tertiary,
-                                trackColor = colors.surface
-
+                                trackColor = colors.surface,
+                                fontSize = MaterialTheme.typography.titleMedium.fontSize
                             )
                             VerticalSpace(16)
                             Text(
