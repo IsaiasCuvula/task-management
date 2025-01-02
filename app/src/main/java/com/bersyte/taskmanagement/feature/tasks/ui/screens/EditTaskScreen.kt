@@ -54,7 +54,10 @@ import com.bersyte.taskmanagement.utils.AppHelper
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EditTaskScreen(navController: NavHostController) {
+fun EditTaskScreen(
+    navController: NavHostController,
+    taskId: Long
+) {
 
     val today = AppHelper.getCurrentDate()
     var title by remember {  mutableStateOf("") }

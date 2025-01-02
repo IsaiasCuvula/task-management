@@ -14,12 +14,16 @@ fun HomeTaskCardTop(
     navController: NavHostController,
     title: String,
     desc: String = "",
+    taskId: Long,
     descMaxLines: Int = 3
 ) {
     val textStyle = MaterialTheme.typography
 
     Column {
-        EditTaskButton(navController)
+        EditTaskButton(
+            navController = navController,
+            taskId = taskId
+        )
         Text(
             title,
             style = textStyle.titleMedium.copy(

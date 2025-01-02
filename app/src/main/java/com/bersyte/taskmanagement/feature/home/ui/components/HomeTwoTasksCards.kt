@@ -42,6 +42,7 @@ fun HomeTwoTasksCards(
                ) {
                    HomeTaskCardTop(
                        title =  firstTask.title,
+                       taskId = firstTask.taskId,
                        navController = navController,
                    )
                    VerticalSpace(24)
@@ -66,6 +67,7 @@ fun HomeTwoTasksCards(
                ) {
                    HomeTaskCardTop(
                        title =  secondTask.title,
+                       taskId = secondTask.taskId,
                        navController = navController,
                    )
                    VerticalSpace(24)

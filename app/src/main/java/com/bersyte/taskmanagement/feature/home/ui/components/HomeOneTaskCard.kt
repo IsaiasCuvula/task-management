@@ -65,7 +65,10 @@ fun HomeOneTaskCard(
                             maxLines = 1
                         )
                     }
-                    EditTaskButton(navController)
+                    EditTaskButton(
+                        navController = navController,
+                        taskId = firstTask.taskId
+                    )
                 }
                 VerticalSpace(32)
                 ProgressBar(percentage = 0.7f)

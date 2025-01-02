@@ -29,9 +29,18 @@ fun NavigationGraph(
         composable(Route.Tasks.name) { TasksScreen(navController) }
         composable(Route.Notifications.name) { NotificationScreen(navController) }
         composable(Route.About.name) { AboutScreen(navController) }
-        composable(Route.EditTask.name) { EditTaskScreen(navController) }
         composable(Route.AddTask.name) { AddTaskScreen(navController) }
 
+
+        composable("${Route.EditTask.name}/{taskId}") { backStackEntry ->
+            val taskId = backStackEntry.arguments?.getString("taskId")
+            if(taskId !=null){
+                EditTaskScreen(
+                    navController = navController,
+                    taskId = taskId.toLong()
+                )
+            }
+        }
 
         composable("${Route.TaskDetails.name}/{taskId}") { backStackEntry ->
             val taskId = backStackEntry.arguments?.getString("taskId")

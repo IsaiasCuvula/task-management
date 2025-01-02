@@ -47,7 +47,10 @@ fun DetailsHeader(navController: NavHostController, task: Task) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text("Task title")
-            EditTaskButton(navController)
+            EditTaskButton(
+                navController = navController,
+                taskId = task.taskId
+            )
         }
         VerticalSpace(4)
         Text(

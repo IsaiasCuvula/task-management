@@ -16,11 +16,18 @@ import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.navigation.Route
 
 @Composable
-fun EditTaskButton(navController: NavHostController) {
+fun EditTaskButton(
+    navController: NavHostController,
+    taskId: Long
+) {
 
-    IconButton(onClick = {
-        navController.navigate(Route.EditTask.name)
-    }) {
+    IconButton(
+        onClick = {
+            navController.navigate(
+                "${Route.EditTask.name}/${taskId}"
+            )
+        }
+    ) {
         Icon(
             Icons.Outlined.Edit,
             contentDescription = "Edit Task",

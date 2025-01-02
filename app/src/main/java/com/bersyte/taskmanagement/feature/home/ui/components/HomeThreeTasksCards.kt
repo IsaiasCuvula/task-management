@@ -52,6 +52,7 @@ fun HomeThreeTasksCards(
                     HomeTaskCardTop(
                         title =  firstTask.title,
                         desc = firstTask.description,
+                        taskId = firstTask.taskId,
                         navController = navController,
                     )
                     VerticalSpace(48)
@@ -89,6 +90,7 @@ fun HomeThreeTasksCards(
                     ) {
                         HomeTaskCardTop(
                             title =  secondTask.title,
+                            taskId = secondTask.taskId,
                             navController = navController,
                         )
                         VerticalSpace(24)
@@ -113,6 +115,7 @@ fun HomeThreeTasksCards(
                         HomeTaskCardTop(
                             title = thirdTask.title,
                             desc = thirdTask.description,
+                            taskId = thirdTask.taskId,
                             descMaxLines = 1,
                             navController = navController,
                         )
