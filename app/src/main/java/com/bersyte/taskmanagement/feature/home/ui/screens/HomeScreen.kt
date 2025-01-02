@@ -28,6 +28,7 @@ import com.bersyte.taskmanagement.feature.home.ui.components.HomeOneTaskCard
 import com.bersyte.taskmanagement.feature.home.ui.components.HomeThreeTasksCards
 import com.bersyte.taskmanagement.feature.home.ui.components.HomeTwoTasksCards
 import com.bersyte.taskmanagement.feature.home.ui.components.SearchField
+import com.bersyte.taskmanagement.feature.home.ui.components.SearchTaskResult
 import com.bersyte.taskmanagement.feature.home.ui.components.TasksCompleted
 import com.bersyte.taskmanagement.feature.home.ui.components.UrgentTasks
 import com.bersyte.taskmanagement.feature.home.viewmodels.HomeViewModel
@@ -81,45 +82,54 @@ fun HomeScreen(
                             },
                             onQueryClear = {query = ""},
                         )
-                        VerticalSpace(16)
-                        TasksCompleted(navController)
-                        VerticalSpace(16)
                         when {
                             homeStateValue.isLoading ->{
-                               LoadingIndicator()
+                                LoadingIndicator()
                             }
 
                             homeStateValue.error != null -> {
                                 ShowErrorMessage(homeStateValue.error)
                             }
-
                             homeStateValue.data != null -> {
-                                when (tasks.size) {
-                                    1 -> {
-                                        HomeOneTaskCard(
-                                            tasks = tasks,
-                                            navController= navController
-                                        )
-                                    }
-                                    2 -> {
-                                        HomeTwoTasksCards(
-                                            tasks = tasks,
-                                            navController= navController
-                                        )
-                                    }
-                                    else -> {
-                                        if(tasks.size >=3){
-                                            HomeThreeTasksCards(
+                                if (query.isNotEmpty()){
+                                    VerticalSpace(24)
+                                    SearchTaskResult(
+                                        query= query,
+                                        allTask =  tasks,
+                                        navController = navController
+                                    )
+                                }else{
+                                    VerticalSpace(16)
+                                    TasksCompleted(navController)
+                                    VerticalSpace(16)
+                                    when (tasks.size) {
+                                        1 -> {
+                                            HomeOneTaskCard(
                                                 tasks = tasks,
                                                 navController= navController
                                             )
                                         }
+                                        2 -> {
+                                            HomeTwoTasksCards(
+                                                tasks = tasks,
+                                                navController= navController
+                                            )
+                                        }
+                                        else -> {
+                                            if(tasks.size >=3){
+                                                HomeThreeTasksCards(
+                                                    tasks = tasks,
+                                                    navController= navController
+                                                )
+                                            }
+                                        }
                                     }
+                                    VerticalSpace(24)
+                                    UrgentTasks(navController)
+                                    VerticalSpace(24)
                                 }
                             }
                         }
-                        VerticalSpace(24)
-                        UrgentTasks(navController)
                     }
                 }
             }
