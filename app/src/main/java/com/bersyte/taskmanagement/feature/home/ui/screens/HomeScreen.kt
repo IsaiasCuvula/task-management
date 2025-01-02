@@ -39,20 +39,17 @@ fun HomeScreen(
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
 
+    LaunchedEffect(Unit) {
+        homeViewModel.getTasks()
+    }
+
     val homeState = homeViewModel.homeState.collectAsState()
     val homeStateValue = homeState.value
-    val urgentTaskState = homeViewModel.homeUrgentTaskState.collectAsState()
-
 
     var query by remember { mutableStateOf("") }
     val textStyle = MaterialTheme.typography
 
-    val urgentTasks = remember {mutableStateListOf<Task>()}
     val tasks = remember {mutableStateListOf<Task>()}
-
-    LaunchedEffect(key1 = urgentTaskState.value) {
-        urgentTaskState.value.data?.let { urgentTasks.addAll(it) }
-    }
 
     LaunchedEffect(key1 = homeState.value) {
         homeStateValue.data?.let { tasks.addAll(it) }
@@ -110,17 +107,19 @@ fun HomeScreen(
                                             navController= navController
                                         )
                                     }
-                                    3 -> {
-                                        HomeThreeTasksCards(
-                                            tasks = tasks,
-                                            navController= navController
-                                        )
+                                    else -> {
+                                        if(tasks.size >=3){
+                                            HomeThreeTasksCards(
+                                                tasks = tasks,
+                                                navController= navController
+                                            )
+                                        }
                                     }
                                 }
                             }
                         }
                         VerticalSpace(24)
-                        UrgentTasks(navController, urgentTasks)
+                        UrgentTasks(navController)
                     }
                 }
             }

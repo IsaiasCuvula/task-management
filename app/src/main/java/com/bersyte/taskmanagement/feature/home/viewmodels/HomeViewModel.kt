@@ -26,13 +26,7 @@ class HomeViewModel @Inject constructor(
     private val _homeUrgentTaskState = MutableStateFlow(UiState<List<Task>>())
     val homeUrgentTaskState = _homeUrgentTaskState.asStateFlow()
 
-
-    init {
-        getNonUrgentTasks()
-        getThreeUrgentTasks()
-    }
-
-    private fun getNonUrgentTasks() = viewModelScope.launch {
+    fun getTasks() = viewModelScope.launch {
         try {
             _homeState.update {it.copy(isLoading = true)}
             //
@@ -53,9 +47,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-
-
-    private fun getThreeUrgentTasks() = viewModelScope.launch {
+     fun getThreeUrgentTasks() = viewModelScope.launch {
         try {
             _homeUrgentTaskState.update {it.copy(isLoading = true)}
             //
