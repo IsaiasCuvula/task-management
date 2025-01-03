@@ -21,17 +21,25 @@ class TasksCompletedViewModel @Inject constructor(
     private val _tasksCompletedState = MutableStateFlow(UiState<List<Task>>())
     val tasksCompletedState = _tasksCompletedState.asStateFlow()
 
+
     init {
         getAllTasks()
     }
 
-   private fun getAllTasks() = viewModelScope.launch {
+    private fun getAllTasks() = viewModelScope.launch {
         try {
-            _tasksCompletedState.update {it.copy(isLoading = true)}
-            //
-            taskRepository.getAllTasks().collect{ task ->
+            _tasksCompletedState.update { it.copy(isLoading = true) }
+            // Collect tasks with subtasks
+            taskRepository.getAllTasksWithSubtasks().collect { tasks ->
+                val enrichedTasks = tasks.map { taskWithSubtasks ->
+                    // Update task completion status based on subtasks
+                    taskWithSubtasks.task.copy(
+                        isCompleted = taskWithSubtasks.subtasks.all { it.isCompleted }
+                    )
+                }
+                // Update state with enriched tasks
                 _tasksCompletedState.update {
-                    it.copy(isLoading = false, data = task)
+                    it.copy(isLoading = false, data = enrichedTasks)
                 }
             }
         }catch (e: Exception){
@@ -42,5 +50,5 @@ class TasksCompletedViewModel @Inject constructor(
             }
             return@launch
         }
-   }
+    }
 }

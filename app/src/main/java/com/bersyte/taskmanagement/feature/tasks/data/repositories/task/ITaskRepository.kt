@@ -15,4 +15,5 @@ interface ITaskRepository {
     suspend fun getTasksByPriority(priority: TaskPriority): Flow<List<Task>>
     suspend fun getTasksWithSubtasks(taskId: Long): Flow<TaskWithSubtasks>
     suspend fun getTasksWithLinks(taskId: Long): Flow<TaskWithLinks>
+    suspend fun getAllTasksWithSubtasks(): Flow<List<TaskWithSubtasks>>
 }

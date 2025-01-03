@@ -32,6 +32,10 @@ class TaskRepository(db: AppDatabase): ITaskRepository {
         return dao.getTasksWithSubtasks(taskId)
     }
 
+    override suspend fun getAllTasksWithSubtasks(): Flow<List<TaskWithSubtasks>> {
+        return dao.getAllTasksWithSubtasks()
+    }
+
     override suspend fun getTasksWithLinks(taskId: Long): Flow<TaskWithLinks> {
         return dao.getTasksWithLinks(taskId)
     }

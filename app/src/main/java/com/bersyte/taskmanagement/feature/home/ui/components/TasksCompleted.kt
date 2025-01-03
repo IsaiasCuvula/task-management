@@ -1,5 +1,6 @@
 package com.bersyte.taskmanagement.feature.home.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,6 +27,7 @@ import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.feature.home.viewmodels.TasksCompletedViewModel
 import com.bersyte.taskmanagement.utils.AppHelper
 import com.bersyte.taskmanagement.utils.Month
+import com.bersyte.taskmanagement.utils.TaskHelper
 
 @Composable
 fun TasksCompleted(
@@ -49,8 +51,12 @@ fun TasksCompleted(
            when{
                tasksCompletedStateValue.data != null -> {
                    val tasks = tasksCompletedStateValue.data
+                   val percentageCompleted = TaskHelper.tasksCompletedPercentage(tasks)
+                   val totalDone = TaskHelper.totalTaskDone(tasks)
+                   val tasksDoneDisplayText = if (tasks.size != 1) "tasks done" else "task done"
 
-                   val tasksDoneDisplayText = if(tasks.size != 1)"tasks done" else "task done"
+                   Log.d("TasksCompleted", "Percentage completed: $percentageCompleted")
+                   Log.d("TasksCompleted", "Total Done : $totalDone")
 
                    Row(
                        modifier = Modifier.fillMaxWidth(),
@@ -66,7 +72,7 @@ fun TasksCompleted(
                            )
                            VerticalSpace(6)
                            Text(
-                               "30/${tasks.size} $tasksDoneDisplayText",
+                               "$totalDone/${tasks.size} $tasksDoneDisplayText",
                                style = textStyle.bodyMedium.copy(
                                    color = Color.White.copy(alpha = 0.6f)
                                )
@@ -82,7 +88,7 @@ fun TasksCompleted(
                                    .padding(horizontal = 10.dp)
                            )
                        }
-                       CircularProgressBar(percentage = 0.8f)
+                       CircularProgressBar(percentage = percentageCompleted)
                    }
                }
            }

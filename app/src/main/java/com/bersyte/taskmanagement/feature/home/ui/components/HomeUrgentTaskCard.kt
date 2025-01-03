@@ -1,5 +1,6 @@
 package com.bersyte.taskmanagement.feature.home.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,14 +36,13 @@ fun HomeUrgentTaskCard(
 
     val subtasksState = subtaskVM.subtaskState.collectAsState()
     val subtasksStateValue = subtasksState.value
+    val taskId = task.taskId
 
-    LaunchedEffect(subtasksStateValue) {
-        subtaskVM.getTaskWithSubtasks(task.taskId)
+    LaunchedEffect(key1 = taskId) {
+        subtaskVM.getTaskWithSubtasks(taskId)
+        Log.d("HomeUrgentTaskCard - $taskId", "Subtasks loaded for taskId: $taskId")
     }
 
-    val percentageCompleted = TaskHelper.isTaskCompleted(
-        subtasksStateValue.data ?: emptyList()
-    )
 
     ThemedCard(
         onClick = onClick,
@@ -52,11 +52,24 @@ fun HomeUrgentTaskCard(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                CircularProgressBar(
-                    percentage = percentageCompleted,
-                    radius = 28, strokeWidth = 6.dp,
-                    color = task.priority.color
-                )
+                when{
+                    subtasksStateValue.data != null -> {
+                        val subtasks = subtasksStateValue.data
+
+                        val percentageCompleted = 0.2f//TaskHelper.tasksCompletedPercentage(subtasks)
+                        Log.d("HomeUrgentTaskCard - Task: $taskId", "Subtasks data: $subtasks")
+                        Log.d("HomeUrgentTaskCard - Task: $taskId", "Percentage Completed: $percentageCompleted")
+
+
+                        CircularProgressBar(
+                            percentage = percentageCompleted,
+                            radius = 28, strokeWidth = 6.dp,
+                            color = task.priority.color
+                        )
+                    }else ->{
+                        Log.d("HomeUrgentTaskCard", "No subtasks found or data is loading.")
+                    }
+                }
                 HorizontalSpace(16)
                 Column(modifier = Modifier.weight(1f)) {
                     Text(

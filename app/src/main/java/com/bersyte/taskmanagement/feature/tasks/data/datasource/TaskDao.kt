@@ -35,6 +35,10 @@ interface TaskDao {
     fun getTasksByPriority(priority: TaskPriority): Flow<List<Task>>
 
     @Transaction
+    @Query("SELECT * FROM tasks ORDER BY dueDate ASC")
+    fun getAllTasksWithSubtasks(): Flow<List<TaskWithSubtasks>>
+
+    @Transaction
     @Query("SELECT * FROM tasks WHERE taskId = :taskId")
     fun getTasksWithSubtasks(taskId: Long): Flow<TaskWithSubtasks>
 

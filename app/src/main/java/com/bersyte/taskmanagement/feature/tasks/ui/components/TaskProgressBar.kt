@@ -28,7 +28,6 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bersyte.taskmanagement.feature.tasks.viewmodels.SubtaskViewmodel
-import com.bersyte.taskmanagement.utils.TaskHelper
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 
 @Composable
@@ -50,13 +49,13 @@ fun TaskProgressBar(
 
     when{
         subtasksStateValue.data != null -> {
-            val percentageCompleted = TaskHelper.isTaskCompleted(
-                subtasksStateValue.data
-            )
+//            val percentageCompleted = TaskHelper.taskPercentageCompleted(
+//                subtasksStateValue.data
+//            )
 
             key(taskId) {
                 ProgressBar(
-                    percentage = percentageCompleted,
+                    percentage = 0.3f,
                     fontSize = fontSize,
                     color = color,
                     trackColor = trackColor,

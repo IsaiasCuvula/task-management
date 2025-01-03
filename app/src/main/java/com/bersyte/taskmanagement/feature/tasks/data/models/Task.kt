@@ -12,6 +12,7 @@ data class Task(
     @PrimaryKey(autoGenerate = true)
     val taskId: Long,
     var title: String,
+    var isCompleted: Boolean = false,
     var description: String,
     var dueDate: LocalDateTime,
     var dueTime: LocalTime,
