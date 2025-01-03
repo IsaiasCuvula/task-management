@@ -1,5 +1,6 @@
 package com.bersyte.taskmanagement.core.data
 
+
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -14,7 +15,7 @@ import com.bersyte.taskmanagement.utils.Converters
 
 @Database(
     entities = [Task::class, TaskLink::class, Subtask::class],
-    version = 1, exportSchema = true
+    version = 2, exportSchema = true
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase() {

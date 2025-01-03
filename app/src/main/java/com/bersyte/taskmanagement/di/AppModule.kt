@@ -2,6 +2,8 @@ package com.bersyte.taskmanagement.di
 
 import android.content.Context
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.bersyte.taskmanagement.core.data.AppDatabase
 import com.bersyte.taskmanagement.feature.tasks.data.repositories.subtask.SubtaskRepository
 import com.bersyte.taskmanagement.feature.tasks.data.repositories.task.TaskRepository
@@ -17,13 +19,21 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+
+    private val migration1To2 = object : Migration(1, 2) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE tasks ADD COLUMN isCompleted INTEGER NOT NULL DEFAULT 0")
+        }
+    }
+
+
     @Provides
     @Singleton
     fun provideAppDatabase(
         @ApplicationContext context: Context
     ): AppDatabase = Room.databaseBuilder(
         context, AppDatabase::class.java, "app_database"
-    ).build()
+    ).addMigrations(migration1To2).build()
 
 
     @Provides
