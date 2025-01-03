@@ -95,7 +95,7 @@ fun HomeThreeTasksCards(
                         )
                         VerticalSpace(24)
                         TaskProgressBar(
-                            taskId = firstTask.taskId,
+                            taskId = secondTask.taskId,
                             color = colorScheme.onTertiary
                         )
                     }
