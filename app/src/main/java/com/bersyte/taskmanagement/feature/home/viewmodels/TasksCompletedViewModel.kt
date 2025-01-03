@@ -29,17 +29,14 @@ class TasksCompletedViewModel @Inject constructor(
     private fun getAllTasks() = viewModelScope.launch {
         try {
             _tasksCompletedState.update { it.copy(isLoading = true) }
-            // Collect tasks with subtasks
             taskRepository.getAllTasksWithSubtasks().collect { tasks ->
-                val enrichedTasks = tasks.map { taskWithSubtasks ->
-                    // Update task completion status based on subtasks
+                val result = tasks.map { taskWithSubtasks ->
                     taskWithSubtasks.task.copy(
-                        isCompleted = taskWithSubtasks.subtasks.all { it.isCompleted }
+                        isCompleted = taskWithSubtasks.subtasks.isNotEmpty() && taskWithSubtasks.subtasks.all { it.isCompleted }
                     )
                 }
-                // Update state with enriched tasks
                 _tasksCompletedState.update {
-                    it.copy(isLoading = false, data = enrichedTasks)
+                    it.copy(isLoading = false, data = result)
                 }
             }
         }catch (e: Exception){

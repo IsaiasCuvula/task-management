@@ -9,12 +9,12 @@ object TaskHelper {
 
     fun tasksCompletedPercentage(tasks: List<Task>): Float {
         val total = tasks.size
-        val totalDone = tasks.count { it.isCompleted }
+        val totalDone = totalTaskDone(tasks)
         return if (total == 0) 0f else (totalDone.toFloat() / total)
     }
 
     fun totalTaskDone(tasks: List<Task>): Int {
-        return tasks.count { it.isCompleted }
+        return tasks.count {it.isCompleted}
     }
 
     fun isTaskDeadline(task: Task): Boolean {

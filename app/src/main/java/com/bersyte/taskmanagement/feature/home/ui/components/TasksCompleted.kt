@@ -1,6 +1,5 @@
 package com.bersyte.taskmanagement.feature.home.ui.components
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -41,7 +40,6 @@ fun TasksCompleted(
     val today = AppHelper.getCurrentDate().date
 
 
-
     ThemedCard(
         onClick = {
             navController.navigate(Route.Schedule.name)
@@ -54,9 +52,6 @@ fun TasksCompleted(
                    val percentageCompleted = TaskHelper.tasksCompletedPercentage(tasks)
                    val totalDone = TaskHelper.totalTaskDone(tasks)
                    val tasksDoneDisplayText = if (tasks.size != 1) "tasks done" else "task done"
-
-                   Log.d("TasksCompleted", "Percentage completed: $percentageCompleted")
-                   Log.d("TasksCompleted", "Total Done : $totalDone")
 
                    Row(
                        modifier = Modifier.fillMaxWidth(),

@@ -1,6 +1,5 @@
 package com.bersyte.taskmanagement.feature.home.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -75,7 +74,6 @@ fun HomeScreen(
                             }
 
                             homeStateValue.error != null -> {
-                                Log.d("Home", "Home error: ${homeStateValue.error}")
                                 ShowErrorMessage(homeStateValue.error)
                             }
                             homeStateValue.data != null -> {
