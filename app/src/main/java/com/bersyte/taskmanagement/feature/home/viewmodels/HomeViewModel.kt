@@ -26,7 +26,11 @@ class HomeViewModel @Inject constructor(
     private val _homeUrgentTaskState = MutableStateFlow(UiState<List<Task>>())
     val homeUrgentTaskState = _homeUrgentTaskState.asStateFlow()
 
-    fun getTasks() = viewModelScope.launch {
+    init {
+        getTasks()
+    }
+
+    private fun getTasks() = viewModelScope.launch {
         try {
             _homeState.update {it.copy(isLoading = true)}
             //

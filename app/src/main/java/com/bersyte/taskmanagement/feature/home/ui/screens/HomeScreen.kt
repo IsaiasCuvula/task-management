@@ -8,7 +8,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,11 +36,6 @@ fun HomeScreen(
     navController: NavHostController,
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
-
-    LaunchedEffect(Unit) {
-        homeViewModel.getTasks()
-    }
-
     val homeState = homeViewModel.homeState.collectAsState()
     val homeStateValue = homeState.value
 
@@ -94,7 +88,7 @@ fun HomeScreen(
                                     )
                                 }else{
                                     VerticalSpace(16)
-                                    TasksCompleted(navController,tasks = tasks)
+                                    TasksCompleted(navController)
                                     VerticalSpace(16)
                                     when (tasks.size) {
                                         1 -> {
