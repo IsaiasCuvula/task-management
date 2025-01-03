@@ -1,6 +1,5 @@
 package com.bersyte.taskmanagement.feature.tasks.ui.components
 
-import android.util.Log
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
@@ -54,8 +53,6 @@ fun TaskProgressBar(
             val percentageCompleted = TaskHelper.isTaskCompleted(
                 subtasksStateValue.data
             )
-
-            Log.d("percentageCompleted", "percentageCompleted: $percentageCompleted")
 
             key(taskId) {
                 ProgressBar(
