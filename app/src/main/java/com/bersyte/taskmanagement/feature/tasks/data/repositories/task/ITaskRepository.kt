@@ -11,7 +11,7 @@ interface ITaskRepository {
     suspend fun delete(task: Task)
     suspend fun update(task: Task)
     suspend fun getTaskById(id: Long): Flow<Task?>
-    suspend fun getAllTasks(): Flow<List<Task>>
+    suspend fun getTasksExcludingHighPriority(): Flow<List<TaskWithSubtasks>>
     suspend fun getTasksByPriority(priority: TaskPriority): Flow<List<TaskWithSubtasks>>
     suspend fun getTasksWithSubtasks(taskId: Long): Flow<TaskWithSubtasks>
     suspend fun getTasksWithLinks(taskId: Long): Flow<TaskWithLinks>

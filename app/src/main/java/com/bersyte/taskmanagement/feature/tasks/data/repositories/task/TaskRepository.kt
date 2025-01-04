@@ -20,8 +20,8 @@ class TaskRepository(db: AppDatabase): ITaskRepository {
         return dao.getTaskById(id)
     }
 
-    override suspend fun getAllTasks(): Flow<List<Task>> {
-        return dao.getAllTasks()
+    override suspend fun getTasksExcludingHighPriority(): Flow<List<TaskWithSubtasks>> {
+        return dao.getTasksExcludingHighPriority()
     }
 
     override suspend fun getTasksByPriority(priority: TaskPriority): Flow<List<TaskWithSubtasks>> {

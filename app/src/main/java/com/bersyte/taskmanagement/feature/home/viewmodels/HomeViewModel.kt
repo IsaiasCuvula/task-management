@@ -28,18 +28,27 @@ class HomeViewModel @Inject constructor(
     val homeUrgentTaskState = _homeUrgentTaskState.asStateFlow()
 
     init {
-        getTasks()
+        getTasksExcludingHighPriority()
+        getThreeUrgentTasks()
     }
 
-    private fun getTasks() = viewModelScope.launch {
+    private fun getTasksExcludingHighPriority() = viewModelScope.launch {
         try {
             _homeState.update {it.copy(isLoading = true)}
             //
-            taskRepository.getAllTasks().collect{ task ->
+            taskRepository.getTasksExcludingHighPriority().collect{ tasks ->
+
+                val result = tasks.map { taskWithSubtasks ->
+                    val subtasks = taskWithSubtasks.subtasks
+
+                    taskWithSubtasks.task.copy(
+                        percentageCompleted = TaskHelper.percentageCompletedPerTask(subtasks),
+                        isCompleted = subtasks.isNotEmpty() && subtasks.all { it.isCompleted }
+                    )
+                }
+
                 _homeState.update {
-                    it.copy(isLoading = false, data = task.filter { task ->
-                        task.priority != TaskPriority.HIGH
-                    })
+                    it.copy(isLoading = false, data = result)
                 }
             }
         }catch (e: Exception){
@@ -52,7 +61,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-     fun getThreeUrgentTasks() = viewModelScope.launch {
+    private fun getThreeUrgentTasks() = viewModelScope.launch {
         try {
             _homeUrgentTaskState.update {it.copy(isLoading = true)}
             //

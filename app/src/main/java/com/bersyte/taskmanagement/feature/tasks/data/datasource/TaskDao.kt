@@ -28,8 +28,8 @@ interface TaskDao {
     @Query("SELECT * FROM tasks WHERE taskId = :id")
     fun getTaskById(id: Long): Flow<Task?>
 
-    @Query("SELECT * FROM tasks ORDER BY dueDate ASC")
-    fun getAllTasks():  Flow<List<Task>>
+    @Query("SELECT * FROM tasks WHERE priority != :priority ORDER BY dueDate ASC")
+    fun getTasksExcludingHighPriority(priority: TaskPriority = TaskPriority.HIGH):  Flow<List<TaskWithSubtasks>>
 
     @Query("SELECT * FROM tasks WHERE priority = :priority ORDER BY dueDate ASC")
     fun getTasksByPriority(priority: TaskPriority): Flow<List<TaskWithSubtasks>>
