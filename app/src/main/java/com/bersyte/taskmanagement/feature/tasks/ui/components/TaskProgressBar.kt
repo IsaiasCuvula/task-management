@@ -1,6 +1,5 @@
 package com.bersyte.taskmanagement.feature.tasks.ui.components
 
-import android.util.Log
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
@@ -53,8 +52,6 @@ fun TaskProgressBar(
     }
 
     val textStyle = MaterialTheme.typography
-
-    Log.d("TaskProgressBar", "$percentage")
 
     Column {
         LinearProgressIndicator(
