@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -45,6 +44,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.VerticalSpace
+import com.bersyte.taskmanagement.feature.home.ui.components.EditProfileButton
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -74,7 +74,9 @@ fun NavigationDrawer(
                             .background(
                                 color = MaterialTheme.colorScheme.primary
                             ).height(160.dp),
+                        contentAlignment = Alignment.TopEnd
                     ) {
+                        EditProfileButton()
                         Column(
                             modifier = Modifier.fillMaxSize().padding(16.dp),
                             verticalArrangement = Arrangement.Center,
@@ -109,7 +111,7 @@ fun NavigationDrawer(
                             }
                         )
                     }
-                    Spacer(Modifier.height(12.dp))
+                    VerticalSpace(12)
                 }
             }
         }
