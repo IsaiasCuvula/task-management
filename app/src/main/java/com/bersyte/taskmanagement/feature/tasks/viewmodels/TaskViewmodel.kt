@@ -27,7 +27,7 @@ class TaskViewmodel @Inject constructor(
     val taskByIdState = _taskByIdState.asStateFlow()
 
     init {
-        getAllTasks()
+        getTasksExcludingHighPriority()
     }
 
     fun updateTask(task: Task) = viewModelScope.launch {
@@ -81,7 +81,7 @@ class TaskViewmodel @Inject constructor(
         }
     }
 
-    private fun getAllTasks() = viewModelScope.launch {
+    private fun getTasksExcludingHighPriority() = viewModelScope.launch {
         try {
             _taskState.update {it.copy(isLoading = true)}
             //
