@@ -58,9 +58,19 @@ class TaskViewmodel @Inject constructor(
         _taskByIdState.update { it.copy(isLoading = true) }
 
         try {
-            repository.getTaskById(taskId).collect{ task ->
-                _taskByIdState.update {
-                    it.copy(isLoading = false, data = task)
+            repository.getTaskById(taskId).collect{ taskWithSubtasks ->
+
+                if(taskWithSubtasks != null){
+                    val subtasks = taskWithSubtasks.subtasks
+
+                  val result =  taskWithSubtasks.task.copy(
+                        percentageCompleted = TaskHelper.percentageCompletedPerTask(subtasks),
+                        isCompleted = subtasks.isNotEmpty() && subtasks.all { it.isCompleted }
+                    )
+
+                  _taskByIdState.update {
+                      it.copy(isLoading = false, data = result)
+                  }
                 }
             }
         } catch (e: Exception) {

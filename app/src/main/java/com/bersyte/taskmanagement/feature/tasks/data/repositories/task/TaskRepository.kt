@@ -16,7 +16,7 @@ class TaskRepository(db: AppDatabase): ITaskRepository {
 
     override suspend fun update(task: Task) = dao.update(task)
 
-    override suspend fun getTaskById(id: Long): Flow<Task?> {
+    override suspend fun getTaskById(id: Long): Flow<TaskWithSubtasks?> {
         return dao.getTaskById(id)
     }
 

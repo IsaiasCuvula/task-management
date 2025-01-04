@@ -26,7 +26,7 @@ interface TaskDao {
     suspend fun update(task: Task)
 
     @Query("SELECT * FROM tasks WHERE taskId = :id")
-    fun getTaskById(id: Long): Flow<Task?>
+    fun getTaskById(id: Long): Flow<TaskWithSubtasks?>
 
     @Query("SELECT * FROM tasks WHERE priority != :priority ORDER BY dueDate ASC")
     fun getTasksExcludingHighPriority(priority: TaskPriority = TaskPriority.HIGH):  Flow<List<TaskWithSubtasks>>
