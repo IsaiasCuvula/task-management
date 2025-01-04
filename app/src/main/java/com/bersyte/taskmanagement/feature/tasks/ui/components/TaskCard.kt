@@ -96,7 +96,7 @@ fun TaskCard(
                     }
                 }
                 CircularProgressBar(
-                    percentage = 0.3f, radius = 30,
+                    percentage = task.percentageCompleted, radius = 30,
                     //color = if(isTaskDeadline)colorScheme.onSurface else colorScheme.onSecondary,
                     color = task.priority.color,
                 )

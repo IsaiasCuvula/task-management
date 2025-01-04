@@ -28,6 +28,36 @@ class TaskViewmodel @Inject constructor(
 
     init {
         getTasksExcludingHighPriority()
+        getAllTasks()
+    }
+
+    private fun getAllTasks() = viewModelScope.launch {
+        try {
+            _taskState.update {it.copy(isLoading = true)}
+            //
+            repository.getAllTasksWithSubtasks().collect{ tasks ->
+
+                val result = tasks.map { taskWithSubtasks ->
+                    val subtasks = taskWithSubtasks.subtasks
+
+                    taskWithSubtasks.task.copy(
+                        percentageCompleted = TaskHelper.percentageCompletedPerTask(subtasks),
+                        isCompleted = subtasks.isNotEmpty() && subtasks.all { it.isCompleted }
+                    )
+                }
+
+                _taskState.update {
+                    it.copy(isLoading = false, data = result)
+                }
+            }
+        }catch (e: Exception){
+            val tag = "ScheduleViewModel "
+            Log.d(tag, "Error while getting all tasks with subtasks - ${e.message}")
+            _taskState.update {
+                it.copy(isLoading = false, error = e.message)
+            }
+            return@launch
+        }
     }
 
     fun updateTask(task: Task) = viewModelScope.launch {

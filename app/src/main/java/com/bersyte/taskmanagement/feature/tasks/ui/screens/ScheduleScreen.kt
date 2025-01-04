@@ -14,10 +14,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,25 +28,18 @@ import com.bersyte.taskmanagement.common.components.LoadingIndicator
 import com.bersyte.taskmanagement.common.components.ShowErrorMessage
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.feature.home.ui.components.CalendarWeekView
-import com.bersyte.taskmanagement.feature.tasks.data.models.Task
 import com.bersyte.taskmanagement.feature.tasks.ui.components.TaskCard
-import com.bersyte.taskmanagement.feature.tasks.viewmodels.TaskViewmodel
+import com.bersyte.taskmanagement.feature.tasks.viewmodels.ScheduleViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScheduleScreen(
     navController: NavHostController,
-    taskViewmodel: TaskViewmodel = hiltViewModel()
+    scheduleViewModel: ScheduleViewModel = hiltViewModel()
 ) {
 
-    val taskState = taskViewmodel.taskState.collectAsState()
-    val taskStateValue = taskState.value
-
-    val tasks = remember { mutableStateListOf<Task>() }
-
-    LaunchedEffect(key1 =  taskStateValue){
-        taskStateValue.data?.let { tasks.addAll(it) }
-    }
+    val scheduleState = scheduleViewModel.scheduleState.collectAsState()
+    val scheduleStateValue = scheduleState.value
 
     Scaffold (
         topBar = {
@@ -87,15 +77,17 @@ fun ScheduleScreen(
                         VerticalSpace(16)
 
                         when{
-                            taskStateValue.isLoading -> {
+                            scheduleStateValue.isLoading -> {
                                 LoadingIndicator()
                             }
 
-                            taskStateValue.error != null -> {
-                                ShowErrorMessage(taskStateValue.error)
+                            scheduleStateValue.error != null -> {
+                                ShowErrorMessage(scheduleStateValue.error)
                             }
 
-                            taskStateValue.data != null -> {
+                            scheduleStateValue.data != null -> {
+                                val tasks = scheduleStateValue.data
+
                                 tasks.forEachIndexed { index, task ->
 
                                     Row(
