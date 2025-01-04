@@ -77,7 +77,9 @@ class HomeViewModel @Inject constructor(
                 }
 
                 _homeUrgentTaskState.update {
-                    it.copy(isLoading = false, data = result)
+                    it.copy(isLoading = false, data = result.filter { task ->
+                        !task.isCompleted
+                    })
                 }
             }
         }catch (e: Exception){
