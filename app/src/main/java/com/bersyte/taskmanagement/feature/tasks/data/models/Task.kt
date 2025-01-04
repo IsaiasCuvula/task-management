@@ -12,12 +12,12 @@ import kotlinx.datetime.LocalTime
 data class Task(
     @PrimaryKey(autoGenerate = true)
     val taskId: Long,
-    var title: String,
-    var isCompleted: Boolean = false,
-    var percentageCompleted : Float = 0f,
-    var description: String,
-    var dueDate: LocalDate,
-    var dueTime: LocalTime,
-    var priority: TaskPriority,
-    var createdAt: LocalDateTime = AppHelper.getCurrentDate()
+    val title: String,
+    val isCompleted: Boolean = false,
+    val percentageCompleted : Float = 0f,
+    val description: String,
+    val dueDate: LocalDate,
+    val dueTime: LocalTime,
+    val priority: TaskPriority,
+    val createdAt: LocalDateTime = AppHelper.getCurrentDate()
 )

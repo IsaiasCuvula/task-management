@@ -236,16 +236,17 @@ fun EditTaskScreen(
                                     "Task title cannot be empty"
                                 )
                             }else{
-                                val taskToUpdate = taskByIdStateValue.data
-                                if(taskToUpdate != null) {
+                                val oldTask = taskByIdStateValue.data
+                                if(oldTask != null) {
+                                    val updatedTask = oldTask.copy(
+                                        title = title ,
+                                        description = description,
+                                        dueDate = dueDate,
+                                        dueTime =  dueTime,
+                                        priority= priority
+                                    )
 
-                                    taskToUpdate.title = title
-                                    taskToUpdate.description = description
-                                    taskToUpdate.dueDate = dueDate
-                                    taskToUpdate.dueDate = dueDate
-                                    taskToUpdate.priority = priority
-
-                                    taskViewmodel.updateTask(taskToUpdate)
+                                    taskViewmodel.updateTask(updatedTask)
 
                                     AppHelper.showToast(
                                         context, "Task updated successfully"
