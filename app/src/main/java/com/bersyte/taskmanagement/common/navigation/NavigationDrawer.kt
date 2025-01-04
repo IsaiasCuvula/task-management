@@ -18,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.NotificationsNone
+import androidx.compose.material.icons.rounded.Schedule
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -140,12 +141,24 @@ fun NavigationDrawer(
                     actions = {
                         IconButton(
                             onClick = {
+                                navController.navigate(Route.Schedule.name)
+                            }
+                        ) {
+                            Icon(
+                                Icons.Rounded.Schedule,
+                                contentDescription = "Today's tasks",
+                                modifier = Modifier.size(28.dp)
+                            )
+                        }
+
+                        IconButton(
+                            onClick = {
                                 navController.navigate(Route.Notifications.name)
                             }
                         ) {
                             Icon(
                                 Icons.Rounded.NotificationsNone,
-                                contentDescription = "Open notification page",
+                                contentDescription = "Notification",
                                 modifier = Modifier.size(32.dp)
                             )
                         }
