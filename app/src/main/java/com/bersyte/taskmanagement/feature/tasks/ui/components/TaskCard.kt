@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.CircularProgressBar
@@ -53,14 +54,18 @@ fun TaskCard(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Column {
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                        .weight(3.5f)
+                ) {
                     Text(
                         task.title,
                         style = textStyle.titleMedium.copy(
                             fontWeight = FontWeight.Bold,
                             color = Color.White,
                         ),
-                        maxLines = 1
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                     VerticalSpace(8)
                     Row {
@@ -95,11 +100,17 @@ fun TaskCard(
                         )
                     }
                 }
-                CircularProgressBar(
-                    percentage = task.percentageCompleted, radius = 30,
-                    //color = if(isTaskDeadline)colorScheme.onSurface else colorScheme.onSecondary,
-                    color = task.priority.color,
-                )
+                HorizontalSpace(8)
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                        .weight(1f)
+
+                ) {
+                    CircularProgressBar(
+                        percentage = task.percentageCompleted, radius = 30,
+                        color = if(isTaskDeadline)colorScheme.onSurface else task.priority.color,
+                    )
+                }
             }
         }
     )

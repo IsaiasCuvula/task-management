@@ -3,7 +3,6 @@ package com.bersyte.taskmanagement.utils
 import com.bersyte.taskmanagement.feature.tasks.data.models.Subtask
 import com.bersyte.taskmanagement.feature.tasks.data.models.Task
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.atTime
 import kotlinx.datetime.minus
 
 object TaskHelper {
@@ -30,11 +29,9 @@ object TaskHelper {
     }
 
     fun isTaskDeadline(task: Task): Boolean {
-        val taskDate = task.dueDate
         val taskTime = task.dueTime
-        val todayDateTime = AppHelper.getCurrentDate()
-        val taskDateTime = taskDate.atTime(taskTime)
-        return todayDateTime == taskDateTime
+        val currentHour = TaskHour.currentHour()
+        return currentHour.hour == taskTime.hour
     }
 
     fun calculateDaysLeft(givenDate: LocalDate): Int {

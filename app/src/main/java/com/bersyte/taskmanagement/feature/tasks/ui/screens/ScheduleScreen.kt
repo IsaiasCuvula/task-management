@@ -31,6 +31,7 @@ import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.feature.home.ui.components.CalendarWeekView
 import com.bersyte.taskmanagement.feature.tasks.ui.components.TaskCard
 import com.bersyte.taskmanagement.feature.tasks.viewmodels.ScheduleViewModel
+import com.bersyte.taskmanagement.utils.TaskHour
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -91,36 +92,49 @@ fun ScheduleScreen(
                             }
 
                             scheduleStateValue.data != null -> {
-                                val tasks = scheduleStateValue.data
+                                val allTasks = scheduleStateValue.data
 
-                                if(tasks.isEmpty()){
+                                if(allTasks.isEmpty()){
                                     VerticalSpace(32)
                                     NoTasksMessageCard(
                                         navController = navController,
                                         msg = "You're all caught up! No tasks for now"
                                     )
                                 }else{
-                                    tasks.forEachIndexed { index, task ->
+                                    TaskHour.entries.forEach{ hour ->
 
-                                        Row(
-                                            modifier = Modifier.fillMaxWidth(),
-                                            horizontalArrangement = Arrangement.Center,
-                                            verticalAlignment = Alignment.CenterVertically
-                                        ) {
-                                            Text(
-                                                "10 PM",
-                                                style = MaterialTheme.typography.titleMedium.copy(
-                                                    color = Color.White.copy(alpha = 0.6f)
-                                                )
-                                            )
-                                            HorizontalSpace(24)
-                                            TaskCard(navController, task = task)
+                                        val tasksByHour = allTasks.filter { task ->
+                                            task.dueTime.hour == hour.hour
                                         }
-                                        if(index != tasks.lastIndex){
+                                        if(tasksByHour.isNotEmpty()){
+                                            Row(
+                                                modifier = Modifier.fillMaxWidth(),
+                                                horizontalArrangement = Arrangement.Center,
+                                                verticalAlignment = Alignment.CenterVertically
+                                            ) {
+                                                Text(
+                                                    "${hour.toLocalTime()}",
+                                                    style = MaterialTheme.typography.titleMedium.copy(
+                                                        color = Color.White.copy(alpha = 0.6f)
+                                                    )
+                                                )
+                                                HorizontalSpace(24)
+                                                Column(
+                                                    modifier = Modifier.fillMaxWidth(),
+                                                ) {
+                                                    tasksByHour.forEachIndexed{index, task ->
+                                                        TaskCard(navController, task = task)
+                                                        if (index != tasksByHour.lastIndex){
+                                                            VerticalSpace(12)
+                                                        }
+                                                    }
+                                                }
+                                            }
                                             VerticalSpace(8)
                                             HorizontalDivider()
                                             VerticalSpace(8)
                                         }
+
                                     }
                                 }
                             }
