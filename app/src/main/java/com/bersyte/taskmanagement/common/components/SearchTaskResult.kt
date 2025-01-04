@@ -11,7 +11,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.navigation.Route
-import com.bersyte.taskmanagement.feature.home.ui.components.HomeUrgentTaskCard
+import com.bersyte.taskmanagement.feature.home.ui.components.UrgentTaskCard
 import com.bersyte.taskmanagement.feature.tasks.data.models.Task
 
 @Composable
@@ -54,7 +54,7 @@ fun SearchTaskResult(
             )
             VerticalSpace(16)
             tasks.forEachIndexed { index, task ->
-                HomeUrgentTaskCard(
+                UrgentTaskCard(
                     task = task,
                     onClick = {
                         navController.navigate(

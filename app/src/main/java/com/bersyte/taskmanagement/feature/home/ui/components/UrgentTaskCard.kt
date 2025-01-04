@@ -19,7 +19,7 @@ import com.bersyte.taskmanagement.feature.tasks.data.models.Task
 import com.bersyte.taskmanagement.utils.TaskHelper
 
 @Composable
-fun HomeUrgentTaskCard(
+fun UrgentTaskCard(
     onClick: ()-> Unit,
     task: Task
 ) {

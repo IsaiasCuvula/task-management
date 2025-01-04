@@ -55,7 +55,7 @@ fun UrgentTasks(
                     )
                     VerticalSpace(16)
                     tasks.forEachIndexed { index, task ->
-                        HomeUrgentTaskCard(
+                        UrgentTaskCard(
                             task = task,
                             onClick = {
                                 navController.navigate(
