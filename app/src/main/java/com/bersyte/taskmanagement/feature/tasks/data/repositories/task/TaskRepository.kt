@@ -1,6 +1,6 @@
 package com.bersyte.taskmanagement.feature.tasks.data.repositories.task
 
-import com.bersyte.taskmanagement.core.data.AppDatabase
+import com.bersyte.taskmanagement.core.db.AppDatabase
 import com.bersyte.taskmanagement.feature.tasks.data.models.Task
 import com.bersyte.taskmanagement.feature.tasks.data.models.TaskPriority
 import com.bersyte.taskmanagement.feature.tasks.data.models.TaskWithLinks

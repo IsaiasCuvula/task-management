@@ -1,6 +1,6 @@
 package com.bersyte.taskmanagement.feature.tasks.data.repositories.subtask
 
-import com.bersyte.taskmanagement.core.data.AppDatabase
+import com.bersyte.taskmanagement.core.db.AppDatabase
 import com.bersyte.taskmanagement.feature.tasks.data.models.Subtask
 import kotlinx.coroutines.flow.Flow
 

@@ -4,7 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.bersyte.taskmanagement.core.data.AppDatabase
+import com.bersyte.taskmanagement.core.db.AppDatabase
+import com.bersyte.taskmanagement.feature.profile.data.repositories.ProfileRepository
 import com.bersyte.taskmanagement.feature.tasks.data.repositories.subtask.SubtaskRepository
 import com.bersyte.taskmanagement.feature.tasks.data.repositories.task.TaskRepository
 import com.bersyte.taskmanagement.feature.tasks.data.repositories.taskLink.TaskLinkRepository
@@ -20,9 +21,17 @@ import javax.inject.Singleton
 object AppModule {
 
 
-    private val migration2To3 = object : Migration(2, 3) {
+    private val migration3To4 = object : Migration(3, 4) {
         override fun migrate(db: SupportSQLiteDatabase) {
-            db.execSQL("ALTER TABLE tasks ADD COLUMN percentageCompleted FLOAT NOT NULL DEFAULT 0")
+            db.execSQL(
+                """
+                CREATE TABLE IF NOT EXISTS user_info (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                    username TEXT NOT NULL DEFAULT 'Your username',
+                    createdAt TEXT NOT NULL
+                )
+                """.trimIndent()
+            )
         }
     }
 
@@ -33,7 +42,7 @@ object AppModule {
         @ApplicationContext context: Context
     ): AppDatabase = Room.databaseBuilder(
         context, AppDatabase::class.java, "app_database"
-    ).addMigrations(migration2To3).build()
+    ).addMigrations(migration3To4).build()
 
 
     @Provides
@@ -55,5 +64,11 @@ object AppModule {
     fun provideTaskLinkRepository(
         db: AppDatabase
     ): TaskLinkRepository = TaskLinkRepository(db)
+
+    @Provides
+    @Singleton
+    fun provideProfileRepository(
+        db: AppDatabase
+    ): ProfileRepository = ProfileRepository(db)
 
 }

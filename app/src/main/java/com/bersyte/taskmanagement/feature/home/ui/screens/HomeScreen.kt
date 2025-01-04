@@ -30,6 +30,7 @@ import com.bersyte.taskmanagement.feature.home.ui.components.SearchTaskResult
 import com.bersyte.taskmanagement.feature.home.ui.components.TasksCompleted
 import com.bersyte.taskmanagement.feature.home.ui.components.UrgentTasks
 import com.bersyte.taskmanagement.feature.home.viewmodels.HomeViewModel
+import com.bersyte.taskmanagement.feature.profile.ui.components.HomeUsername
 
 @Composable
 fun HomeScreen(
@@ -53,7 +54,7 @@ fun HomeScreen(
                             .padding(horizontal =  16.dp),
                         verticalArrangement = Arrangement.Top
                     ) {
-                        Text("Hi, Jason")
+                        HomeUsername()
                         Text(
                             "Be, productive today",
                             style = textStyle.titleLarge.copy(
