@@ -1,4 +1,4 @@
-package com.bersyte.taskmanagement.feature.home.ui.screens
+package com.bersyte.taskmanagement.feature.profile.ui.screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

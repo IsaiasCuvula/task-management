@@ -1,4 +1,4 @@
-package com.bersyte.taskmanagement.feature.home.ui.components
+package com.bersyte.taskmanagement.feature.profile.ui.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.bersyte.taskmanagement.common.components.VerticalSpace
-import com.bersyte.taskmanagement.feature.home.ui.screens.EditProfileScreen
+import com.bersyte.taskmanagement.feature.profile.ui.screens.EditProfileScreen
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

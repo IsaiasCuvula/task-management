@@ -44,7 +44,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.VerticalSpace
-import com.bersyte.taskmanagement.feature.home.ui.components.EditProfileButton
+import com.bersyte.taskmanagement.feature.profile.ui.components.EditProfileButton
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
