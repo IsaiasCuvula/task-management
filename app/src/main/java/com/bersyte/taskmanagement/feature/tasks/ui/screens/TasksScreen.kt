@@ -27,8 +27,8 @@ import com.bersyte.taskmanagement.common.components.LoadingIndicator
 import com.bersyte.taskmanagement.common.components.ShowErrorMessage
 import com.bersyte.taskmanagement.feature.tasks.ui.components.TaskCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
-import com.bersyte.taskmanagement.feature.home.ui.components.SearchField
-import com.bersyte.taskmanagement.feature.home.ui.components.SearchTaskResult
+import com.bersyte.taskmanagement.common.components.SearchField
+import com.bersyte.taskmanagement.common.components.SearchTaskResult
 import com.bersyte.taskmanagement.feature.tasks.viewmodels.TaskViewmodel
 
 @OptIn(ExperimentalMaterial3Api::class)

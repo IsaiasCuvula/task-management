@@ -25,8 +25,8 @@ import com.bersyte.taskmanagement.common.navigation.NavigationDrawer
 import com.bersyte.taskmanagement.feature.home.ui.components.HomeOneTaskCard
 import com.bersyte.taskmanagement.feature.home.ui.components.HomeThreeTasksCards
 import com.bersyte.taskmanagement.feature.home.ui.components.HomeTwoTasksCards
-import com.bersyte.taskmanagement.feature.home.ui.components.SearchField
-import com.bersyte.taskmanagement.feature.home.ui.components.SearchTaskResult
+import com.bersyte.taskmanagement.common.components.SearchField
+import com.bersyte.taskmanagement.common.components.SearchTaskResult
 import com.bersyte.taskmanagement.feature.home.ui.components.TasksCompleted
 import com.bersyte.taskmanagement.feature.home.ui.components.UrgentTasks
 import com.bersyte.taskmanagement.feature.home.viewmodels.HomeViewModel

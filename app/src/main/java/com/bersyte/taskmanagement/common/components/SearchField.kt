@@ -1,4 +1,4 @@
-package com.bersyte.taskmanagement.feature.home.ui.components
+package com.bersyte.taskmanagement.common.components
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardActions
@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import com.bersyte.taskmanagement.common.components.CommonTextField
 
 @Composable
 fun SearchField(
