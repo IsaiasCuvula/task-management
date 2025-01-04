@@ -55,41 +55,15 @@ class ProfileViewModel @Inject constructor(
     fun updateUser(appUser: AppUser) = viewModelScope.launch {
         try {
             repository.update(appUser)
+            _profileState.update {
+                it.copy(data = appUser)
+            }
         }catch (e:Exception){
             Log.d("Update user", "Update user error: $e")
             _profileState.update {
                 it.copy(isLoading = false, error = e.message)
             }
             return@launch
-        }
-    }
-
-    fun deleteUser(appUser: AppUser)= viewModelScope.launch {
-        try {
-            repository.delete(appUser)
-        }catch (e:Exception){
-            Log.d("Delete user", "Delete user error: $e")
-            _profileState.update {
-                it.copy(isLoading = false, error = e.message)
-            }
-            return@launch
-        }
-    }
-
-    fun getUserById(userId: Int) = viewModelScope.launch {
-        _profileState.update { it.copy(isLoading = true) }
-
-        try {
-            repository.getUserById(userId).collect{ user ->
-                _profileState.update {
-                    it.copy(isLoading = false, data = user)
-                }
-            }
-        } catch (e: Exception) {
-            Log.d("Fetch user by id", "Fetch user by id error: $e")
-            _profileState.update {
-                it.copy(isLoading = false, error = e.message)
-            }
         }
     }
 

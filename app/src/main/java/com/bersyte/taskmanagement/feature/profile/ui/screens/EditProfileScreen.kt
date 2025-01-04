@@ -29,16 +29,21 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.bersyte.taskmanagement.common.components.CommonTextField
 import com.bersyte.taskmanagement.common.components.VerticalSpace
+import com.bersyte.taskmanagement.feature.profile.data.models.AppUser
+import com.bersyte.taskmanagement.feature.profile.viewmodels.ProfileViewModel
 import com.bersyte.taskmanagement.utils.AppHelper
 
 @Composable
 fun EditProfileScreen(
+    user: AppUser,
     onClose: () -> Unit,
-//    subtaskViewmodel: SubtaskViewmodel = hiltViewModel()
+    profileViewModel: ProfileViewModel = hiltViewModel()
 ) {
-    var name by remember { mutableStateOf("")}
+
+    var name by remember { mutableStateOf(user.username)}
     val context = LocalContext.current
 
     val focusRequester = remember { FocusRequester()}
@@ -47,7 +52,6 @@ fun EditProfileScreen(
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
     }
-
 
     LazyColumn(
         modifier = Modifier.fillMaxWidth()
@@ -101,19 +105,16 @@ fun EditProfileScreen(
                     shape = RoundedCornerShape(16.dp),
                     onClick = {
                         if(name.isEmpty()){
-                          AppHelper.showToast(
-                              context, "Please your name"
-                          )
-                        }else{
-//                            subtaskViewmodel.saveSubtask(
-//                                taskOwnerId = taskId,
-//                                title = name,
-//                            )
-                            //
                             AppHelper.showToast(
-                                context, "Name saved successfully"
+                                context, "Please enter your username..."
                             )
-                            //
+                        }else{
+                            val updatedUser = user.copy(username = name)
+
+                            profileViewModel.updateUser(updatedUser)
+                            AppHelper.showToast(
+                                context, "Name updated successfully"
+                            )
                             onClose()
                         }
                     }

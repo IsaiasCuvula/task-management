@@ -20,12 +20,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.bersyte.taskmanagement.common.components.VerticalSpace
+import com.bersyte.taskmanagement.feature.profile.data.models.AppUser
 import com.bersyte.taskmanagement.feature.profile.ui.screens.EditProfileScreen
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun  EditProfileButton() {
+fun  EditProfileButton(user: AppUser) {
 
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded  = true
@@ -55,6 +56,7 @@ fun  EditProfileButton() {
                 dragHandle = {}
             ) {
                 EditProfileScreen (
+                    user = user,
                     onClose = {
                         scope.launch { sheetState.hide() }
                             .invokeOnCompletion {

@@ -34,26 +34,25 @@ fun DisplayUserInfo(
             ).height(160.dp),
         contentAlignment = Alignment.TopEnd
     ) {
-        EditProfileButton()
-        Column(
-            modifier = Modifier.fillMaxSize().padding(16.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text("Hi",
-                style = MaterialTheme.typography.titleLarge
-            )
-            when {
-                profileStateValue.data != null -> {
-                    val user = profileStateValue.data
+        when {
+            profileStateValue.data != null -> {
+                val user = profileStateValue.data
 
+                EditProfileButton(user)
+                Column(
+                    modifier = Modifier.fillMaxSize().padding(16.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text("Hi",
+                        style = MaterialTheme.typography.titleLarge
+                    )
                     Text(
                         user.username,
                         style = MaterialTheme.typography.titleLarge
                     )
                 }
             }
-
         }
     }
 }
