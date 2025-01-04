@@ -64,10 +64,9 @@ fun HomeScreen(
                         VerticalSpace(24)
                         SearchField(
                             query = query,
-                            onQueryChanged = {newValue ->
-                                query = newValue
-                            },
+                            onQueryChanged = {query = it},
                             onQueryClear = {query = ""},
+                            onSpeaking = {query = it}
                         )
                         when {
                             homeStateValue.isLoading ->{

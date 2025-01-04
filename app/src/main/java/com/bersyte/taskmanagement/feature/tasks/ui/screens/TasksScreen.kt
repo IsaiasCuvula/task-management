@@ -35,12 +35,13 @@ import com.bersyte.taskmanagement.feature.tasks.viewmodels.TaskViewmodel
 @Composable
 fun TasksScreen(
     navController: NavHostController,
-    taskViewmodel: TaskViewmodel = hiltViewModel()
+    taskViewmodel: TaskViewmodel = hiltViewModel(),
 ) {
 
     val taskState = taskViewmodel.taskState.collectAsState()
     val taskStateValue = taskState.value
     var query by remember { mutableStateOf("") }
+
 
     Scaffold (
         topBar = {
@@ -69,10 +70,9 @@ fun TasksScreen(
                     ) {
                         SearchField(
                             query = query,
-                            onQueryChanged = {newValue ->
-                                query = newValue
-                            },
+                            onQueryChanged = {query = it},
                             onQueryClear = {query = ""},
+                            onSpeaking = {query = it}
                         )
                         VerticalSpace(32)
                         if(query.isNotEmpty()){
