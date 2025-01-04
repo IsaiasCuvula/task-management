@@ -42,7 +42,7 @@ fun TasksCompleted(
 
     ThemedCard(
         onClick = {
-            navController.navigate(Route.Schedule.name)
+            navController.navigate(Route.Tasks.name)
         },
         modifier = Modifier.fillMaxWidth(),
         content = {

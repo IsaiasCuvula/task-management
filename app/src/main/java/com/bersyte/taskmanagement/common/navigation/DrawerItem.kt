@@ -32,7 +32,7 @@ data class DrawerItem(
                 route = Route.Tasks
             ),
             DrawerItem(
-                title =  Route.Schedule.name,
+                title = "Today's Tasks",
                 selectedIcon = Icons.Rounded.Schedule,
                 unselectedIcon =  Icons.Outlined.Schedule,
                 route = Route.Schedule
