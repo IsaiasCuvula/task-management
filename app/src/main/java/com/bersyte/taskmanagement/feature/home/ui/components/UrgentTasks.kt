@@ -11,9 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.bersyte.taskmanagement.common.components.NoTasksMessageCard
 import com.bersyte.taskmanagement.common.components.LoadingIndicator
 import com.bersyte.taskmanagement.common.components.ShowErrorMessage
-import com.bersyte.taskmanagement.common.components.ThemedCard
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.common.navigation.Route
 import com.bersyte.taskmanagement.feature.home.viewmodels.HomeViewModel
@@ -39,16 +39,10 @@ fun UrgentTasks(
             val tasks = tasksValue.data
 
             if(tasks.isEmpty()){
-                Column(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    ThemedCard(
-                        modifier = Modifier.fillMaxWidth(),
-                        content = {
-                            Text("No urgent task to-do")
-                        }
-                    )
-                }
+                NoTasksMessageCard(
+                    navController = navController,
+                    msg = "No urgent task to-do\nYou're all caught up! No tasks for now."
+                )
             }else{
                 Column(
                     modifier = Modifier.fillMaxWidth()

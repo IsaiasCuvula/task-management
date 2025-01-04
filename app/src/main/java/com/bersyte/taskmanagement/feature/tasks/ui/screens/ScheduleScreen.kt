@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.BackButton
+import com.bersyte.taskmanagement.common.components.NoTasksMessageCard
 import com.bersyte.taskmanagement.common.components.HorizontalSpace
 import com.bersyte.taskmanagement.common.components.LoadingIndicator
 import com.bersyte.taskmanagement.common.components.ShowErrorMessage
@@ -92,26 +93,34 @@ fun ScheduleScreen(
                             scheduleStateValue.data != null -> {
                                 val tasks = scheduleStateValue.data
 
-                                tasks.forEachIndexed { index, task ->
+                                if(tasks.isEmpty()){
+                                    VerticalSpace(32)
+                                    NoTasksMessageCard(
+                                        navController = navController,
+                                        msg = "You're all caught up! No tasks for now"
+                                    )
+                                }else{
+                                    tasks.forEachIndexed { index, task ->
 
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.Center,
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        Text(
-                                            "10 PM",
-                                            style = MaterialTheme.typography.titleMedium.copy(
-                                                color = Color.White.copy(alpha = 0.6f)
+                                        Row(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            horizontalArrangement = Arrangement.Center,
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            Text(
+                                                "10 PM",
+                                                style = MaterialTheme.typography.titleMedium.copy(
+                                                    color = Color.White.copy(alpha = 0.6f)
+                                                )
                                             )
-                                        )
-                                        HorizontalSpace(24)
-                                        TaskCard(navController, task = task)
-                                    }
-                                    if(index != tasks.lastIndex){
-                                        VerticalSpace(8)
-                                        HorizontalDivider()
-                                        VerticalSpace(8)
+                                            HorizontalSpace(24)
+                                            TaskCard(navController, task = task)
+                                        }
+                                        if(index != tasks.lastIndex){
+                                            VerticalSpace(8)
+                                            HorizontalDivider()
+                                            VerticalSpace(8)
+                                        }
                                     }
                                 }
                             }

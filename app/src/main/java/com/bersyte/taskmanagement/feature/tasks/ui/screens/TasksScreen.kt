@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.bersyte.taskmanagement.common.components.BackButton
+import com.bersyte.taskmanagement.common.components.NoTasksMessageCard
 import com.bersyte.taskmanagement.common.components.LoadingIndicator
 import com.bersyte.taskmanagement.common.components.ShowErrorMessage
 import com.bersyte.taskmanagement.feature.tasks.ui.components.TaskCard
@@ -96,12 +97,20 @@ fun TasksScreen(
                                 taskStateValue.data != null -> {
                                     val tasks = taskStateValue.data
 
-                                    tasks.forEachIndexed { index, task ->
-                                       TaskCard(navController, task = task)
-                                        if(index != tasks.lastIndex){
-                                            VerticalSpace(8)
-                                            HorizontalDivider()
-                                            VerticalSpace(8)
+                                    if(tasks.isEmpty()){
+                                        VerticalSpace(64)
+                                        NoTasksMessageCard(
+                                            navController = navController,
+                                            msg = "You're all caught up! No tasks for now"
+                                        )
+                                    }else{
+                                        tasks.forEachIndexed { index, task ->
+                                            TaskCard(navController, task = task)
+                                            if(index != tasks.lastIndex){
+                                                VerticalSpace(8)
+                                                HorizontalDivider()
+                                                VerticalSpace(8)
+                                            }
                                         }
                                     }
                                 }
