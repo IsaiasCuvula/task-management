@@ -45,4 +45,7 @@ interface TaskDao {
     @Transaction
     @Query("SELECT * FROM tasks WHERE taskId = :taskId")
     fun getTasksWithLinks(taskId: Long): Flow<TaskWithLinks>
+
+    @Query("SELECT * FROM tasks WHERE dueDate = DATE(:dueDate) ORDER BY dueDate ASC")
+    fun getTasksByDueDate(dueDate: String): Flow<List<TaskWithSubtasks>>
 }

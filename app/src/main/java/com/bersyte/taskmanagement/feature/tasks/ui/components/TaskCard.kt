@@ -88,7 +88,7 @@ fun TaskCard(
                         )
                         HorizontalSpace(8)
                         Text(
-                            task.dueDate.date.toString(),
+                            task.dueDate.toString(),
                             style = textStyle.labelLarge.copy(
                                 color = Color.White.copy(alpha = 0.6f)
                             )

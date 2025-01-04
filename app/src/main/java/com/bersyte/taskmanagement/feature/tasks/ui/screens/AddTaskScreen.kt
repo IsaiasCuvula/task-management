@@ -62,7 +62,7 @@ fun AddTaskScreen(
     val today = AppHelper.getCurrentDate()
     var title by remember {  mutableStateOf("") }
     var description by remember {  mutableStateOf("") }
-    var dueDate by remember {  mutableStateOf(today) }
+    var dueDate by remember {  mutableStateOf(today.date) }
     var dueTime by remember {  mutableStateOf(today.time) }
     var priority by remember {  mutableStateOf(TaskPriority.LOW) }
 
@@ -150,10 +150,10 @@ fun AddTaskScreen(
                                  shape = RoundedCornerShape(16.dp)
                              ) {
                                  CommonTextField(
-                                     value = dueDate.date.toString(),
+                                     value = dueDate.toString(),
                                      readOnly= true,
                                      onValueChange = {},
-                                     placeholder = dueDate.date.toString(),
+                                     placeholder = dueDate.toString(),
                                      trailingIcon = {
                                          Icon(
                                              Icons.Rounded.CalendarMonth,

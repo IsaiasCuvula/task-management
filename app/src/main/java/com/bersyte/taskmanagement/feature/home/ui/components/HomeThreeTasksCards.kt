@@ -62,7 +62,7 @@ fun HomeThreeTasksCards(
                         Alignment.BottomStart
                     ) {
                         Text(
-                            "Due: ${firstTask.dueDate.date}",
+                            "Due: ${firstTask.dueDate}",
                             style = textStyle.labelMedium.copy(
                                 color = Color.White.copy(alpha = 0.6f)
                             )

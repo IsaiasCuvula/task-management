@@ -16,4 +16,5 @@ interface ITaskRepository {
     suspend fun getTasksWithSubtasks(taskId: Long): Flow<TaskWithSubtasks>
     suspend fun getTasksWithLinks(taskId: Long): Flow<TaskWithLinks>
     suspend fun getAllTasksWithSubtasks(): Flow<List<TaskWithSubtasks>>
+    suspend fun getTasksByDueDate(dueDate: String): Flow<List<TaskWithSubtasks>>
 }

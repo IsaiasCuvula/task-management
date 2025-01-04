@@ -1,10 +1,21 @@
 package com.bersyte.taskmanagement.utils
 
 import androidx.room.TypeConverter
+import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 
 class Converters {
+
+    @TypeConverter
+    fun toLocalDate(value: String?): LocalDate {
+        return value?.let { LocalDate.parse(it) } ?: AppHelper.getCurrentDate().date
+    }
+
+    @TypeConverter
+    fun fromLocalDate(date: LocalDate?): String {
+        return date?.toString() ?: AppHelper.getCurrentDate().toString()
+    }
 
     @TypeConverter
     fun fromTimestamp(value: String?): LocalDateTime {

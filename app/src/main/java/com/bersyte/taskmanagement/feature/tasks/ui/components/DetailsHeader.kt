@@ -79,7 +79,7 @@ fun DetailsHeader(navController: NavHostController, task: Task) {
                     )
                     HorizontalSpace(8)
                     Text(
-                        task.dueDate.date.toString(),
+                        task.dueDate.toString(),
                         style = textStyle.bodyLarge
                     )
                 }

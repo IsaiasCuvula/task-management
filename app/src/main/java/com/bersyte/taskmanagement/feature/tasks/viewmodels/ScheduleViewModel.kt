@@ -6,12 +6,14 @@ import androidx.lifecycle.viewModelScope
 import com.bersyte.taskmanagement.core.ui.UiState
 import com.bersyte.taskmanagement.feature.tasks.data.models.Task
 import com.bersyte.taskmanagement.feature.tasks.data.repositories.task.TaskRepository
+import com.bersyte.taskmanagement.utils.AppHelper
 import com.bersyte.taskmanagement.utils.TaskHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.datetime.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,14 +25,14 @@ class ScheduleViewModel @Inject constructor(
     val scheduleState = _scheduleState.asStateFlow()
 
     init {
-      getAllTasks()
+      getAllTasks(AppHelper.getCurrentDate().date)
     }
 
-    private fun getAllTasks() = viewModelScope.launch {
+    fun getAllTasks(date: LocalDate) = viewModelScope.launch {
         try {
             _scheduleState.update {it.copy(isLoading = true)}
             //
-            repository.getAllTasksWithSubtasks().collect{ tasks ->
+            repository.getTasksByDueDate(date.toString()).collect{ tasks ->
 
                 val result = tasks.map { taskWithSubtasks ->
                     val subtasks = taskWithSubtasks.subtasks

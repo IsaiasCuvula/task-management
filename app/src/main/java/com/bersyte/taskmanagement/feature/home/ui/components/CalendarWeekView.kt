@@ -31,10 +31,13 @@ import com.bersyte.taskmanagement.common.components.HorizontalSpace
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 import com.bersyte.taskmanagement.utils.AppHelper
 import com.bersyte.taskmanagement.utils.Month
+import kotlinx.datetime.LocalDate
 import kotlinx.datetime.number
 
 @Composable
-fun CalendarWeekView() {
+fun CalendarWeekView(
+    onDateSelected: (LocalDate) -> Unit
+) {
 
     val today = AppHelper.getCurrentDate().date
     val month = Month.getName(today.month.number)
@@ -78,7 +81,10 @@ fun CalendarWeekView() {
                             shape = RoundedCornerShape(16.dp)
                         )
                         .padding(4.dp)
-                        .clickable {selectedDate.value = date}
+                        .clickable {
+                            selectedDate.value = date
+                            onDateSelected(date)
+                        }
                         .size(height = 80.dp, width = 50.dp)
                 ) {
                     Column(

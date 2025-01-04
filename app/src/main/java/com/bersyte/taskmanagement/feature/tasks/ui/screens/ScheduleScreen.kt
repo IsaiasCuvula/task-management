@@ -60,7 +60,11 @@ fun ScheduleScreen(
         Column(
             modifier =  Modifier.padding(innerPadding)
         ) {
-            CalendarWeekView()
+            CalendarWeekView(
+                onDateSelected = {selectedDate ->
+                    scheduleViewModel.getAllTasks(selectedDate)
+                }
+            )
             VerticalSpace(32)
             LazyColumn {
                 item {

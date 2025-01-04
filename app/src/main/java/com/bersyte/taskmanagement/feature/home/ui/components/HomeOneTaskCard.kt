@@ -82,7 +82,7 @@ fun HomeOneTaskCard(
                     Alignment.BottomStart
                 ) {
                     Text(
-                        "Due: ${firstTask.dueDate.date}",
+                        "Due: ${firstTask.dueDate}",
                         style = MaterialTheme.typography.labelMedium.copy(
                             color = Color.White.copy(alpha = 0.6f)
                         )

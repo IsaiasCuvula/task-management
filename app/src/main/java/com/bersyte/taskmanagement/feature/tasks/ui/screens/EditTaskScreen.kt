@@ -75,7 +75,7 @@ fun EditTaskScreen(
     val today = AppHelper.getCurrentDate()
     var title by remember {  mutableStateOf("") }
     var description by remember {  mutableStateOf("") }
-    var dueDate by remember {  mutableStateOf(today) }
+    var dueDate by remember {  mutableStateOf(today.date) }
     var dueTime by remember {  mutableStateOf(today.time) }
     var priority by remember {  mutableStateOf(TaskPriority.LOW) }
     val taskMin = if(dueTime.minute == 0) "00" else dueTime.minute
@@ -94,7 +94,7 @@ fun EditTaskScreen(
 
         title = data?.title ?: ""
         description = data?.description ?:""
-        dueDate = data?.dueDate ?: today
+        dueDate = data?.dueDate ?: today.date
         dueTime = data?.dueTime ?: today.time
         priority = data?.priority ?: TaskPriority.LOW
     }
@@ -177,10 +177,10 @@ fun EditTaskScreen(
                                 shape = RoundedCornerShape(16.dp)
                             ) {
                                 CommonTextField(
-                                    value = dueDate.date.toString(),
+                                    value = dueDate.toString(),
                                     readOnly= true,
                                     onValueChange = {},
-                                    placeholder = dueDate.date.toString(),
+                                    placeholder = dueDate.toString(),
                                     trailingIcon = {
                                         Icon(
                                             Icons.Rounded.CalendarMonth,

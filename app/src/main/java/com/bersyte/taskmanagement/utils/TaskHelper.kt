@@ -2,7 +2,7 @@ package com.bersyte.taskmanagement.utils
 
 import com.bersyte.taskmanagement.feature.tasks.data.models.Subtask
 import com.bersyte.taskmanagement.feature.tasks.data.models.Task
-import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.LocalDate
 import kotlinx.datetime.atTime
 import kotlinx.datetime.minus
 
@@ -33,13 +33,13 @@ object TaskHelper {
         val taskDate = task.dueDate
         val taskTime = task.dueTime
         val todayDateTime = AppHelper.getCurrentDate()
-        val taskDateTime = taskDate.date.atTime(taskTime)
+        val taskDateTime = taskDate.atTime(taskTime)
         return todayDateTime == taskDateTime
     }
 
-    fun calculateDaysLeft(givenDateTime: LocalDateTime): Int {
+    fun calculateDaysLeft(givenDate: LocalDate): Int {
         val today = AppHelper.getCurrentDate().date
-        val result = givenDateTime.date.minus(today)
+        val result = givenDate.minus(today)
         return if(result.days < 0) 0 else result.days
     }
 
