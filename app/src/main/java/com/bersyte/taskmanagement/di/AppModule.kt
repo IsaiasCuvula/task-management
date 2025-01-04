@@ -20,9 +20,9 @@ import javax.inject.Singleton
 object AppModule {
 
 
-    private val migration1To2 = object : Migration(1, 2) {
+    private val migration2To3 = object : Migration(2, 3) {
         override fun migrate(db: SupportSQLiteDatabase) {
-            db.execSQL("ALTER TABLE tasks ADD COLUMN isCompleted INTEGER NOT NULL DEFAULT 0")
+            db.execSQL("ALTER TABLE tasks ADD COLUMN percentageCompleted FLOAT NOT NULL DEFAULT 0")
         }
     }
 
@@ -33,7 +33,7 @@ object AppModule {
         @ApplicationContext context: Context
     ): AppDatabase = Room.databaseBuilder(
         context, AppDatabase::class.java, "app_database"
-    ).addMigrations(migration1To2).build()
+    ).addMigrations(migration2To3).build()
 
 
     @Provides

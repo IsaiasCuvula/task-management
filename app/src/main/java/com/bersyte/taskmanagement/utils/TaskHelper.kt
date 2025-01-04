@@ -1,5 +1,6 @@
 package com.bersyte.taskmanagement.utils
 
+import com.bersyte.taskmanagement.feature.tasks.data.models.Subtask
 import com.bersyte.taskmanagement.feature.tasks.data.models.Task
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.atTime
@@ -7,13 +8,24 @@ import kotlinx.datetime.minus
 
 object TaskHelper {
 
+    fun percentageCompletedPerTask(subtasks: List<Subtask>): Float {
+       val totalSubtasks = subtasks.size
+       val completedSubtasks = subtasks.count { it.isCompleted }
+
+       return if (totalSubtasks > 0) {
+            (completedSubtasks.toFloat() / totalSubtasks.toFloat())
+       } else {
+           0f
+       }
+    }
+
     fun tasksCompletedPercentage(tasks: List<Task>): Float {
         val total = tasks.size
-        val totalDone = totalTaskDone(tasks)
+        val totalDone = totalTasksDone(tasks)
         return if (total == 0) 0f else (totalDone.toFloat() / total)
     }
 
-    fun totalTaskDone(tasks: List<Task>): Int {
+    fun totalTasksDone(tasks: List<Task>): Int {
         return tasks.count {it.isCompleted}
     }
 

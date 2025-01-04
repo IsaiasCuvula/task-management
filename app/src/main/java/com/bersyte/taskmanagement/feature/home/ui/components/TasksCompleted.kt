@@ -50,7 +50,7 @@ fun TasksCompleted(
                tasksCompletedStateValue.data != null -> {
                    val tasks = tasksCompletedStateValue.data
                    val percentageCompleted = TaskHelper.tasksCompletedPercentage(tasks)
-                   val totalDone = TaskHelper.totalTaskDone(tasks)
+                   val totalDone = TaskHelper.totalTasksDone(tasks)
                    val tasksDoneDisplayText = if (tasks.size != 1) "tasks done" else "task done"
 
                    Row(

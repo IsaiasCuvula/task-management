@@ -13,6 +13,7 @@ data class Task(
     val taskId: Long,
     var title: String,
     var isCompleted: Boolean = false,
+    var percentageCompleted : Float = 0f,
     var description: String,
     var dueDate: LocalDateTime,
     var dueTime: LocalTime,

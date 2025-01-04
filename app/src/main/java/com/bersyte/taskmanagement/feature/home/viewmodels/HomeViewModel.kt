@@ -7,6 +7,7 @@ import com.bersyte.taskmanagement.core.ui.UiState
 import com.bersyte.taskmanagement.feature.tasks.data.models.Task
 import com.bersyte.taskmanagement.feature.tasks.data.models.TaskPriority
 import com.bersyte.taskmanagement.feature.tasks.data.repositories.task.TaskRepository
+import com.bersyte.taskmanagement.utils.TaskHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -55,9 +56,19 @@ class HomeViewModel @Inject constructor(
         try {
             _homeUrgentTaskState.update {it.copy(isLoading = true)}
             //
-            taskRepository.getTasksByPriority(TaskPriority.HIGH).collect{ task ->
+            taskRepository.getTasksByPriority(TaskPriority.HIGH).collect{ tasks ->
+
+                val result = tasks.map { taskWithSubtasks ->
+                    val subtasks = taskWithSubtasks.subtasks
+
+                    taskWithSubtasks.task.copy(
+                        percentageCompleted = TaskHelper.percentageCompletedPerTask(subtasks),
+                        isCompleted = subtasks.isNotEmpty() && subtasks.all { it.isCompleted }
+                    )
+                }
+
                 _homeUrgentTaskState.update {
-                    it.copy(isLoading = false, data = task)
+                    it.copy(isLoading = false, data = result)
                 }
             }
         }catch (e: Exception){

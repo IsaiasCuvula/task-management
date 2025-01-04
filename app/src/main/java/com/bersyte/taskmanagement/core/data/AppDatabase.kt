@@ -15,7 +15,7 @@ import com.bersyte.taskmanagement.utils.Converters
 
 @Database(
     entities = [Task::class, TaskLink::class, Subtask::class],
-    version = 2, exportSchema = true
+    version = 3, exportSchema = true
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase() {

@@ -113,7 +113,8 @@ fun TaskDetailsScreen(
                             FileAndLinks(navController = navController, taskId = taskId)
                             VerticalSpace(32)
                             TaskProgressBar(
-                                taskId = taskId, height = 12,
+                                height = 12,
+                                percentage = task.percentageCompleted,
                                 color = colors.tertiary,
                                 trackColor = colors.surface,
                                 fontSize = MaterialTheme.typography.titleMedium.fontSize

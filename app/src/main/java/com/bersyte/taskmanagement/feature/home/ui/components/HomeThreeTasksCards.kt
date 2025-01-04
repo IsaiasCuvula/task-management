@@ -56,7 +56,7 @@ fun HomeThreeTasksCards(
                         navController = navController,
                     )
                     VerticalSpace(48)
-                    TaskProgressBar(taskId = firstTask.taskId)
+                    TaskProgressBar(percentage = firstTask.percentageCompleted)
                     Box(
                         modifier = Modifier.fillMaxSize(),
                         Alignment.BottomStart
@@ -95,7 +95,7 @@ fun HomeThreeTasksCards(
                         )
                         VerticalSpace(24)
                         TaskProgressBar(
-                            taskId = secondTask.taskId,
+                            percentage = secondTask.percentageCompleted,
                             color = colorScheme.onTertiary
                         )
                     }

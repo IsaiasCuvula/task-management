@@ -1,5 +1,6 @@
 package com.bersyte.taskmanagement.feature.tasks.ui.components
 
+import android.util.Log
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
@@ -14,9 +15,7 @@ import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -26,50 +25,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.bersyte.taskmanagement.feature.tasks.viewmodels.SubtaskViewmodel
 import com.bersyte.taskmanagement.common.components.VerticalSpace
 
 @Composable
 fun TaskProgressBar(
-    taskId: Long,
-    height: Int = 8,
-    fontSize: TextUnit = MaterialTheme.typography.labelSmall.fontSize,
-    color: Color = colorScheme.secondary,
-    trackColor: Color =  colorScheme.background,
-    subtaskVM: SubtaskViewmodel = hiltViewModel()
-) {
-    val subtasksState = subtaskVM.subtaskState.collectAsState()
-    val subtasksStateValue = subtasksState.value
-
-    LaunchedEffect(key1 = taskId) {
-        subtaskVM.getTaskWithSubtasks(taskId)
-    }
-
-
-    when{
-        subtasksStateValue.data != null -> {
-//            val percentageCompleted = TaskHelper.taskPercentageCompleted(
-//                subtasksStateValue.data
-//            )
-
-            key(taskId) {
-                ProgressBar(
-                    percentage = 0.3f,
-                    fontSize = fontSize,
-                    color = color,
-                    trackColor = trackColor,
-                    height = height
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun ProgressBar(
     percentage: Float,
-    height: Int,
+    height: Int = 8,
     totalPerc: Int = 100,
     fontSize: TextUnit = MaterialTheme.typography.labelSmall.fontSize,
     color: Color = colorScheme.secondary,
@@ -92,6 +53,8 @@ private fun ProgressBar(
     }
 
     val textStyle = MaterialTheme.typography
+
+    Log.d("TaskProgressBar", "$percentage")
 
     Column {
         LinearProgressIndicator(

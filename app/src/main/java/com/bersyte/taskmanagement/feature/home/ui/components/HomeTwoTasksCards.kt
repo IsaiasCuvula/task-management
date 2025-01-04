@@ -47,7 +47,7 @@ fun HomeTwoTasksCards(
                    )
                    VerticalSpace(24)
                    TaskProgressBar(
-                       taskId = firstTask.taskId,
+                       percentage = firstTask.percentageCompleted,
                        color = colorScheme.onTertiary
                    )
                }
@@ -73,7 +73,7 @@ fun HomeTwoTasksCards(
                    )
                    VerticalSpace(24)
                    TaskProgressBar(
-                       taskId = secondTask.taskId,
+                       percentage = secondTask.percentageCompleted,
                        color = colorScheme.secondary
                    )
                }

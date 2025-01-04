@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.bersyte.taskmanagement.core.ui.UiState
 import com.bersyte.taskmanagement.feature.tasks.data.models.Task
 import com.bersyte.taskmanagement.feature.tasks.data.repositories.task.TaskRepository
+import com.bersyte.taskmanagement.utils.TaskHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,8 +32,11 @@ class TasksCompletedViewModel @Inject constructor(
             _tasksCompletedState.update { it.copy(isLoading = true) }
             taskRepository.getAllTasksWithSubtasks().collect { tasks ->
                 val result = tasks.map { taskWithSubtasks ->
+                    val subtasks = taskWithSubtasks.subtasks
+
                     taskWithSubtasks.task.copy(
-                        isCompleted = taskWithSubtasks.subtasks.isNotEmpty() && taskWithSubtasks.subtasks.all { it.isCompleted }
+                        percentageCompleted = TaskHelper.percentageCompletedPerTask(subtasks),
+                        isCompleted = subtasks.isNotEmpty() && subtasks.all { it.isCompleted }
                     )
                 }
                 _tasksCompletedState.update {

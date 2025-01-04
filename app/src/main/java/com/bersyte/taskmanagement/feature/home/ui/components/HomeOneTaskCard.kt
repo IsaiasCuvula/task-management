@@ -72,7 +72,7 @@ fun HomeOneTaskCard(
                 }
                 VerticalSpace(32)
                 TaskProgressBar(
-                    taskId = firstTask.taskId,
+                    percentage = firstTask.percentageCompleted,
                     color = colorScheme.tertiary,
                     trackColor = colorScheme.surface
                 )
