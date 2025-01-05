@@ -22,6 +22,7 @@ import com.bersyte.taskFlow.feature.tasks.viewmodels.SubtaskViewmodel
 
 @Composable
 fun SubtaskCard(
+    taskId: Long,
     subtask: Subtask,
     subtaskViewmodel: SubtaskViewmodel = hiltViewModel()
 ) {
@@ -42,7 +43,7 @@ fun SubtaskCard(
             isCompleted = newValue
             //save in db
             subtask.isCompleted = newValue
-            subtaskViewmodel.updateSubtask(subtask)
+            subtaskViewmodel.updateSubtask(subtask, taskId)
         },
         content = {
             Row(
@@ -55,7 +56,7 @@ fun SubtaskCard(
                         isCompleted = isChecked
                         //save in db
                         subtask.isCompleted = isChecked
-                        subtaskViewmodel.updateSubtask(subtask)
+                        subtaskViewmodel.updateSubtask(subtask, taskId)
                     },
                     colors = CheckboxDefaults.colors(
                         checkedColor = MaterialTheme.colorScheme.onTertiary

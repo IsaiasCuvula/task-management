@@ -36,7 +36,10 @@ fun Subtasks(
                     key(subtask.subtaskId) {
                         SwipeToDeleteContainer(
                             content = {
-                                SubtaskCard(subtask = subtask)
+                                SubtaskCard(
+                                    subtask = subtask,
+                                    taskId = taskId
+                                )
                             },
                             item = subtask,
                             onDelete = { subtaskToDelete ->
