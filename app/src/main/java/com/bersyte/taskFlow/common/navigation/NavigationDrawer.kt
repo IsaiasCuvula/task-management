@@ -25,6 +25,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.rememberCoroutineScope
@@ -50,6 +51,14 @@ fun NavigationDrawer(
     val scope = rememberCoroutineScope()
     var selectedDrawerItem by rememberSaveable {
         mutableIntStateOf(0)
+    }
+
+    //Reset Drawer Item to the initial after
+    // opening any screen on the Drawer items
+    LaunchedEffect(Unit) {
+        if(selectedDrawerItem != 0){
+            selectedDrawerItem = 0
+        }
     }
 
     ModalNavigationDrawer(
