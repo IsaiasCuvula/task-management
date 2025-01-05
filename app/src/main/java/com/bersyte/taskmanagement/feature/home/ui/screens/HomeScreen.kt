@@ -1,19 +1,31 @@
 package com.bersyte.taskmanagement.feature.home.ui.screens
 
+import android.Manifest
+import android.app.Application
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Mic
+import androidx.compose.material.icons.rounded.StopCircle
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -31,12 +43,35 @@ import com.bersyte.taskmanagement.feature.home.ui.components.TasksCompleted
 import com.bersyte.taskmanagement.feature.home.ui.components.UrgentTasks
 import com.bersyte.taskmanagement.feature.home.viewmodels.HomeViewModel
 import com.bersyte.taskmanagement.feature.profile.ui.components.HomeUsername
+import com.bersyte.taskmanagement.feature.voice.VoiceToTextParser
 
 @Composable
 fun HomeScreen(
     navController: NavHostController,
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
+
+    val context = LocalContext.current
+    val app = context.applicationContext as Application
+
+    val voiceToTextParser by lazy {
+        VoiceToTextParser(app)
+    }
+
+    var canRecord by remember { mutableStateOf(false) }
+    val recordAudioLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) {
+        canRecord = it
+    }
+
+    LaunchedEffect(key1= recordAudioLauncher) {
+        recordAudioLauncher.launch(Manifest.permission.RECORD_AUDIO)
+    }
+
+    val state by voiceToTextParser.state.collectAsState()
+
+
     val homeState = homeViewModel.homeState.collectAsState()
     val homeStateValue = homeState.value
 
@@ -62,11 +97,48 @@ fun HomeScreen(
                             )
                         )
                         VerticalSpace(24)
+                        AnimatedContent(
+                            targetState = state.isSpeaking,
+                            label = ""
+                        ) { isSpeaking  ->
+                            if(isSpeaking){
+                                Text("🔊 Speaking...")
+                            }else{
+                                query = state.spokenText
+                            }
+                        }
                         SearchField(
                             query = query,
                             onQueryChanged = {query = it},
                             onQueryClear = {query = ""},
-                            onSpeaking = {query = it}
+                            leadingIcon = {
+                                IconButton(
+                                    onClick = {
+                                        if (state.isSpeaking) {
+                                            voiceToTextParser.stopListening()
+                                        } else {
+                                            voiceToTextParser.startListening()
+                                        }
+                                    }
+                                ) {
+                                    AnimatedContent(
+                                        targetState = state.isSpeaking,
+                                        label = ""
+                                    ) { isSpeaking ->
+                                        if (isSpeaking){
+                                            Icon(
+                                                Icons.Rounded.StopCircle,
+                                                contentDescription = "Stop",
+                                            )
+                                        }else{
+                                            Icon(
+                                                Icons.Rounded.Mic,
+                                                contentDescription = "Voice",
+                                            )
+                                        }
+                                    }
+                                }
+                            },
                         )
                         when {
                             homeStateValue.isLoading ->{
