@@ -59,6 +59,10 @@ class VoiceToTextParser(
         recognizer.stopListening()
     }
 
+    fun onRestart(){
+        _state.update {it.copy(isSpeaking = false, spokenText = "")}
+    }
+
     override fun onReadyForSpeech(params: Bundle?) {
         _state.update {it.copy(error = null)}
     }

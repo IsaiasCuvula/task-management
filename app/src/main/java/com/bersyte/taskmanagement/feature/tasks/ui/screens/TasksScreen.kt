@@ -2,7 +2,6 @@ package com.bersyte.taskmanagement.feature.tasks.ui.screens
 
 import android.Manifest
 import android.app.Application
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedContent
@@ -115,7 +114,10 @@ fun TasksScreen(
                         SearchField(
                             query = query,
                             onQueryChanged = {query = it},
-                            onQueryClear = {query = ""},
+                            onQueryClear = {
+                                query = ""
+                                voiceToTextParser.onRestart()
+                            },
                             leadingIcon = {
                                 IconButton(
                                     onClick = {

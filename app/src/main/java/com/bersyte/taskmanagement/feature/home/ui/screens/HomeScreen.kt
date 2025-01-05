@@ -110,7 +110,10 @@ fun HomeScreen(
                         SearchField(
                             query = query,
                             onQueryChanged = {query = it},
-                            onQueryClear = {query = ""},
+                            onQueryClear = {
+                                query = ""
+                                voiceToTextParser.onRestart()
+                            },
                             leadingIcon = {
                                 IconButton(
                                     onClick = {
