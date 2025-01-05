@@ -1,4 +1,4 @@
-package com.bersyte.taskFlow.feature.tasks.ui.components
+package com.bersyte.taskFlow.common.components
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween

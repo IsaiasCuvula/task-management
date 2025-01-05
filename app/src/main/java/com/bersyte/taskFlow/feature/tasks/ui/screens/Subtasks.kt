@@ -9,7 +9,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.bersyte.taskFlow.common.components.VerticalSpace
 import com.bersyte.taskFlow.feature.tasks.ui.components.AddSubTaskButton
 import com.bersyte.taskFlow.feature.tasks.ui.components.SubtaskCard
-import com.bersyte.taskFlow.feature.tasks.ui.components.SwipeToDeleteContainer
+import com.bersyte.taskFlow.common.components.SwipeToDeleteContainer
 import com.bersyte.taskFlow.feature.tasks.viewmodels.SubtaskViewmodel
 
 @Composable
