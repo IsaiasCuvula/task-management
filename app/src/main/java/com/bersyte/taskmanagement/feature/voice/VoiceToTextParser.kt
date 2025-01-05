@@ -1,11 +1,14 @@
 package com.bersyte.taskmanagement.feature.voice
 
+import android.Manifest
 import android.app.Application
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
+import androidx.core.content.ContextCompat
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -26,6 +29,15 @@ class VoiceToTextParser(
             _state.update { it.copy(error = "Voice recognition is not available")}
         }
 
+        val permissionGranted = ContextCompat.checkSelfPermission(
+            app, Manifest.permission.RECORD_AUDIO
+        ) == PackageManager.PERMISSION_GRANTED
+
+        if (!permissionGranted) {
+            _state.update { it.copy(error = "Permission to record audio is not granted") }
+            return
+        }
+
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
             putExtra(
                 RecognizerIntent.EXTRA_LANGUAGE_MODEL,
@@ -39,15 +51,13 @@ class VoiceToTextParser(
 
         recognizer.setRecognitionListener(this)
         recognizer.startListening(intent)
-        _state.update {it.copy(isSpeaking = true)}
+        _state.update {it.copy(isSpeaking = true, error = null)}
     }
 
     fun stopListening(){
         _state.update {it.copy(isSpeaking = false)}
         recognizer.stopListening()
     }
-
-
 
     override fun onReadyForSpeech(params: Bundle?) {
         _state.update {it.copy(error = null)}
