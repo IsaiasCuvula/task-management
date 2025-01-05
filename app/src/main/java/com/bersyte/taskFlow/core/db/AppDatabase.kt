@@ -23,7 +23,10 @@ import com.bersyte.taskFlow.utils.Converters
         Subtask::class, AppUser::class,
         AppNotification::class
     ],
-    version = 5, exportSchema = true
+    version = 5, exportSchema = true,
+    autoMigrations = [
+       // AutoMigration (from = 5, to = 6)
+    ]
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase() {
