@@ -1,0 +1,136 @@
+package com.bersyte.taskFlow.feature.tasks.ui.components
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DatasetLinked
+import androidx.compose.material.icons.rounded.AddLink
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import com.bersyte.taskFlow.common.components.BottomSheet
+import com.bersyte.taskFlow.common.components.HorizontalSpace
+import com.bersyte.taskFlow.common.components.ThemedCard
+import com.bersyte.taskFlow.common.components.VerticalSpace
+import com.bersyte.taskFlow.common.navigation.Route
+import com.bersyte.taskFlow.feature.tasks.ui.screens.AddLinks
+import com.bersyte.taskFlow.feature.tasks.viewmodels.TaskLinkViewmodel
+import kotlinx.coroutines.launch
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun FileAndLinks(
+    taskId: Long,
+    navController: NavHostController,
+    taskLinkViewmodel: TaskLinkViewmodel = hiltViewModel()
+) {
+
+    LaunchedEffect(Unit){
+        taskLinkViewmodel.getTaskWithLinks(taskId)
+    }
+
+    val taskLinksState = taskLinkViewmodel.taskLinkState.collectAsState()
+    val taskLinksStateValue = taskLinksState.value
+
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded  = true
+    )
+    val scope = rememberCoroutineScope()
+    var showAddLinksSheet by remember { mutableStateOf(false) }
+
+    ThemedCard(
+        content = {
+            when{
+
+                taskLinksStateValue.data != null -> {
+                    val filesLinks = taskLinksStateValue.data
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        IconButton(
+                            onClick = {showAddLinksSheet=true}
+                        ) {
+                            Icon(
+                                Icons.Rounded.AddLink,
+                                contentDescription = "",
+                                modifier = Modifier.size(30.dp),
+                            )
+                        }
+                        Text("File & Links: ")
+                        HorizontalSpace(10)
+                        if(filesLinks.isEmpty()){
+                            Text("No 🔗 links added yet...")
+                        }else{
+                            LazyRow {
+                                items(items = filesLinks, key = {it.taskLinkId}){ item ->
+                                    Column(
+                                        modifier = Modifier
+                                            .clip(shape = RoundedCornerShape(8.dp))
+                                            .clickable {
+                                                navController.navigate( "${Route.WebView.name}/${item.url}")
+                                            }.padding(6.dp)
+                                    ) {
+                                        Icon(
+                                            Icons.Filled.DatasetLinked,
+                                            contentDescription = ""
+                                        )
+                                    }
+                                    HorizontalSpace(8)
+                                }
+                            }
+                        }
+                    }
+                    VerticalSpace(32)
+                }
+            }
+
+
+            if(showAddLinksSheet){
+                BottomSheet(
+                    sheetState = sheetState,
+                    onDismissRequest = {
+                        showAddLinksSheet = false
+                    },
+                    content = {
+                        AddLinks (
+                            taskId = taskId,
+                            onClose = {
+                                scope.launch { sheetState.hide() }
+                                    .invokeOnCompletion {
+                                        if(!sheetState.isVisible){
+                                            showAddLinksSheet = false
+                                        }
+                                    }
+                            }
+                        )
+                    }
+                )
+            }
+        }
+    )
+}
