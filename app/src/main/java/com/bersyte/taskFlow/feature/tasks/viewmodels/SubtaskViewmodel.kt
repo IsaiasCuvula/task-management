@@ -5,10 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bersyte.taskFlow.core.ui.UiState
 import com.bersyte.taskFlow.feature.notifications.data.models.AppNotification
-import com.bersyte.taskFlow.feature.notifications.data.repositories.NotificationRepository
+import com.bersyte.taskFlow.feature.notifications.data.repositories.INotificationRepository
+import com.bersyte.taskFlow.feature.notifications.service.INotificationService
 import com.bersyte.taskFlow.feature.tasks.data.models.Subtask
-import com.bersyte.taskFlow.feature.tasks.data.repositories.subtask.SubtaskRepository
-import com.bersyte.taskFlow.feature.tasks.data.repositories.task.TaskRepository
+import com.bersyte.taskFlow.feature.tasks.data.models.Task
+import com.bersyte.taskFlow.feature.tasks.data.repositories.subtask.ISubtaskRepository
+import com.bersyte.taskFlow.feature.tasks.data.repositories.task.ITaskRepository
 import com.bersyte.taskFlow.utils.AppHelper
 import com.bersyte.taskFlow.utils.TaskHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,9 +23,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SubtaskViewmodel @Inject constructor(
-    private val subtaskRepository: SubtaskRepository,
-    private val taskRepository: TaskRepository,
-    private val notificationsRepository: NotificationRepository
+    private val subtaskRepository: ISubtaskRepository,
+    private val taskRepository: ITaskRepository,
+    private val notificationsRepository: INotificationRepository,
+    private val notificationService: INotificationService
 ): ViewModel() {
 
     private val _subtaskState = MutableStateFlow(UiState<List<Subtask>>())
@@ -83,7 +86,10 @@ class SubtaskViewmodel @Inject constructor(
     fun updateSubtask(subtask: Subtask, taskId: Long)= viewModelScope.launch {
         try {
             subtaskRepository.update(subtask)
+
+            //save and show notification
             saveNotification(taskId)
+
         }catch (e:Exception){
             Log.d("Update subtask", "Update subtask error: $e")
             _subtaskState.update {
@@ -104,22 +110,42 @@ class SubtaskViewmodel @Inject constructor(
                          createdAt = AppHelper.getCurrentDate()
                      )
                      notificationsRepository.update(updatedNot)
+
+                     taskRepository.getTaskById(taskId).collect{ taskWithSub ->
+                         if(taskWithSub != null){
+                             val subtasks = taskWithSub.subtasks
+
+                             val task = taskWithSub.task.copy(
+                                 percentageCompleted = TaskHelper.percentageCompletedPerTask(subtasks),
+                                 isCompleted = subtasks.isNotEmpty() && subtasks.all { it.isCompleted }
+                             )
+
+                             if(task.isCompleted){
+                                 //show local notification
+                                 showNotification(taskWithSub.task)
+                             }
+                         }
+                     }
+
                  }else{
                      taskRepository.getTasksWithSubtasks(taskId).collect{ taskWithSubtasks ->
                          val subtasks = taskWithSubtasks.subtasks
 
-                         val result = taskWithSubtasks.task.copy(
+                         val task = taskWithSubtasks.task.copy(
                              percentageCompleted = TaskHelper.percentageCompletedPerTask(subtasks),
                              isCompleted = subtasks.isNotEmpty() && subtasks.all { it.isCompleted }
                          )
 
-                         if(result.isCompleted){
+                         if(task.isCompleted){
                              val notification = AppNotification(
                                  id = 0,
-                                 title = taskWithSubtasks.task.title,
+                                 title = task.title,
                                  taskId = taskId
                              )
                              notificationsRepository.insert(notification)
+
+                             //show local notification
+                             showNotification(task)
                          }
                      }
                  }
@@ -129,5 +155,13 @@ class SubtaskViewmodel @Inject constructor(
             Log.d(tag, "$tag - ${e.message}")
             return@launch
         }
+    }
+
+    private fun showNotification(task: Task){
+        notificationService.showNotification(
+            title = task.title,
+            description = "Task completed successfully 🎉",
+            taskId = task.taskId.toInt()
+        )
     }
 }

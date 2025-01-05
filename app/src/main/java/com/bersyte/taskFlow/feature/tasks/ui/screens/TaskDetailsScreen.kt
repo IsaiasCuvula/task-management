@@ -1,5 +1,10 @@
 package com.bersyte.taskFlow.feature.tasks.ui.screens
 
+import android.Manifest
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -18,6 +23,10 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -33,6 +42,7 @@ import com.bersyte.taskFlow.feature.tasks.ui.components.FileAndLinks
 import com.bersyte.taskFlow.feature.tasks.ui.components.TaskProgressBar
 import com.bersyte.taskFlow.feature.tasks.viewmodels.TaskViewmodel
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskDetailsScreen(
@@ -50,6 +60,14 @@ fun TaskDetailsScreen(
 
     val colors = MaterialTheme.colorScheme
     val textStyle = MaterialTheme.typography
+
+
+    var canShowNotification by remember { mutableStateOf(false) }
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) {
+        canShowNotification = it
+    }
 
     Scaffold (
         topBar = {
@@ -76,6 +94,12 @@ fun TaskDetailsScreen(
             }
             taskByIdStateValue.data != null -> {
                 val task = taskByIdStateValue.data
+
+                if(task.isCompleted){
+                    permissionLauncher.launch(
+                        Manifest.permission.POST_NOTIFICATIONS
+                    )
+                }
 
                 Column(
                     modifier =  Modifier.padding(innerPadding)
@@ -127,7 +151,7 @@ fun TaskDetailsScreen(
                                 )
                             )
                             VerticalSpace(16)
-                            Subtasks(taskId = taskId)
+                            Subtasks(taskId = task.taskId)
                         }
                     }
                 }

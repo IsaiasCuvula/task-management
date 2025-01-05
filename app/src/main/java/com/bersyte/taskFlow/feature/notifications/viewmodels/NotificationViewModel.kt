@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bersyte.taskFlow.core.ui.UiState
 import com.bersyte.taskFlow.feature.notifications.data.models.AppNotification
-import com.bersyte.taskFlow.feature.notifications.data.repositories.NotificationRepository
+import com.bersyte.taskFlow.feature.notifications.data.repositories.INotificationRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NotificationViewModel @Inject constructor(
-    private val repository: NotificationRepository
+    private val repository: INotificationRepository
 ): ViewModel() {
 
     private val _notificationsState = MutableStateFlow(UiState<List<AppNotification>>())

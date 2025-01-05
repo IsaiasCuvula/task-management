@@ -25,12 +25,15 @@ interface TaskDao {
     @Update
     suspend fun update(task: Task)
 
+    @Transaction
     @Query("SELECT * FROM tasks WHERE taskId = :id")
     fun getTaskById(id: Long): Flow<TaskWithSubtasks?>
 
+    @Transaction
     @Query("SELECT * FROM tasks WHERE priority != :priority ORDER BY dueDate ASC")
     fun getTasksExcludingHighPriority(priority: TaskPriority = TaskPriority.HIGH):  Flow<List<TaskWithSubtasks>>
 
+    @Transaction
     @Query("SELECT * FROM tasks WHERE priority = :priority ORDER BY dueDate ASC")
     fun getTasksByPriority(priority: TaskPriority): Flow<List<TaskWithSubtasks>>
 
@@ -46,6 +49,7 @@ interface TaskDao {
     @Query("SELECT * FROM tasks WHERE taskId = :taskId")
     fun getTasksWithLinks(taskId: Long): Flow<TaskWithLinks>
 
+    @Transaction
     @Query("SELECT * FROM tasks WHERE dueDate = DATE(:dueDate) ORDER BY dueDate ASC")
     fun getTasksByDueDate(dueDate: String): Flow<List<TaskWithSubtasks>>
 }

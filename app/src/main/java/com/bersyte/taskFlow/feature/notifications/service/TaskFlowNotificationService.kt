@@ -15,11 +15,11 @@ import com.bersyte.taskmanagment.R
 
 class TaskFlowNotificationService(
     private val context: Context
-) {
+): INotificationService {
     private val notificationManager = context
         .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-    fun showNotification(title: String, taskId: Int){
+    override fun showNotification(title: String,description: String, taskId: Int){
 
         val hasPermission = if(Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU) hasPermission() else true
 
@@ -33,8 +33,8 @@ class TaskFlowNotificationService(
             val notification = NotificationCompat
                 .Builder(context, TASK_FLOW_CHANNEL_ID)
                 .setSmallIcon(R.drawable.baseline_task_alt_24)
-                .setContentTitle("Task Flow")
-                .setContentText(title)
+                .setContentTitle(title)
+                .setContentText(description)
                 .setContentIntent(activityPendingIntent)
                 .build()
             notificationManager.notify(taskId, notification)

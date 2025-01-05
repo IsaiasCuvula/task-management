@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bersyte.taskFlow.core.ui.UiState
 import com.bersyte.taskFlow.feature.profile.data.models.AppUser
-import com.bersyte.taskFlow.feature.profile.data.repositories.ProfileRepository
+import com.bersyte.taskFlow.feature.profile.data.repositories.IProfileRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val repository: ProfileRepository
+    private val repository: IProfileRepository
 ): ViewModel() {
     private val _profileState = MutableStateFlow(UiState<AppUser>())
     val profileState = _profileState.asStateFlow()

@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bersyte.taskFlow.core.ui.UiState
 import com.bersyte.taskFlow.feature.tasks.data.models.Task
-import com.bersyte.taskFlow.feature.tasks.data.repositories.task.TaskRepository
+import com.bersyte.taskFlow.feature.tasks.data.repositories.task.ITaskRepository
 import com.bersyte.taskFlow.utils.TaskHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TaskViewmodel @Inject constructor(
-    private val repository: TaskRepository
+    private val repository: ITaskRepository
 ): ViewModel() {
 
     private val _taskState = MutableStateFlow(UiState<List<Task>>())

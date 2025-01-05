@@ -5,10 +5,17 @@ import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.bersyte.taskFlow.core.db.AppDatabase
+import com.bersyte.taskFlow.feature.notifications.data.repositories.INotificationRepository
 import com.bersyte.taskFlow.feature.notifications.data.repositories.NotificationRepository
+import com.bersyte.taskFlow.feature.notifications.service.INotificationService
+import com.bersyte.taskFlow.feature.notifications.service.TaskFlowNotificationService
+import com.bersyte.taskFlow.feature.profile.data.repositories.IProfileRepository
 import com.bersyte.taskFlow.feature.profile.data.repositories.ProfileRepository
+import com.bersyte.taskFlow.feature.tasks.data.repositories.subtask.ISubtaskRepository
 import com.bersyte.taskFlow.feature.tasks.data.repositories.subtask.SubtaskRepository
+import com.bersyte.taskFlow.feature.tasks.data.repositories.task.ITaskRepository
 import com.bersyte.taskFlow.feature.tasks.data.repositories.task.TaskRepository
+import com.bersyte.taskFlow.feature.tasks.data.repositories.taskLink.ITaskLinkRepository
 import com.bersyte.taskFlow.feature.tasks.data.repositories.taskLink.TaskLinkRepository
 import dagger.Module
 import dagger.Provides
@@ -20,7 +27,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
 
     private val migration4To5 = object : Migration(4, 5) {
         override fun migrate(db: SupportSQLiteDatabase) {
@@ -40,6 +46,14 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideNotificationService(
+        @ApplicationContext context: Context
+    ): INotificationService {
+        return TaskFlowNotificationService(context)
+    }
+
+    @Provides
+    @Singleton
     fun provideAppDatabase(
         @ApplicationContext context: Context
     ): AppDatabase = Room.databaseBuilder(
@@ -51,33 +65,33 @@ object AppModule {
     @Singleton
     fun provideTaskRepository(
         db: AppDatabase
-    ): TaskRepository = TaskRepository(db)
+    ): ITaskRepository = TaskRepository(db)
 
 
     @Provides
     @Singleton
     fun provideSubtaskRepository(
         db: AppDatabase
-    ): SubtaskRepository = SubtaskRepository(db)
+    ): ISubtaskRepository = SubtaskRepository(db)
 
 
     @Provides
     @Singleton
     fun provideTaskLinkRepository(
         db: AppDatabase
-    ): TaskLinkRepository = TaskLinkRepository(db)
+    ): ITaskLinkRepository = TaskLinkRepository(db)
 
     @Provides
     @Singleton
     fun provideProfileRepository(
         db: AppDatabase
-    ): ProfileRepository = ProfileRepository(db)
+    ): IProfileRepository = ProfileRepository(db)
 
 
     @Provides
     @Singleton
     fun provideNotificationsRepository(
         db: AppDatabase
-    ): NotificationRepository = NotificationRepository(db)
+    ): INotificationRepository = NotificationRepository(db)
 
 }
