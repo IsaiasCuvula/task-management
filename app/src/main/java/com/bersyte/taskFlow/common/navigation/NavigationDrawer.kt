@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.bersyte.taskFlow.common.components.VerticalSpace
+import com.bersyte.taskFlow.feature.notifications.ui.components.HomeNotificationButton
 import com.bersyte.taskFlow.feature.profile.ui.components.DisplayUserInfo
 import kotlinx.coroutines.launch
 
@@ -124,17 +125,7 @@ fun NavigationDrawer(
                             )
                         }
 
-                        IconButton(
-                            onClick = {
-                                navController.navigate(Route.Notifications.name)
-                            }
-                        ) {
-                            Icon(
-                                Icons.Rounded.NotificationsNone,
-                                contentDescription = "Notification",
-                                modifier = Modifier.size(32.dp)
-                            )
-                        }
+                        HomeNotificationButton(navController)
                     }
                 )
             },
