@@ -27,7 +27,6 @@ class SubtaskViewmodel @Inject constructor(
 
     fun getTaskWithSubtasks(taskId: Long) = viewModelScope.launch {
         _subtaskState.update { it.copy(isLoading = true) }
-
         try {
             taskRepository.getTasksWithSubtasks(taskId).collect{ task ->
                 _subtaskState.update {
@@ -64,11 +63,11 @@ class SubtaskViewmodel @Inject constructor(
         }
     }
 
-    fun updateSubtask(subtask: Subtask)= viewModelScope.launch {
+    fun deleteSubtask(subtask: Subtask)= viewModelScope.launch {
         try {
-            subtaskRepository.update(subtask)
+            subtaskRepository.delete(subtask)
         }catch (e:Exception){
-            Log.d("Update subtask", "Update subtask error: $e")
+            Log.d("Delete subtask", "Delete subtask error: $e")
             _subtaskState.update {
                 it.copy(isLoading = false, error = e.message)
             }
@@ -76,11 +75,11 @@ class SubtaskViewmodel @Inject constructor(
         }
     }
 
-    fun deleteSubtask(subtask: Subtask)= viewModelScope.launch {
+    fun updateSubtask(subtask: Subtask)= viewModelScope.launch {
         try {
-            subtaskRepository.delete(subtask)
+            subtaskRepository.update(subtask)
         }catch (e:Exception){
-            Log.d("Delete subtask", "Delete subtask error: $e")
+            Log.d("Update subtask", "Update subtask error: $e")
             _subtaskState.update {
                 it.copy(isLoading = false, error = e.message)
             }
