@@ -78,8 +78,11 @@ fun NavigationDrawer(
                                 scope.launch {
                                     drawerState.close()
                                 }
-
-                                navController.navigate(drawerItem.route.name)
+                                if(drawerItem.route != Route.Home){
+                                    navController.navigate(drawerItem.route.name){
+                                        launchSingleTop = true
+                                    }
+                                }
                             }
                         )
                     }
