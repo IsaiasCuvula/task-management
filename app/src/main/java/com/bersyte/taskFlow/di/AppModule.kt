@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.bersyte.taskFlow.core.db.AppDatabase
+import com.bersyte.taskFlow.feature.notifications.data.repositories.NotificationRepository
 import com.bersyte.taskFlow.feature.profile.data.repositories.ProfileRepository
 import com.bersyte.taskFlow.feature.tasks.data.repositories.subtask.SubtaskRepository
 import com.bersyte.taskFlow.feature.tasks.data.repositories.task.TaskRepository
@@ -21,20 +22,21 @@ import javax.inject.Singleton
 object AppModule {
 
 
-    private val migration3To4 = object : Migration(3, 4) {
+    private val migration4To5 = object : Migration(4, 5) {
         override fun migrate(db: SupportSQLiteDatabase) {
             db.execSQL(
                 """
-                CREATE TABLE IF NOT EXISTS user_info (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-                    username TEXT NOT NULL DEFAULT 'Your username',
-                    createdAt TEXT NOT NULL
-                )
-                """.trimIndent()
+            CREATE TABLE IF NOT EXISTS notifications (
+                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                title TEXT NOT NULL,
+                taskId INTEGER NOT NULL,
+                isSeen INTEGER NOT NULL DEFAULT 0,
+                createdAt TEXT NOT NULL
+            )
+            """.trimIndent()
             )
         }
     }
-
 
     @Provides
     @Singleton
@@ -42,7 +44,7 @@ object AppModule {
         @ApplicationContext context: Context
     ): AppDatabase = Room.databaseBuilder(
         context, AppDatabase::class.java, "app_database"
-    ).addMigrations(migration3To4).build()
+    ).addMigrations(migration4To5).build()
 
 
     @Provides
@@ -70,5 +72,12 @@ object AppModule {
     fun provideProfileRepository(
         db: AppDatabase
     ): ProfileRepository = ProfileRepository(db)
+
+
+    @Provides
+    @Singleton
+    fun provideNotificationsRepository(
+        db: AppDatabase
+    ): NotificationRepository = NotificationRepository(db)
 
 }
