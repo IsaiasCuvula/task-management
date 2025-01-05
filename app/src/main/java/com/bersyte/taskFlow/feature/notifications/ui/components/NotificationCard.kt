@@ -24,23 +24,19 @@ fun NotificationCard(
 ) {
 
     val textStyle = MaterialTheme.typography
-    val colors = MaterialTheme.colorScheme
 
     val date = notification.createdAt.date
     val time = notification.createdAt.time
     val notificationMin = if(time.minute < 10) "0${time.minute}" else time.minute
     val isSeen = notification.isSeen
-    val bgColor = if(isSeen)colors.surface.copy(
-        alpha = 0.5f
-    ) else colors.surface
 
-    val titleColor = if(isSeen) Color.White.copy(alpha = 0.4f) else Color.White
-    val descColor = if(isSeen) Color.White.copy(alpha = 0.2f) else Color.White.copy(alpha = 0.4f)
-    val iconColor = if(isSeen) LightGreen.copy(alpha = 0.2f) else LightGreen
+    val titleAlpha = if (isSeen) 0.4f else 1f
+    val descAlpha = if (isSeen) 0.2f else 0.4f
+    val iconAlpha = if (isSeen) 0.2f else 1f
+
 
     ThemedCard(
         modifier = Modifier.fillMaxWidth(),
-        bgColor = bgColor,
         onClick = onClick,
         content = {
             Row(
@@ -51,23 +47,26 @@ fun NotificationCard(
                     painterResource(
                         R.drawable.baseline_task_alt_24
                     ),contentDescription = "",
-                    tint = iconColor
+                    tint = LightGreen.copy(alpha = iconAlpha)
                 )
                 HorizontalSpace(10)
                 Column(
                     modifier = Modifier.weight(1f),
                 ) {
-                    Text(notification.title, color = titleColor)
+                    Text(
+                        notification.title,
+                        color = Color.White.copy(alpha = titleAlpha)
+                    )
                     Text(
                         "Task completed on $date",
                         style = textStyle.labelLarge.copy(
-                            color = descColor
+                            color = Color.White.copy(alpha = descAlpha)
                         )
                     )
                 }
                 Text(
                     "${time.hour}:$notificationMin",
-                    color = titleColor
+                    color = Color.White.copy(alpha = titleAlpha)
                 )
             }
         }
