@@ -37,8 +37,9 @@ fun TaskCard(
     val colorScheme = MaterialTheme. colorScheme
     val isTaskDeadline = TaskHelper.isTaskDeadline(task)
     val bgColor = if(isTaskDeadline) colorScheme.primary else colorScheme.surface
+    val taskTime = task.dueTime
 
-    val taskMin = if(task.dueTime.minute == 0) "00" else task.dueTime.minute
+    val taskMin = if(taskTime.minute < 10) "0${taskTime.minute}" else taskTime.minute
 
     ThemedCard(
         onClick = {
