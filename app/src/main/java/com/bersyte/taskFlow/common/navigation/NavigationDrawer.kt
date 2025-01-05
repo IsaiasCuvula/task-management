@@ -73,12 +73,13 @@ fun NavigationDrawer(
                                 contentDescription = drawerItem.title
                             ) },
                             onClick = {
-                                navController.navigate(drawerItem.route.name)
-                                //
+
                                 selectedDrawerItem = index
                                 scope.launch {
                                     drawerState.close()
                                 }
+
+                                navController.navigate(drawerItem.route.name)
                             }
                         )
                     }
