@@ -99,6 +99,8 @@ class SubtaskViewmodel @Inject constructor(
 
                  if(existingNotification != null){
                      val updatedNot = existingNotification.copy(
+                         isSeen = false,
+                         title = existingNotification.title,
                          createdAt = AppHelper.getCurrentDate()
                      )
                      notificationsRepository.update(updatedNot)
