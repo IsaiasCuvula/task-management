@@ -165,6 +165,9 @@ fun AddTaskScreen(
                          }
                          HorizontalSpace(12)
                          Column(modifier = Modifier.weight(1f)) {
+
+                             val min = if(dueTime.minute < 10) "0${dueTime.minute}" else dueTime.minute
+
                              Text("Due time")
                              VerticalSpace(8)
                              Surface(
@@ -173,7 +176,7 @@ fun AddTaskScreen(
                                  },
                                 shape = RoundedCornerShape(16.dp)
                              ) {
-                                 val time = "${dueTime.hour}:${dueTime.minute}"
+                                 val time = "${dueTime.hour}:$min"
                                  CommonTextField(
                                      value = time,
                                      readOnly= true,
