@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.cancellation.CancellationException
 
 
 @HiltViewModel
@@ -42,9 +43,10 @@ class ProfileViewModel @Inject constructor(
                 }
 
             }
+        }catch (e: CancellationException){
+            throw e
         }catch (e: Exception){
-            val tag = "ProfileViewModel "
-            Log.d(tag, "Error while getting current user - ${e.message}")
+            Log.d("ProfileViewModel", "Error while getting current user - $e")
             _profileState.update {
                 it.copy(isLoading = false, error = e.message)
             }
@@ -58,8 +60,10 @@ class ProfileViewModel @Inject constructor(
             _profileState.update {
                 it.copy(data = appUser)
             }
+        }catch (e: CancellationException){
+            throw e
         }catch (e:Exception){
-            Log.d("Update user", "Update user error: $e")
+            Log.d("ProfileViewModel", "Update user error: $e")
             _profileState.update {
                 it.copy(isLoading = false, error = e.message)
             }
@@ -74,9 +78,10 @@ class ProfileViewModel @Inject constructor(
             repository.insert(appUser)
             //
             _profileState.update {it.copy(isLoading = false)}
+        }catch (e: CancellationException){
+            throw e
         }catch (e: Exception){
-            val tag = "Error while saving user"
-            Log.d(tag, "$tag - ${e.message}")
+            Log.d("ProfileViewModel", "Saving user exception - ${e.message}")
             _profileState.update {
                 it.copy(isLoading = false, error = e.message)
             }

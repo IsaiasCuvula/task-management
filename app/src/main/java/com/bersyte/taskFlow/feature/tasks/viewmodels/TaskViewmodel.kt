@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.cancellation.CancellationException
 
 
 @HiltViewModel
@@ -50,9 +51,10 @@ class TaskViewmodel @Inject constructor(
                     it.copy(isLoading = false, data = result)
                 }
             }
+        }catch (e: CancellationException){
+            throw e
         }catch (e: Exception){
-            val tag = "ScheduleViewModel "
-            Log.d(tag, "Error while getting all tasks with subtasks - ${e.message}")
+            Log.d("TaskViewmodel", "Getting all tasks with subtasks exception- $e")
             _taskState.update {
                 it.copy(isLoading = false, error = e.message)
             }
@@ -63,8 +65,10 @@ class TaskViewmodel @Inject constructor(
     fun updateTask(task: Task) = viewModelScope.launch {
         try {
             repository.update(task)
+        }catch (e: CancellationException){
+            throw e
         }catch (e:Exception){
-            Log.d("Update task", "Update task error: $e")
+            Log.d("TaskViewmodel", "Update task error: $e")
             _taskState.update {
                 it.copy(isLoading = false, error = e.message)
             }
@@ -75,8 +79,10 @@ class TaskViewmodel @Inject constructor(
     fun deleteTask(task: Task)= viewModelScope.launch {
         try {
             repository.delete(task)
+        }catch (e: CancellationException){
+            throw e
         }catch (e:Exception){
-            Log.d("Delete task", "Delete task error: $e")
+            Log.d("TaskViewmodel", "Delete task error: $e")
             _taskState.update {
                 it.copy(isLoading = false, error = e.message)
             }
@@ -103,8 +109,10 @@ class TaskViewmodel @Inject constructor(
                   }
                 }
             }
-        } catch (e: Exception) {
-            Log.d("Fetch task by id", "Fetch task by id error: $e")
+        } catch (e: CancellationException){
+            throw e
+        }catch (e: Exception) {
+            Log.d("TaskViewmodel", "Fetch task by id error: $e")
             _taskByIdState.update {
                 it.copy(isLoading = false, error = e.message)
             }
@@ -130,9 +138,10 @@ class TaskViewmodel @Inject constructor(
                     it.copy(isLoading = false, data = result)
                 }
             }
+        }catch (e: CancellationException){
+            throw e
         }catch (e: Exception){
-            val tag = "Error while getting all tasks"
-            Log.d(tag, "$tag - ${e.message}")
+            Log.d("TaskViewmodel", "Getting all tasks - ${e.message}")
             _taskState.update {
                 it.copy(isLoading = false, error = e.message)
             }
@@ -148,9 +157,10 @@ class TaskViewmodel @Inject constructor(
             repository.insert(task)
             //
             _taskState.update {it.copy(isLoading = false)}
+        }catch (e: CancellationException){
+            throw e
         }catch (e: Exception){
-            val tag = "Error while saving task"
-            Log.d(tag, "$tag - ${e.message}")
+            Log.d("TaskViewmodel", "Saving task exception - $e")
             _taskState.update {
                 it.copy(isLoading = false, error = e.message)
             }

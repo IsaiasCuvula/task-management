@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.cancellation.CancellationException
 
 @HiltViewModel
 class NotificationViewModel @Inject constructor(
@@ -40,8 +41,10 @@ class NotificationViewModel @Inject constructor(
 
                 _hasNotSeenNotificationsState.update { it.copy(hasNotSeenNotification) }
             }
+        }catch (e: CancellationException){
+            throw e
         } catch (e: Exception) {
-            Log.d("Fetch task with notifications", "Fetch notifications error: $e")
+            Log.d("NotificationViewModel", "Fetch notifications error: $e")
             _notificationsState.update {
                 it.copy(isLoading = false, error = e.message)
             }
@@ -52,8 +55,10 @@ class NotificationViewModel @Inject constructor(
    fun deleteNotification(notification: AppNotification)= viewModelScope.launch {
        try {
            repository.delete(notification)
+       }catch (e: CancellationException){
+           throw e
        }catch (e:Exception){
-           Log.d("Delete notification", "Delete notification error: $e")
+           Log.d("NotificationViewModel", "Delete notification error: $e")
            _notificationsState.update {
                it.copy(isLoading = false, error = e.message)
            }
@@ -64,8 +69,10 @@ class NotificationViewModel @Inject constructor(
    fun updateNotification(notification: AppNotification)= viewModelScope.launch {
        try {
            repository.update(notification)
+       }catch (e: CancellationException){
+           throw e
        }catch (e:Exception){
-           Log.d("Update notification", "Update notification error: $e")
+           Log.d("NotificationViewModel", "Update notification error: $e")
            _notificationsState.update {
                it.copy(isLoading = false, error = e.message)
            }

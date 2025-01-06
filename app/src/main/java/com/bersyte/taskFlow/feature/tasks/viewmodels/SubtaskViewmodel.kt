@@ -14,6 +14,7 @@ import com.bersyte.taskFlow.feature.tasks.data.repositories.task.ITaskRepository
 import com.bersyte.taskFlow.utils.AppHelper
 import com.bersyte.taskFlow.utils.TaskHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -41,8 +42,10 @@ class SubtaskViewmodel @Inject constructor(
                     it.copy(isLoading = false, data = task.subtasks)
                 }
             }
+        }catch (e: CancellationException){
+            throw e
         } catch (e: Exception) {
-            Log.d("Fetch task with subtasks", "Fetch task with subtasks error: $e")
+            Log.d("SubtaskViewmodel", "Fetch task with subtasks exception: $e")
             _subtaskState.update {
                 it.copy(isLoading = false, error = e.message)
             }
@@ -61,9 +64,10 @@ class SubtaskViewmodel @Inject constructor(
             subtaskRepository.insert(subtask)
             //
             _subtaskState.update {it.copy(isLoading = false)}
+        }catch (e: CancellationException){
+            throw e
         }catch (e: Exception){
-            val tag = "Error while saving subtask"
-            Log.d(tag, "$tag - ${e.message}")
+            Log.d("SubtaskViewmodel", "Saving subtask exception- $e")
             _subtaskState.update {
                 it.copy(isLoading = false, error = e.message)
             }
@@ -74,8 +78,10 @@ class SubtaskViewmodel @Inject constructor(
     fun deleteSubtask(subtask: Subtask)= viewModelScope.launch {
         try {
             subtaskRepository.delete(subtask)
+        }catch (e: CancellationException){
+            throw e
         }catch (e:Exception){
-            Log.d("Delete subtask", "Delete subtask error: $e")
+            Log.d("SubtaskViewmodel", "Delete subtask error: $e")
             _subtaskState.update {
                 it.copy(isLoading = false, error = e.message)
             }
@@ -90,8 +96,10 @@ class SubtaskViewmodel @Inject constructor(
             //save and show notification
             saveNotification(taskId)
 
+        }catch (e: CancellationException){
+            throw e
         }catch (e:Exception){
-            Log.d("Update subtask", "Update subtask error: $e")
+            Log.d("SubtaskViewmodel", "Update subtask error: $e")
             _subtaskState.update {
                 it.copy(isLoading = false, error = e.message)
             }
@@ -150,9 +158,10 @@ class SubtaskViewmodel @Inject constructor(
                      }
                  }
             }
+        }catch (e: CancellationException){
+            throw e
         } catch (e: Exception){
-            val tag = "Error while saving notification"
-            Log.d(tag, "$tag - ${e.message}")
+            Log.d("SubtaskViewmodel", "saving notification exception - ${e.message}")
             return@launch
         }
     }

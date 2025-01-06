@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
 import javax.inject.Inject
+import kotlin.coroutines.cancellation.CancellationException
 
 @HiltViewModel
 class ScheduleViewModel @Inject constructor(
@@ -47,9 +48,10 @@ class ScheduleViewModel @Inject constructor(
                     it.copy(isLoading = false, data = result)
                 }
             }
+        }catch (e: CancellationException){
+            throw e
         }catch (e: Exception){
-            val tag = "ScheduleViewModel "
-            Log.d(tag, "Error while getting all tasks with subtasks - ${e.message}")
+            Log.d("ScheduleViewModel", "Getting all tasks with subtasks exception- $e")
             _scheduleState.update {
                 it.copy(isLoading = false, error = e.message)
             }

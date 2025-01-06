@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.cancellation.CancellationException
 
 @HiltViewModel
 class TasksCompletedViewModel @Inject constructor(
@@ -43,9 +44,10 @@ class TasksCompletedViewModel @Inject constructor(
                     it.copy(isLoading = false, data = result)
                 }
             }
+        }catch (e: CancellationException){
+            throw e
         }catch (e: Exception){
-            val tag = "TasksCompletedViewModel "
-            Log.d(tag, "Error Get all tasks - ${e.message}")
+            Log.d("TasksCompletedViewModel", "Get all tasks exception - $e")
             _tasksCompletedState.update {
                 it.copy(isLoading = false, error = e.message)
             }

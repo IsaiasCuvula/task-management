@@ -9,6 +9,7 @@ import com.bersyte.taskFlow.feature.tasks.data.models.TaskPriority
 import com.bersyte.taskFlow.feature.tasks.data.repositories.task.ITaskRepository
 import com.bersyte.taskFlow.utils.TaskHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -51,9 +52,10 @@ class HomeViewModel @Inject constructor(
                     it.copy(isLoading = false, data = result)
                 }
             }
+        }catch (e: CancellationException){
+            throw e
         }catch (e: Exception){
-            val tag = "Error while getting all tasks"
-            Log.d(tag, "$tag - ${e.message}")
+            Log.d("HomeViewModel", "Get tasks excluding high priority exception: - $e")
             _homeState.update {
                 it.copy(isLoading = false, error = e.message)
             }
@@ -82,9 +84,10 @@ class HomeViewModel @Inject constructor(
                     })
                 }
             }
+        }catch (e: CancellationException){
+            throw e
         }catch (e: Exception){
-            val tag = "Error while getting all tasks"
-            Log.d(tag, "$tag - ${e.message}")
+            Log.d("HomeViewModel", "Get three urgent tasks exception - $e")
             _homeUrgentTaskState.update {
                 it.copy(isLoading = false, error = e.message)
             }

@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.cancellation.CancellationException
 
 @HiltViewModel
 class TaskLinkViewmodel @Inject constructor(
@@ -33,8 +34,10 @@ class TaskLinkViewmodel @Inject constructor(
                     it.copy(isLoading = false, data = task.taskLinks)
                 }
             }
+        }catch (e: CancellationException){
+            throw e
         } catch (e: Exception) {
-            Log.d("Fetch task with taskLinks", "Fetch task with taskLinks error: $e")
+            Log.d("TaskLinkViewmodel", "Fetch task with taskLinks error: $e")
             _taskLinkState.update {
                 it.copy(isLoading = false, error = e.message)
             }
@@ -53,37 +56,14 @@ class TaskLinkViewmodel @Inject constructor(
             taskLinkRepository.insert(taskLink)
             //
             _taskLinkState.update {it.copy(isLoading = false)}
+        }catch (e: CancellationException){
+            throw e
         }catch (e: Exception){
-            val tag = "Error while saving taskLink"
-            Log.d(tag, "$tag - ${e.message}")
+            Log.d("TaskLinkViewmodel", "saving taskLink error - $e")
             _taskLinkState.update {
                 it.copy(isLoading = false, error = e.message)
             }
             return@launch
         }
     }
-
-//    fun updateTaskLink(taskLink: TaskLink)= viewModelScope.launch {
-//        try {
-//            taskLinkRepository.update(taskLink)
-//        }catch (e:Exception){
-//            Log.d("Update taskLink", "Update taskLink error: $e")
-//            _taskLinkState.update {
-//                it.copy(isLoading = false, error = e.message)
-//            }
-//            return@launch
-//        }
-//    }
-//
-//    fun deleteTaskLink(taskLink: TaskLink)= viewModelScope.launch {
-//        try {
-//            taskLinkRepository.delete(taskLink)
-//        }catch (e:Exception){
-//            Log.d("Delete taskLink", "Delete taskLink error: $e")
-//            _taskLinkState.update {
-//                it.copy(isLoading = false, error = e.message)
-//            }
-//            return@launch
-//        }
-//    }
 }
