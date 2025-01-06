@@ -15,7 +15,7 @@ import com.bersyte.taskFlow.common.components.HorizontalSpace
 import com.bersyte.taskFlow.common.components.ThemedCard
 import com.bersyte.taskFlow.common.theme.LightGreen
 import com.bersyte.taskFlow.feature.notifications.data.models.AppNotification
-import com.bersyte.taskmanagment.R
+import com.bersyte.taskflow.R
 
 @Composable
 fun NotificationCard(

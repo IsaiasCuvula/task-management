@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace = "com.bersyte.taskmanagment"
+    namespace = "com.bersyte.taskflow"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.bersyte.taskmanagment"
+        applicationId = "com.bersyte.taskflow"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

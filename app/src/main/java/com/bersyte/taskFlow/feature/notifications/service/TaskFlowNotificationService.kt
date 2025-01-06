@@ -11,7 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.bersyte.taskFlow.MainActivity
-import com.bersyte.taskmanagment.R
+import com.bersyte.taskflow.R
 
 class TaskFlowNotificationService(
     private val context: Context
