@@ -32,7 +32,6 @@ class ScheduleViewModel @Inject constructor(
     fun getAllTasks(date: LocalDate) = viewModelScope.launch {
         try {
             _scheduleState.update {it.copy(isLoading = true)}
-            //
             repository.getTasksByDueDate(date.toString()).collect{ tasks ->
 
                 val result = tasks.map { taskWithSubtasks ->
