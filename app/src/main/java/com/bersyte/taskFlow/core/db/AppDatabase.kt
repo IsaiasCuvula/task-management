@@ -23,15 +23,15 @@ import com.bersyte.taskFlow.utils.Converters
         Subtask::class, AppUser::class,
         AppNotification::class
     ],
-    version = 5, exportSchema = true,
+    version = 1, exportSchema = true,
     autoMigrations = [
-       // AutoMigration (from = 5, to = 6)
+        // AutoMigration (from = 5, to = 6)
     ]
 )
 @TypeConverters(Converters::class)
-abstract class AppDatabase: RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
     abstract fun taskDao(): TaskDao
-    abstract fun subtaskDao():SubtaskDao
+    abstract fun subtaskDao(): SubtaskDao
     abstract fun taskLinkDao(): TaskLinkDao
     abstract fun profileDao(): ProfileDao
     abstract fun notificationDao(): NotificationDao
