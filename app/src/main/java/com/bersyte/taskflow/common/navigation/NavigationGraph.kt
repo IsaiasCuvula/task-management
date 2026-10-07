@@ -1,5 +1,7 @@
 package com.bersyte.taskflow.common.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -15,6 +17,7 @@ import com.bersyte.taskflow.feature.tasks.ui.screens.EditTaskScreen
 import com.bersyte.taskflow.feature.tasks.ui.screens.ScheduleScreen
 import com.bersyte.taskflow.feature.tasks.ui.screens.TaskDetailsScreen
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun NavigationGraph(
     navController: NavHostController,
