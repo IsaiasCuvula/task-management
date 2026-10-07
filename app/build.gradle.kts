@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.ksp)
 
     alias(libs.plugins.dagger.hilt.android)
+    alias(libs.plugins.kotlin.android)
 
 }
 
@@ -43,6 +44,9 @@ android {
     buildFeatures {
         compose = true
     }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
 }
 
 dependencies {
@@ -61,6 +65,7 @@ dependencies {
 
     //Icons
     implementation(libs.androidx.material.icons.extended)
+    implementation(libs.core.ktx)
 
     //Date time
     implementation(libs.kotlinx.datetime)
